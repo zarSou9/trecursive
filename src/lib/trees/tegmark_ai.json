@@ -1,0 +1,1087 @@
+{
+	"id": "f54651a2-efdf-45e5-b903-9177faeea554",
+	"title": "AI Safety",
+	"description": "Mitigate the risk that people build an agentic AI system which results in the loss of human control, extinction or some other existential catastrophe.",
+	"questions": null,
+	"breakdowns": [
+		{
+			"id": "e3c39d1d-4e00-41b4-a192-bea2cfafa73e",
+			"title": null,
+			"paper": {
+				"url": "https://arxiv.org/abs/2309.01933",
+				"arxiv_id": "2309.01933",
+				"title": "Provably safe systems: the only path to controllable AGI",
+				"abstract": "We describe a path to humanity safely thriving with powerful Artificial General Intelligences (AGIs) by building them to provably satisfy human-specified requirements. We argue that this will soon be technically feasible using advanced AI for formal verification and mechanistic interpretability. We further argue that it is the only path which guarantees safe controlled AGI. We end with a list of challenge problems whose solution would contribute to this positive outcome and invite readers to join in this work.",
+				"published_date": "2023-09-05T00:00:00",
+				"citation_count": 14,
+				"influential_citation_count": 0
+			},
+			"explanation": "The paper proposes that the only reliable path to safe AGI is through provably secure systems, where both AI software and the hardware it runs on must mathematically demonstrate compliance with formal safety specifications before being allowed to operate. Rather than trying to align black-box neural networks through training or hoping that safety emerges from testing, this approach requires that every deployed AI system carry mathematical proofs that it cannot violate critical safety constraints. This creates multiple layers of protection: the AI systems themselves must be provably safe, the hardware they run on must enforce these proofs, and the entire infrastructure must be designed to prevent circumvention.\n\nThe five identified sub-goals form an interlocking system where each component reinforces the others. Automated formal verification provides the core mathematical foundation for proving safety properties, but this capability alone is insufficient without comprehensive safety specifications that define what must be proven. These specifications in turn rely on algorithm extraction methods to translate powerful AI capabilities into a form that can be verified. The resulting provably safe systems can only be trusted if they run on secure hardware infrastructure that enforces compliance checking. Finally, the governance and enforcement framework ensures universal adoption of these technical safeguards, preventing any individual actor from deploying unverified systems that could pose existential risks.\n\nThis integrated approach addresses the AGI safety challenge by creating multiple complementary barriers against catastrophic outcomes. Even if a superintelligent system tried to circumvent safety constraints, it would need to simultaneously defeat the mathematical proofs of its limitations, compromise tamper-proof hardware, and evade detection by the verification infrastructure. By requiring proofs rather than just testing or training, the system provides guarantees rather than mere empirical evidence of safety. The governance layer ensures these protections are universally adopted, while the hardware infrastructure makes compliance physically mandatory rather than just legally required. Together, these components create a robust framework where safety is enforced through multiple independent mechanisms, making it extremely difficult for even a superintelligent system to cause catastrophic harm.",
+			"sub_nodes": [
+				{
+					"id": "2b75547b-5853-4786-9383-f4ced79744cf",
+					"title": "Automated Formal Verification",
+					"description": "Develop the capability to automatically verify that complex software systems provably satisfy formal specifications. This includes both generating and checking mathematical proofs of compliance at the scale and complexity needed for AGI systems.",
+					"questions": null,
+					"breakdowns": [
+						{
+							"id": "15c89abc-99e2-47ba-a317-17a4819fd7c9",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2003.06458",
+								"arxiv_id": "2003.06458",
+								"url": "https://arxiv.org/abs/2003.06458",
+								"title": "QED at Large: A Survey of Engineering of Formally Verified Software",
+								"published_date": "2020-03-13T00:00:00.000Z",
+								"abstract": "Development of formal proofs of correctness of programs can increase actual and perceived reliability and facilitate better understanding of program specifications and their underlying assumptions. Tools supporting such development have been available for over 40 years, but have only recently seen wide practical use. Projects based on construction of machine-checked formal proofs are now reaching an unprecedented scale, comparable to large software projects, which leads to new challenges in proof development and maintenance. Despite its increasing importance, the field of proof engineering is seldom considered in its own right; related theories, techniques, and tools span many fields and venues. This survey of the literature presents a holistic understanding of proof engineering for program correctness, covering impact in practice, foundations, proof automation, proof organization, and practical proof development.",
+								"citation_count": 65,
+								"influential_citation_count": 1,
+								"ref": "17914"
+							},
+							"explanation": "The paper approaches automated formal verification through the lens of proof engineering - treating the development of formal proofs as a software engineering discipline. It emphasizes that proving properties of complex systems requires not just automated theorem proving capabilities, but also robust infrastructure for checking proofs, clear ways to specify properties, and principled methodologies for managing large proof developments.\n\nThe breakdown reflects the key technical components needed for automated verification of complex systems, as outlined in the paper's sections on foundations, automation, and proof organization. Automated theorem proving provides the core capability to discover proofs, while proof checking infrastructure ensures these proofs are trustworthy. Specification languages provide the formal framework for expressing what needs to be proved, while proof engineering methodology enables scaling these techniques to large systems.\n\nThese components work together as an integrated verification pipeline: Properties are expressed in specification languages, automated theorem provers attempt to find proofs of these properties, proof checkers verify the correctness of these proofs, and proof engineering methods help manage the overall development. The paper emphasizes that all of these aspects must scale together to handle AGI-scale systems - automated proving alone is insufficient without corresponding advances in specification, checking, and engineering practices. This holistic approach is critical for achieving automated verification that is both powerful enough to handle complex properties and reliable enough to trust for safety-critical AGI systems.",
+							"sub_nodes": [
+								{
+									"id": "79e92151-e44d-470e-809f-b6ee076bc830",
+									"title": "Automated Theorem Proving",
+									"description": "Develop automated systems capable of discovering mathematical proofs at scale, particularly for verifying program properties. This includes both complete automation for simpler properties and semi-automated interactive proving for complex properties.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "8bfbff4f-2e37-4b2b-975e-6f0791eac949",
+									"title": "Proof Checking Infrastructure",
+									"description": "Create efficient and trustworthy systems for verifying the correctness of generated proofs. This includes developing small, verifiable proof checker kernels and efficient proof representations that can scale to complex AGI systems.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "5702d13d-2b41-4a5b-846e-fe00568383e2",
+									"title": "Specification Language Development",
+									"description": "Design formal languages and frameworks for precisely expressing desired system properties and safety constraints. These must be both mathematically rigorous and practical for specifying complex behavioral and safety properties of AGI systems.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "b5d5ab29-e361-44f9-9cff-4093fb108e5f",
+									"title": "Proof Engineering Methodology",
+									"description": "Develop principles, patterns and tools for managing large-scale formal verification projects. This includes approaches for proof organization, reuse, and evolution that can scale to the complexity of AGI systems while remaining maintainable.",
+									"questions": null,
+									"breakdowns": null
+								}
+							]
+						},
+						{
+							"id": "36d3e616-9ace-4987-b456-5e9ee0f2c233",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/pdf/2109.01362v1.pdf",
+								"arxiv_id": "2109.01362",
+								"url": "https://arxiv.org/pdf/2109.01362v1.pdf",
+								"title": "A Survey of Practical Formal Methods for Security",
+								"published_date": "2021-09-03T00:00:00.000Z",
+								"abstract": "In today\u2019s world, critical infrastructure is often controlled by computing systems. This introduces new risks for cyber attacks, which can compromise the security and disrupt the functionality of these systems. It is therefore necessary to build such systems with strong guarantees of resiliency against cyber attacks. One way to achieve this level of assurance is using formal verification, which provides proofs of system compliance with desired cyber security properties. The use of Formal Methods (FM) in aspects of cyber security and safety-critical systems are reviewed in this article. We split FM into the three main classes: theorem proving, model checking, and lightweight FM. To allow the different uses of FM to be compared, we define a common set of terms. We further develop categories based on the type of computing system FM are applied in. Solutions in each class and category are presented, discussed, compared, and summarised. We describe historical highlights and developments and present a state-of-the-art review in the area of FM in cyber security. This review is presented from the point of view of FM practitioners and researchers, commenting on the trends in each of the classes and categories. This is achieved by considering all types of FM, several types of security and safety-critical systems, and by structuring the taxonomy accordingly. The article hence provides a comprehensive overview of FM and techniques available to system designers of security-critical systems, simplifying the process of choosing the right tool for the task. The article concludes by summarising the discussion of the review, focusing on best practices, challenges, general future trends, and directions of research within this field.",
+								"citation_count": 34,
+								"influential_citation_count": 0,
+								"ref": "57124"
+							},
+							"explanation": "This paper surveys different formal methods approaches (theorem proving, model checking, and lightweight FM) for verifying security properties of critical systems, comparing their practical applications and tradeoffs. This is directly relevant to the automated formal verification sub-goal, as it provides an overview of existing techniques that could be built upon to verify safety properties of AGI systems, though the paper focuses specifically on cyber security rather than AI safety.",
+							"sub_nodes": null
+						},
+						{
+							"id": "f5bc2d23-71ac-4be6-99a2-ab8136b9672d",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2104.06178",
+								"arxiv_id": "2104.06178",
+								"url": "https://arxiv.org/abs/2104.06178",
+								"title": "Certified Control: An Architecture for Verifiable Safety of Autonomous Vehicles",
+								"published_date": "2021-03-29T00:00:00.000Z",
+								"abstract": "Widespread adoption of autonomous cars will require greater confidence in their safety than is currently possible. Certified control is a new safety architecture whose goal is two-fold: to achieve a very high level of safety, and to provide a framework for justifiable confidence in that safety. The key idea is a runtime monitor that acts, along with sensor hardware and low-level control and actuators, as a small trusted base, ensuring the safety of the system as a whole. Unfortunately, in current systems complex perception makes the verification even of a runtime monitor challenging. Unlike traditional runtime monitoring, therefore, a certified control monitor does not perform perception and analysis itself. Instead, the main controller assembles evidence that the proposed action is safe into a certificate that is then checked independently by the monitor. This exploits the classic gap between the costs of finding and checking. The controller is assigned the task of finding the certificate, and can thus use the most sophisticated algorithms available (including learning-enabled software); the monitor is assigned only the task of checking, and can thus run quickly and be smaller and formally verifiable. This paper explains the key ideas of certified control and illustrates them with a certificate for LiDAR data and its formal verification. It shows how the architecture dramatically reduces the amount of code to be verified, providing an end-to-end safety analysis that would likely not be achievable in a traditional architecture.",
+								"citation_count": 5,
+								"influential_citation_count": 2,
+								"ref": "24955"
+							},
+							"explanation": "This paper proposes a \"certified control\" architecture where a formally verifiable runtime monitor checks safety certificates produced by the main controller of an autonomous vehicle, allowing complex perception and control systems to be safely deployed without having to formally verify the entire system. This approach is relevant to automated formal verification by demonstrating how to make formal verification more tractable by strategically verifying only a small trusted component rather than an entire complex system.",
+							"sub_nodes": null
+						},
+						{
+							"id": "a6160dc7-c89f-4acf-b81f-b2f757ab82d8",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2012.04185",
+								"arxiv_id": "2012.04185",
+								"url": "https://arxiv.org/abs/2012.04185",
+								"title": "Formalism- Driven Development of Decentralized Systems",
+								"published_date": "2020-12-08T00:00:00.000Z",
+								"abstract": "Decentralized systems have been widely developed and applied to address security and privacy issues in centralized systems, especially since the advancement of distributed ledger technology. However, it is challenging to ensure their correct functioning with respect to their designs and minimize the technical risk before the delivery. Although formal methods have made significant progress over the past decades, a feasible solution based on formal methods from a development process perspective has not been well developed. In this paper, we formulate an iterative and incremental development process, named formalism-driven development (FDD), for developing provably correct decentralized systems under the guidance of formal methods. We also present a framework named Seniz, to practicalize FDD with a new modeling language and scaffolds. Furthermore, we conduct case studies to demonstrate the effectiveness of FDD in practice with the support of Seniz.",
+								"citation_count": 3,
+								"influential_citation_count": 0,
+								"ref": "54662"
+							},
+							"explanation": "This paper proposes a formalism-driven development process and supporting framework called Seniz that enables developers to build provably correct decentralized systems through formal verification methods, which is relevant to the automated formal verification sub-goal as it presents a practical approach for integrating formal verification into complex system development.",
+							"sub_nodes": null
+						},
+						{
+							"id": "4e3b43a7-27b9-4395-b33b-e7ecad6b2aa1",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/1902.04245",
+								"arxiv_id": "1902.04245",
+								"url": "https://arxiv.org/abs/1902.04245",
+								"title": "VERIFAI: A Toolkit for the Design and Analysis of Artificial Intelligence-Based Systems",
+								"published_date": "2019-02-12T00:00:00.000Z",
+								"abstract": "We present VERIFAI, a software toolkit for the formal design and analysis of systems that include artificial intelligence (AI) and machine learning (ML) components. VERIFAI particularly seeks to address challenges with applying formal methods to perception and ML components, including those based on neural networks, and to model and analyze system behavior in the presence of environment uncertainty. We describe the initial version of VERIFAI which centers on simulation guided by formal models and specifications. Several use cases are illustrated with examples, including temporal-logic falsification, model-based systematic fuzz testing, parameter synthesis, counterexample analysis, and data set augmentation.",
+								"citation_count": 27,
+								"influential_citation_count": 1,
+								"ref": "25414"
+							},
+							"explanation": "This paper presents VERIFAI, a software toolkit that enables formal verification and testing of AI/ML systems through simulation-guided analysis and specification checking, which directly supports the sub-goal of automated formal verification by providing practical tools for verifying AI system compliance with specifications, though it focuses more on finding violations than proving complete correctness.",
+							"sub_nodes": null
+						},
+						{
+							"id": "e6e410b0-b21c-4496-9f23-c7c164b13111",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/1908.11179",
+								"arxiv_id": "1908.11179",
+								"url": "https://arxiv.org/abs/1908.11179",
+								"title": "ActivFORMS: A Formally Founded Model-based Approach to Engineer Self-adaptive Systems",
+								"published_date": "2019-08-29T00:00:00.000Z",
+								"abstract": "Self-adaptation equips a computing system with a feedback loop that enables it to deal with change caused by uncertainties during operation, such as changing availability of resources and fluctuating workloads. To ensure that the system complies with the adaptation goals, recent research suggests the use of formal techniques at runtime. Yet, existing approaches have three limitations that affect their practical applicability: (i) they ignore correctness of the behavior of the feedback loop, (ii) they rely on exhaustive verification at runtime to select adaptation options to realize the adaptation goals, which is time- and resource-demanding, and (iii) they provide limited or no support for changing adaptation goals at runtime. To tackle these shortcomings, we present ActivFORMS (Active FORmal Models for Self-adaptation). ActivFORMS contributes an end-to-end approach for engineering self-adaptive systems, spanning four main stages of the life cycle of a feedback loop: design, deployment, runtime adaptation, and evolution. We also present ActivFORMS-ta, a tool-supported instance of ActivFORMS that leverages timed automata models and statistical model checking at runtime. We validate the research results using an IoT application for building security monitoring that is deployed in Leuven. The experimental results demonstrate that ActivFORMS supports correctness of the behavior of the feedback loop, achieves the adaptation goals in an efficient way, and supports changing adaptation goals at runtime.",
+								"citation_count": 27,
+								"influential_citation_count": 2,
+								"ref": "49407"
+							},
+							"explanation": "This paper presents ActivFORMS, an approach for engineering self-adaptive systems that uses formal models and verification throughout the system lifecycle to ensure correctness of adaptive behavior, which is relevant to automated formal verification but focuses more narrowly on verifying self-adaptive systems rather than general AGI systems. The approach demonstrates formal verification techniques being successfully applied to runtime systems, though at a much smaller scale than would be needed for AGI verification.",
+							"sub_nodes": null
+						},
+						{
+							"id": "59adf53b-2a6e-48ec-8b8b-274e8957d3e2",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2203.15841",
+								"arxiv_id": "2203.15841",
+								"url": "https://arxiv.org/abs/2203.15841",
+								"title": "NNLander-VeriF: A Neural Network Formal Verification Framework for Vision-Based Autonomous Aircraft Landing",
+								"published_date": "2022-03-29T00:00:00.000Z",
+								"abstract": ". In this paper, we consider the problem of formally verifying a Neural Network (NN) based autonomous landing system. In such a system, a NN controller processes images from a camera to guide the aircraft while approaching the runway. A central challenge for the safety and liveness veri\ufb01cation of vision-based closed-loop systems is the lack of mathematical models that captures the relation between the system states (e.g., position of the aircraft) and the images processed by the vision-based NN controller. Another challenge is the limited abilities of state-of-the-art NN model checkers. Such model checkers can reason only about simple input-output robustness properties of neural networks. This limitation creates a gap between the NN model checker abilities and the need to verify a closed-loop system while considering the aircraft dynamics, the perception components, and the NN controller. To this end, this paper presents NNLander-VeriF, a framework to verify vision-based NN controllers used for autonomous landing. NNLander-VeriF addresses the challenges above by exploiting geometric models of perspective cameras to obtain a mathematical model that captures the relation between the aircraft states and the inputs to the NN controller. By converting this model into a NN (with manually assigned weights) and composing it with the NN controller, one can capture the relation between aircraft states and control actions using one augmented NN. Such an augmented NN model leads to a natural encoding of the closed-loop veri\ufb01cation into several NN robustness queries, which state-of-the-art NN model checkers can handle. Finally, we evaluate our framework to formally verify the properties of a trained NN and we show its e\ufb03ciency. LiDAR scanners and cameras. These data",
+								"citation_count": 22,
+								"influential_citation_count": 1,
+								"ref": "03861"
+							},
+							"explanation": "This paper presents a framework (NNLander-VeriF) for formally verifying neural network-based autonomous aircraft landing systems by converting geometric camera models into neural networks that can be combined with the control network, enabling verification of the complete closed-loop system using existing neural network verification tools. This work demonstrates progress on automated formal verification of complex AI systems, though at a more limited scale than would be needed for AGI systems.",
+							"sub_nodes": null
+						},
+						{
+							"id": "c8b63371-cbb4-4eab-b256-f3356c179216",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/1902.08726",
+								"arxiv_id": "1902.08726",
+								"url": "https://arxiv.org/abs/1902.08726",
+								"title": "A Hybrid Formal Verification System in Coq for Ensuring the Reliability and Security of Ethereum-Based Service Smart Contracts",
+								"published_date": "2019-02-23T00:00:00.000Z",
+								"abstract": "This paper reports a formal symbolic process virtual machine (FSPVM) denoted as FSPVM-E for verifying the reliability and security of Ethereum-based services at the source code level of smart contracts. A Coq proof assistant is employed for programming the system and for proving its correctness. The current version of FSPVM-E adopts execution-verification isomorphism, which is an application extension of Curry-Howard isomorphism, as its fundamental theoretical framework to combine symbolic execution and higher-order logic theorem proving. The four primary components of FSPVM-E include a general, extensible, and reusable formal memory framework, an extensible and universal formal intermediate programming language denoted as Lolisa, which is a large subset of the Solidity programming language using generalized algebraic datatypes, the corresponding formally verified interpreter of Lolisa, denoted as FEther, and assistant tools and libraries. The self-correctness of all components is certified in Coq. FSPVM-E supports the ERC20 token standard, and can automatically and symbolically execute Ethereum-based smart contracts, scan their standard vulnerabilities, and verify their reliability and security properties with Hoare-style logic in Coq.",
+								"citation_count": 23,
+								"influential_citation_count": 0,
+								"ref": "46920"
+							},
+							"explanation": "This paper presents a formal verification system built in Coq that can automatically verify security properties of Ethereum smart contracts through a combination of symbolic execution and theorem proving. While this demonstrates progress in automated formal verification of complex software systems, it focuses specifically on smart contracts rather than the broader scale and complexity needed for AGI systems.",
+							"sub_nodes": null
+						},
+						{
+							"id": "3d13f6ad-a72c-4632-8aa0-b032994e12ec",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2008.08936",
+								"arxiv_id": "2008.08936",
+								"url": "https://arxiv.org/abs/2008.08936",
+								"title": "DataProVe: A Data Protection Policy and System Architecture Verification Tool",
+								"published_date": "2020-08-20T00:00:00.000Z",
+								"abstract": "In this paper, we propose a tool, called DataProVe, for specifying high-level data protection policies and system architectures, as well as verifying the conformance between them in a fully automated way. The syntax of the policies and the architectures is based on semi-formal languages, and the automated verification engine relies on logic and resolution based proofs. The functionality and operation of the tool are presented using different examples.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "35298"
+							},
+							"explanation": "This paper presents DataProVe, a tool that automatically verifies whether system architectures comply with specified data protection policies through logic-based proofs. While this demonstrates progress in automated formal verification of specific security properties, it appears limited in scope compared to the comprehensive verification needs for AGI systems outlined in the sub-goal.",
+							"sub_nodes": null
+						}
+					]
+				},
+				{
+					"id": "15a4f25a-43fe-42f5-828c-68c887d4058f",
+					"title": "Safe Hardware Infrastructure",
+					"description": "Create a global infrastructure of provably secure hardware that can enforce safety constraints on AI systems. This hardware must be tamper-proof against even superintelligent adversaries and maintain security when networked together.",
+					"questions": null,
+					"breakdowns": [
+						{
+							"id": "f3b41fdd-e534-43c3-8090-78bb13aa32de",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2203.08284",
+								"arxiv_id": "2203.08284",
+								"url": "https://arxiv.org/abs/2203.08284",
+								"title": "Minimizing Trust with Exclusively-Used Physically-Isolated Hardware",
+								"published_date": "2022-03-15T00:00:00.000Z",
+								"abstract": "Smartphone owners often need to run security-critical programs on the same device as other untrusted and potentially malicious programs. This requires users to trust hardware and system software to correctly sandbox malicious programs, trust that is often misplaced. Our goal is to minimize the number and complexity of hardware and software components that a smartphone owner needs to trust to withstand adversarial inputs. We present a multi-domain hardware design composed of statically-partitioned, physically-isolated trust domains. We introduce a few simple, formally-verified hardware components to enable a program to gain provably exclusive and simultaneous access to both computation and I/O on a temporary basis. To manage this hardware, we present OctopOS, an OS composed of mutually distrustful subsystems. We present a prototype of this machine (hardware and OS) on a CPU-FPGA board and show that it incurs a small hardware cost compared to modern SoCs. For security-critical programs, we show that this machine significantly reduces the required trust compared to mainstream TEEs while achieving decent performance. For normal programs, performance is similar to a legacy machine.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "78473"
+							},
+							"explanation": "The paper presents a novel approach to hardware security based on the principle of \"provably exclusive access\" and physical isolation. Rather than trying to create secure sharing of hardware resources, it advocates for complete physical separation with carefully controlled interactions. This represents a fundamental shift from traditional hardware security approaches that rely on privilege levels and dynamic isolation.\n\nThe breakdown follows the paper's key architectural components but reorganizes them around the fundamental security properties needed for AI safety. Physical Domain Isolation serves as the foundation, creating separate \"trust domains\" that minimize attack surfaces. Secure Inter-Domain Communication and Hardware State Management work together to allow these isolated domains to interact safely while preventing information leakage. Resource Access Control provides the mechanisms needed to coordinate resource use across domains while maintaining security properties. Finally, Verified Core Components represents the minimal \"trusted computing base\" that must be formally verified to guarantee the system's security properties.\n\nThese sub-goals form an interlocking system where each reinforces the others. Physical isolation prevents side-channel attacks and hardware-level vulnerabilities, but requires secure communication channels to be useful. These channels in turn depend on proper state management to prevent information leakage between uses. Resource access control builds on these primitives to enable practical coordination between domains. The verified core components provide the foundation of trust that allows the other mechanisms to be proven secure. Together, they create a hardware infrastructure that can provably enforce security constraints even against superintelligent adversaries by making certain behaviors physically impossible rather than just programmatically restricted.",
+							"sub_nodes": [
+								{
+									"id": "908af3c1-4bb6-4885-9963-b75e2a385b10",
+									"title": "Physical Domain Isolation",
+									"description": "Establish complete hardware-level isolation between different computational domains, ensuring no shared hardware components or communication channels exist except through explicitly defined interfaces. This includes separate processors, memory, and I/O devices for different security domains.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "eeb91829-ba5f-46d3-876a-7523bebb024a",
+									"title": "Secure Inter-Domain Communication",
+									"description": "Create verifiable and tamper-proof communication channels between isolated hardware domains. These channels must enforce exclusive access, prevent unauthorized interference, and maintain security properties even when connecting trusted and untrusted domains.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "edf98cf7-1f01-42b7-9fee-8683fcf6d122",
+									"title": "Hardware State Management",
+									"description": "Implement mechanisms to guarantee clean hardware states before and after use, preventing information leakage between different executions. This includes verifiable reset capabilities and state verification systems that can be cryptographically proven.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "56c73a4d-a089-4e96-ab29-05572bf55c0a",
+									"title": "Resource Access Control",
+									"description": "Develop hardware-enforced mechanisms for controlling access to critical resources and ensuring exclusive use when needed. This includes systems for delegating control, enforcing quotas, and maintaining security properties during resource transitions.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "a4c98411-a497-4f2e-a8df-7c945aa011bb",
+									"title": "Verified Core Components",
+									"description": "Create and verify the minimal set of core hardware components that must be trusted for the system's security properties to hold. These components must be simple enough to be formally verified while being powerful enough to enforce critical security properties.",
+									"questions": null,
+									"breakdowns": null
+								}
+							]
+						},
+						{
+							"id": "52d55a6b-8730-4041-90e9-cb1acda10285",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/pdf/2008.11632v2.pdf",
+								"arxiv_id": "2008.11632",
+								"url": "https://arxiv.org/pdf/2008.11632v2.pdf",
+								"title": "GuardNN: secure accelerator architecture for privacy-preserving deep learning",
+								"published_date": "2022-07-10T00:00:00.000Z",
+								"abstract": "This paper proposes GuardNN, a secure DNN accelerator that provides hardware-based protection for user data and model parameters even in an untrusted environment. GuardNN shows that the architecture and protection can be customized for a specific application to provide strong confidentiality and integrity guarantees with negligible overhead. The design of the GuardNN instruction set reduces the TCB to just the accelerator and allows confidentiality protection even when the instructions from a host cannot be trusted. GuardNN minimizes the overhead of memory encryption and integrity verification by customizing the off-chip memory protection for the known memory access patterns of a DNN accelerator. GuardNN is prototyped on an FPGA, demonstrating effective confidentiality protection with ~3% performance overhead for inference.",
+								"citation_count": 22,
+								"influential_citation_count": 6,
+								"ref": "01184"
+							},
+							"explanation": "This paper presents GuardNN, a secure hardware accelerator architecture for deep neural networks that aims to protect both data and model parameters through hardware-based security mechanisms, demonstrating minimal performance overhead. While this work shows progress in securing AI hardware components, it focuses primarily on privacy and integrity protection rather than enforcing safety constraints or achieving tamper-proof security against superintelligent systems as required by the sub-goal.",
+							"sub_nodes": null
+						}
+					]
+				},
+				{
+					"id": "c3bf9b10-d199-4a93-86b6-33c135d11252",
+					"title": "Safety Specifications",
+					"description": "Develop formal specifications that fully capture all requirements for preventing catastrophic outcomes from AGI systems. These specifications must be both mathematically precise and completely cover all potential failure modes while remaining tractable for verification.",
+					"questions": null,
+					"breakdowns": [
+						{
+							"id": "2d65aa0c-da37-4cdf-8150-d26caa410086",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2405.06624",
+								"arxiv_id": "2405.06624",
+								"url": "https://arxiv.org/abs/2405.06624",
+								"title": "Towards Guaranteed Safe AI: A Framework for Ensuring Robust and Reliable AI Systems",
+								"published_date": "2024-05-10T00:00:00.000Z",
+								"abstract": "Ensuring that AI systems reliably and robustly avoid harmful or dangerous behaviours is a crucial challenge, especially for AI systems with a high degree of autonomy and general intelligence, or systems used in safety-critical contexts. In this paper, we will introduce and define a family of approaches to AI safety, which we will refer to as guaranteed safe (GS) AI. The core feature of these approaches is that they aim to produce AI systems which are equipped with high-assurance quantitative safety guarantees. This is achieved by the interplay of three core components: a world model (which provides a mathematical description of how the AI system affects the outside world), a safety specification (which is a mathematical description of what effects are acceptable), and a verifier (which provides an auditable proof certificate that the AI satisfies the safety specification relative to the world model). We outline a number of approaches for creating each of these three core components, describe the main technical challenges, and suggest a number of potential solutions to them. We also argue for the necessity of this approach to AI safety, and for the inadequacy of the main alternative approaches.",
+								"citation_count": 32,
+								"influential_citation_count": 4,
+								"ref": "49492"
+							},
+							"explanation": "The paper approaches safety specifications as one of three core components (alongside world models and verifiers) needed for guaranteed safe AI. It emphasizes that specifications must be both mathematically precise enough for verification while being comprehensive enough to prevent catastrophic outcomes. The paper presents a spectrum of approaches to specifications, ranging from simple constraints to complete encodings of human values, and argues that different applications may require different levels of specification sophistication.\n\nThe breakdown reflects the paper's key insights about specification development: First, that we need both fundamental safety properties and ways to compose them into more complex specifications (Core Safety Properties and Specification Composition Framework). Second, that handling uncertainty and learning from data are crucial challenges that require dedicated approaches (Uncertainty Integration and Specification Learning System). Finally, that specifications must interface effectively with verification systems to be useful (Specification Verification Interface).\n\nThese sub-goals work together in a layered fashion: Core Safety Properties provide the fundamental building blocks, which are combined using the Specification Composition Framework. Uncertainty Integration and the Specification Learning System provide ways to develop and refine these specifications while handling real-world complexity. The Specification Verification Interface ensures these specifications can be effectively verified. Together, they enable the development of specifications that are both mathematically precise and comprehensive while remaining tractable for verification - addressing both the technical and practical requirements outlined in the goal.",
+							"sub_nodes": [
+								{
+									"id": "18d38951-056a-4cd5-a742-e3e596b80c57",
+									"title": "Core Safety Properties",
+									"description": "Define the fundamental safety properties that must be guaranteed to prevent catastrophic outcomes. This includes identifying and formalizing both universal safety constraints (like preventing deception or power-seeking) and domain-specific requirements based on the system's capabilities and context of use.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "1af9a392-025b-4a08-aeec-50820a40448e",
+									"title": "Specification Composition Framework",
+									"description": "Develop a framework for composing complex safety specifications from simpler, verified components. This includes methods for combining multiple specifications, handling conflicts between specifications, and ensuring that composition preserves safety properties while maintaining tractability.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "bfc4d3ef-0fc9-49ad-ae78-bfddf91fa84c",
+									"title": "Uncertainty Integration",
+									"description": "Create methods to formally incorporate both Bayesian and Knightian uncertainty into safety specifications. This includes developing ways to express uncertainty about the specification itself, handle edge cases and ambiguity, and ensure specifications remain robust under uncertainty while avoiding specification gaming.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "dff183db-6333-4700-8f17-a3b49c30a165",
+									"title": "Specification Learning System",
+									"description": "Develop methods to learn and refine safety specifications from data, human feedback, and formal analysis. This includes techniques for extracting implicit specifications from examples, validating learned specifications against human intent, and updating specifications based on new information while maintaining safety guarantees.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "082f83b4-8909-4393-888d-c0a3fb5f08b2",
+									"title": "Specification Verification Interface",
+									"description": "Create interfaces between safety specifications and verification systems that enable efficient proof generation and checking. This includes developing specification languages that balance expressiveness with tractability and methods for decomposing specifications into verifiable components.",
+									"questions": null,
+									"breakdowns": null
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "3587df18-6378-4838-8fee-fe5e6a8c3feb",
+					"title": "Algorithm Extraction and Translation",
+					"description": "Establish reliable methods to convert black-box AI systems into transparent, verifiable code that preserves their capabilities. This includes both extracting learned algorithms from neural networks and synthesizing equivalent provably safe implementations.",
+					"questions": null,
+					"breakdowns": [
+						{
+							"id": "8a814b18-80e5-4836-9cea-c4e8ff3fa0f2",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2402.05110",
+								"arxiv_id": "2402.05110",
+								"url": "https://arxiv.org/abs/2402.05110",
+								"title": "Opening the AI black box: program synthesis via mechanistic interpretability",
+								"published_date": "2024-02-07T00:00:00.000Z",
+								"abstract": "We present MIPS, a novel method for program synthesis based on automated mechanistic interpretability of neural networks trained to perform the desired task, auto-distilling the learned algorithm into Python code. We test MIPS on a benchmark of 62 algorithmic tasks that can be learned by an RNN and find it highly complementary to GPT-4: MIPS solves 32 of them, including 13 that are not solved by GPT-4 (which also solves 30). MIPS uses an integer autoencoder to convert the RNN into a finite state machine, then applies Boolean or integer symbolic regression to capture the learned algorithm. As opposed to large language models, this program synthesis technique makes no use of (and is therefore not limited by) human training data such as algorithms and code from GitHub. We discuss opportunities and challenges for scaling up this approach to make machine-learned models more interpretable and trustworthy.",
+								"citation_count": 9,
+								"influential_citation_count": 0,
+								"ref": "11228"
+							},
+							"explanation": "The paper presents a systematic approach to converting black-box neural networks into verifiable code through what it calls the MIPS (Mechanistic-Interpretability-based Program Synthesis) method. The core insight is that neural networks trained on algorithmic tasks tend to learn discrete internal representations and operations, even though they're implemented in continuous mathematics. By carefully extracting these discrete structures and the operations performed on them, we can reconstruct the underlying algorithm in a verifiable form.\n\nThe breakdown follows the paper's key insight that this conversion requires progressively transforming the neural network from continuous to discrete representations while preserving its computational behavior. Each sub-goal represents a crucial transformation step: first simplifying the network to reveal its core structure, then identifying the discrete representations it uses, extracting the operations it performs on these representations, discovering symbolic formulas for these operations, and finally generating proper code. This progression moves from continuous neural networks toward discrete, verifiable programs while maintaining functional equivalence at each step.\n\nThe sub-goals work together as a pipeline where each stage makes the next possible. Network simplification reveals patterns that enable discrete representation discovery, which in turn allows function extraction in terms of these representations. These extracted functions can then be converted to symbolic formulas, which provide the building blocks for generating the final program. This decomposition matches how the paper's MIPS algorithm progressively transforms neural networks into increasingly structured and discrete forms until reaching verifiable code, while each step maintains the system's core computational capabilities.",
+							"sub_nodes": [
+								{
+									"id": "7d8da680-3e10-45df-91d3-1e8b66cfc25a",
+									"title": "Neural Network Simplification",
+									"description": "Transform trained neural networks into their simplest equivalent form by exploiting symmetries and removing unnecessary complexity. This includes normalizing activations, simplifying weight matrices, and quantizing parameters to prepare the network for interpretation while preserving its functional behavior.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "0035b0ac-939a-4bcb-9f8f-7fd1bb8789bd",
+									"title": "Discrete Representation Discovery",
+									"description": "Identify and extract the fundamental discrete representations (e.g., bits, integers) that the neural network has learned to use internally. This includes detecting hidden state patterns and mapping them to interpretable discrete structures while preserving their relationships.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "1472844a-d24f-4cbd-8a15-b99624b6ef99",
+									"title": "Function Extraction",
+									"description": "Convert the neural network's operations into explicit lookup tables or transition functions based on the discovered discrete representations. This involves mapping how the network transforms its internal states and generates outputs in terms of the identified discrete structures.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "2f7a11c7-1bc5-426e-85ac-c9764a1c9519",
+									"title": "Symbolic Algorithm Synthesis",
+									"description": "Derive minimal symbolic formulas that capture the exact behavior of the extracted functions. This includes applying symbolic regression techniques to discover the simplest mathematical or logical expressions that reproduce the network's computation.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "c5017d58-e610-482f-bc53-c898de017404",
+									"title": "Program Generation",
+									"description": "Synthesize a complete, executable program that implements the discovered algorithm while maintaining verifiability. This includes converting symbolic formulas into proper code syntax and structuring the program to preserve the original system's sequential processing behavior.",
+									"questions": null,
+									"breakdowns": null
+								}
+							]
+						},
+						{
+							"id": "cf9b7fbb-d319-4be9-ad2e-ebc77eda2209",
+							"title": null,
+							"paper": {
+								"id": "http://arxiv.org/abs/2401.13544",
+								"arxiv_id": "2401.13544",
+								"url": "http://arxiv.org/abs/2401.13544",
+								"title": "Beyond Concept Bottleneck Models: How to Make Black Boxes Intervenable?",
+								"published_date": "2024-01-24T00:00:00.000Z",
+								"abstract": "Recently, interpretable machine learning has re-explored concept bottleneck models (CBM). An advantage of this model class is the user's ability to intervene on predicted concept values, affecting the downstream output. In this work, we introduce a method to perform such concept-based interventions on pretrained neural networks, which are not interpretable by design, only given a small validation set with concept labels. Furthermore, we formalise the notion of intervenability as a measure of the effectiveness of concept-based interventions and leverage this definition to fine-tune black boxes. Empirically, we explore the intervenability of black-box classifiers on synthetic tabular and natural image benchmarks. We focus on backbone architectures of varying complexity, from simple, fully connected neural nets to Stable Diffusion. We demonstrate that the proposed fine-tuning improves intervention effectiveness and often yields better-calibrated predictions. To showcase the practical utility of our techniques, we apply them to deep chest X-ray classifiers and show that fine-tuned black boxes are more intervenable than CBMs. Lastly, we establish that our methods are still effective under vision-language-model-based concept annotations, alleviating the need for a human-annotated validation set.",
+								"citation_count": 8,
+								"influential_citation_count": 0,
+								"ref": "78403"
+							},
+							"explanation": "This paper presents a method for making black-box neural networks more interpretable and controllable by enabling interventions on internal concepts, even without being explicitly designed for interpretability, which relates to the sub-goal by offering a potential approach for making AI systems more transparent and verifiable while preserving their capabilities. However, the paper focuses on relatively simple classification tasks rather than extracting complete algorithms from complex AI systems.",
+							"sub_nodes": null
+						},
+						{
+							"id": "4e13a6fe-c378-46cb-962f-319f77d29fcf",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2103.03704",
+								"arxiv_id": "2103.03704",
+								"url": "https://arxiv.org/abs/2103.03704",
+								"title": "Abstraction and Symbolic Execution of Deep Neural Networks with Bayesian Approximation of Hidden Features",
+								"published_date": "2021-03-05T00:00:00.000Z",
+								"abstract": "Intensive research has been conducted on the verification and validation of deep neural networks (DNNs), aiming to understand if, and how, DNNs can be applied to safety critical applications. However, existing verification and validation techniques are limited by their scalability, over both the size of the DNN and the size of the dataset. In this paper, we propose a novel abstraction method which abstracts a DNN and a dataset into a Bayesian network (BN). We make use of dimensionality reduction techniques to identify hidden features that have been learned by hidden layers of the DNN, and associate each hidden feature with a node of the BN. On this BN, we can conduct probabilistic inference to understand the behaviours of the DNN processing data. More importantly, we can derive a runtime monitoring approach to detect in operational time rare inputs and covariate shift of the input data. We can also adapt existing structural coverage-guided testing techniques (i.e., based on low-level elements of the DNN such as neurons), in order to generate test cases that better exercise hidden features. We implement and evaluate the BN abstraction technique using our DeepConcolic tool available at https://github.com/TrustAI/DeepConcolic.",
+								"citation_count": 10,
+								"influential_citation_count": 0,
+								"ref": "24733"
+							},
+							"explanation": "This paper proposes a method to abstract deep neural networks into more interpretable Bayesian networks by identifying and mapping learned hidden features, which is relevant to algorithm extraction as it provides a way to make black-box neural networks more transparent and analyzable, though it falls short of full capability-preserving code translation.",
+							"sub_nodes": null
+						},
+						{
+							"id": "d231435a-ec2d-4b59-a42f-30f7b9e133d6",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2412.20992",
+								"arxiv_id": "2412.20992",
+								"url": "https://arxiv.org/abs/2412.20992",
+								"title": "Verified Lifting of Deep learning Operators",
+								"published_date": "2024-12-30T00:00:00.000Z",
+								"abstract": "Deep learning operators are fundamental components of modern deep learning frameworks. With the growing demand for customized operators, it has become increasingly common for developers to create their own. However, designing and implementing operators is complex and error-prone, due to hardware-specific optimizations and the need for numerical stability. There is a pressing need for tools that can summarize the functionality of both existing and user-defined operators. To address this gap, this work introduces a novel framework for the verified lifting of deep learning operators, which synthesizes high-level mathematical formulas from low-level implementations. Our approach combines symbolic execution, syntax-guided synthesis, and SMT-based verification to produce readable and formally verified mathematical formulas. In synthesis, we employ a combination of top-down and bottom-up strategies to explore the vast search space efficiently; In verification, we design invariant synthesis patterns and leverage SMT solvers to validate the correctness of the derived summaries; In simplification, we use egraph-based techniques with custom rules to restore complex formulas to their natural, intuitive forms. Evaluated on a dataset of deep learning operators implemented in Triton from the real world, our method demonstrates the effectiveness of synthesis and verification compared to existing techniques. This framework bridges the gap between low-level implementations and high-level abstractions, improving understanding and reliability in deep learning operator development.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "21101"
+							},
+							"explanation": "This paper presents a framework for automatically extracting and verifying high-level mathematical formulas from low-level implementations of deep learning operators, which directly supports the sub-goal by providing a method to make black-box neural network components more transparent and verifiable while preserving their functionality. The approach combines multiple formal methods techniques to synthesize readable and provably correct mathematical descriptions of neural network operations.",
+							"sub_nodes": null
+						},
+						{
+							"id": "514aa879-442e-444f-afc3-66e5d3cb56af",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2402.01353",
+								"arxiv_id": "2402.01353",
+								"url": "https://arxiv.org/abs/2402.01353",
+								"title": "Efficient compilation of expressive problem space specifications to neural network solvers",
+								"published_date": "2024-01-24T00:00:00.000Z",
+								"abstract": "Recent work has described the presence of the embedding gap in neural network verification. On one side of the gap is a high-level specification about the network's behaviour, written by a domain expert in terms of the interpretable problem space. On the other side are a logically-equivalent set of satisfiability queries, expressed in the uninterpretable embedding space in a form suitable for neural network solvers. In this paper we describe an algorithm for compiling the former to the latter. We explore and overcome complications that arise from targeting neural network solvers as opposed to standard SMT solvers.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "16789"
+							},
+							"explanation": "This paper focuses on developing methods to translate high-level behavioral specifications into formal verification queries that can be used with neural network solvers, which is relevant to algorithm extraction by helping bridge the gap between human-interpretable specifications and the internal representations of neural networks. While this work approaches the translation direction opposite to the sub-goal (going from specifications to neural networks rather than neural networks to verifiable code), the techniques developed could inform bidirectional translation methods.",
+							"sub_nodes": null
+						},
+						{
+							"id": "5876121d-40bd-4fcc-a357-1f76b9274fef",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2111.08275",
+								"arxiv_id": "2111.08275",
+								"url": "https://arxiv.org/abs/2111.08275",
+								"title": "Deep Distilling: automated code generation using explainable deep learning",
+								"published_date": "2021-11-16T00:00:00.000Z",
+								"abstract": "Human reasoning can distill principles from observed patterns and generalize them to explain and solve novel problems. The most powerful artificial intelligence systems lack explainability and symbolic reasoning ability, and have therefore not achieved supremacy in domains requiring human understanding, such as science or common sense reasoning. Here we introduce deep distilling, a machine learning method that learns patterns from data using explainable deep learning and then condenses it into concise, executable computer code. The code, which can contain loops, nested logical statements, and useful intermediate variables, is equivalent to the neural network but is generally orders of magnitude more compact and human-comprehensible. On a diverse set of problems involving arithmetic, computer vision, and optimization, we show that deep distilling generates concise code that generalizes out-of-distribution to solve problems orders-of-magnitude larger and more complex than the training data. For problems with a known ground-truth rule set, deep distilling discovers the rule set exactly with scalable guarantees. For problems that are ambiguous or computationally intractable, the distilled rules are similar to existing human-derived algorithms and perform at par or better. Our approach demonstrates that unassisted machine intelligence can build generalizable and intuitive rules explaining patterns in large datasets that would otherwise overwhelm human reasoning.",
+								"citation_count": 2,
+								"influential_citation_count": 0,
+								"ref": "04892"
+							},
+							"explanation": "This paper presents \"deep distilling,\" a method that can automatically convert neural networks into human-readable and verifiable computer code while preserving their functionality, directly addressing the sub-goal of extracting algorithms from black-box AI systems into transparent implementations. The approach shows promise in generating concise code that can generalize beyond training data and, in some cases, exactly recover known underlying rules.",
+							"sub_nodes": null
+						},
+						{
+							"id": "1913388d-1831-441e-b7bb-60d976502e3f",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/pdf/2103.00124v1.pdf",
+								"arxiv_id": "2103.00124",
+								"url": "https://arxiv.org/pdf/2103.00124v1.pdf",
+								"title": "NEUROSPF: A Tool for the Symbolic Analysis of Neural Networks",
+								"published_date": "2021-05-01T00:00:00.000Z",
+								"abstract": "This paper presents NEUROSPF, a tool for the symbolic analysis of neural networks. Given a trained neural network model, the tool extracts the architecture and model parameters and translates them into a Java representation that is amenable for analysis using the Symbolic PathFinder symbolic execution tool. Notably, NEUROSPF encodes specialized peer classes for parsing the model's parameters, thereby enabling efficient analysis. With NEUROSPF the user has the flexibility to specify either the inputs or the network internal parameters as symbolic, promoting the application of program analysis and testing approaches from software engineering to the field of machine learning. For instance, NEUROSPF can be used for coverage-based testing and test generation, finding adversarial examples and also constraint-based repair of neural networks, thus improving the reliability of neural networks and of the applications that use them. Video URL: https://youtu.be/seal8fG78LI",
+								"citation_count": 7,
+								"influential_citation_count": 0,
+								"ref": "09357"
+							},
+							"explanation": "This paper presents NEUROSPF, a tool that translates trained neural networks into analyzable Java code and enables symbolic analysis of the network's behavior through techniques like coverage testing and constraint-based repair. This work is relevant to algorithm extraction as it provides a concrete method for converting neural networks into more transparent and verifiable code representations, though it may not fully preserve the original capabilities.",
+							"sub_nodes": null
+						},
+						{
+							"id": "0f65c998-b13a-4527-bab9-77609243597d",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2306.01128",
+								"arxiv_id": "2306.01128",
+								"url": "https://arxiv.org/abs/2306.01128",
+								"title": "Learning Transformer Programs",
+								"published_date": "2023-06-01T00:00:00.000Z",
+								"abstract": "Recent research in mechanistic interpretability has attempted to reverse-engineer Transformer models by carefully inspecting network weights and activations. However, these approaches require considerable manual effort and still fall short of providing complete, faithful descriptions of the underlying algorithms. In this work, we introduce a procedure for training Transformers that are mechanistically interpretable by design. We build on RASP [Weiss et al., 2021], a programming language that can be compiled into Transformer weights. Instead of compiling human-written programs into Transformers, we design a modified Transformer that can be trained using gradient-based optimization and then automatically converted into a discrete, human-readable program. We refer to these models as Transformer Programs. To validate our approach, we learn Transformer Programs for a variety of problems, including an in-context learning task, a suite of algorithmic problems (e.g. sorting, recognizing Dyck languages), and NLP tasks including named entity recognition and text classification. The Transformer Programs can automatically find reasonable solutions, performing on par with standard Transformers of comparable size; and, more importantly, they are easy to interpret. To demonstrate these advantages, we convert Transformers into Python programs and use off-the-shelf code analysis tools to debug model errors and identify the\"circuits\"used to solve different sub-problems. We hope that Transformer Programs open a new path toward the goal of intrinsically interpretable machine learning.",
+								"citation_count": 30,
+								"influential_citation_count": 2,
+								"ref": "31130"
+							},
+							"explanation": "This paper presents a method for training Transformer models that can be automatically converted into human-readable programs, making their internal algorithms transparent and analyzable - directly addressing the sub-goal of extracting interpretable algorithms from neural networks. The approach demonstrates success on various tasks while maintaining performance comparable to standard Transformers.",
+							"sub_nodes": null
+						},
+						{
+							"id": "e70d5fd6-8943-4988-851f-6054dcd15fd6",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2405.16508",
+								"arxiv_id": "2405.16508",
+								"url": "https://arxiv.org/abs/2405.16508",
+								"title": "AnyCBMs: How to Turn Any Black Box into a Concept Bottleneck Model",
+								"published_date": "2024-05-26T00:00:00.000Z",
+								"abstract": "Interpretable deep learning aims at developing neural architectures whose decision-making processes could be understood by their users. Among these techniqes, Concept Bottleneck Models enhance the interpretability of neural networks by integrating a layer of human-understandable concepts. These models, however, necessitate training a new model from the beginning, consuming significant resources and failing to utilize already trained large models. To address this issue, we introduce\"AnyCBM\", a method that transforms any existing trained model into a Concept Bottleneck Model with minimal impact on computational resources. We provide both theoretical and experimental insights showing the effectiveness of AnyCBMs in terms of classification performances and effectivenss of concept-based interventions on downstream tasks.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "68560"
+							},
+							"explanation": "This paper presents a method to convert existing trained neural networks into more interpretable models by adding a layer of human-understandable concepts, which is relevant to algorithm extraction as it provides a way to make black-box AI systems more transparent and analyzable without requiring retraining from scratch. The approach could be a stepping stone toward extracting and understanding the learned algorithms within neural networks, though it falls short of full algorithm extraction or translation to verifiable code.",
+							"sub_nodes": null
+						},
+						{
+							"id": "dcaa5abf-b709-42cd-8bed-27e8f052e110",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2210.01075",
+								"arxiv_id": "2210.01075",
+								"url": "https://arxiv.org/abs/2210.01075",
+								"title": "Decompiling x86 Deep Neural Network Executables",
+								"published_date": "2022-10-03T00:00:00.000Z",
+								"abstract": "Due to their widespread use on heterogeneous hardware devices, deep learning (DL) models are compiled into executables by DL compilers to fully leverage low-level hardware primitives. This approach allows DL computations to be undertaken at low cost across a variety of computing platforms, including CPUs, GPUs, and various hardware accelerators. We present BTD (Bin to DNN), a decompiler for deep neural network (DNN) executables. BTD takes DNN executables and outputs full model specifications, including types of DNN operators, network topology, dimensions, and parameters that are (nearly) identical to those of the input models. BTD delivers a practical framework to process DNN executables compiled by different DL compilers and with full optimizations enabled on x86 platforms. It employs learning-based techniques to infer DNN operators, dynamic analysis to reveal network architectures, and symbolic execution to facilitate inferring dimensions and parameters of DNN operators. Our evaluation reveals that BTD enables accurate recovery of full specifications of complex DNNs with millions of parameters (e.g., ResNet). The recovered DNN specifications can be re-compiled into a new DNN executable exhibiting identical behavior to the input executable. We show that BTD can boost two representative attacks, adversarial example generation and knowledge stealing, against DNN executables. We also demonstrate cross-architecture legacy code reuse using BTD, and envision BTD being used for other critical downstream tasks like DNN security hardening and patching.",
+								"citation_count": 10,
+								"influential_citation_count": 1,
+								"ref": "16080"
+							},
+							"explanation": "This paper presents BTD, a tool for decompiling neural network executables back into their original model specifications, which directly supports the sub-goal by demonstrating a method to make black-box AI systems (in executable form) more transparent and analyzable by extracting their underlying neural network architecture and parameters.",
+							"sub_nodes": null
+						},
+						{
+							"id": "9d6e2728-f9b6-4ca2-99ee-195b030c98e1",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2304.00989",
+								"arxiv_id": "2304.00989",
+								"url": "https://arxiv.org/abs/2304.00989",
+								"title": "Neuro-Symbolic Execution of Generic Source Code",
+								"published_date": "2023-03-23T00:00:00.000Z",
+								"abstract": "Can a Python program be executed statement-by-statement by neural networks composed according to the source code? We formulate the Neuro-Symbolic Execution Problem and introduce Neural Interpretation (NI), the first neural model for the execution of generic source code that allows missing definitions. NI preserves source code structure, where every variable has a vector encoding, and every function executes a neural network. NI is a novel neural model of computers with a compiler architecture that can assemble neural layers\"programmed\"by source code. NI is the first neural model capable of executing Py150 dataset programs, including library functions without concrete inputs, and it can be trained with flexible code understanding objectives. We demonstrate white-box execution without concrete inputs for variable misuse localization and repair.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "42473"
+							},
+							"explanation": "This paper introduces Neural Interpretation, a system that can execute Python code using neural networks while maintaining interpretability of the code's structure, which is relevant to algorithm extraction by demonstrating a potential bridge between neural and symbolic representations of programs. The approach allows for white-box analysis of program execution, which could contribute to making AI systems more transparent and verifiable.",
+							"sub_nodes": null
+						},
+						{
+							"id": "1f48c131-a6cd-47fd-8d2b-ed8116a47831",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2205.10364",
+								"arxiv_id": "2205.10364",
+								"url": "https://arxiv.org/abs/2205.10364",
+								"title": "Learning to Reverse DNNs from AI Programs Automatically",
+								"published_date": "2022-05-20T00:00:00.000Z",
+								"abstract": "With the privatization deployment of DNNs on edge devices, the security of on-device DNNs has raised significant concern. To quantify the model leakage risk of on-device DNNs automatically, we propose NNReverse, the first learning-based method which can reverse DNNs from AI programs without domain knowledge. NNReverse trains a representation model to represent the semantics of binary code for DNN layers. By searching the most similar function in our database, NNReverse infers the layer type of a given function's binary code. To represent assembly instructions semantics precisely, NNReverse proposes a more fine-grained embedding model to represent the textual and structural-semantic of assembly functions.",
+								"citation_count": 13,
+								"influential_citation_count": 1,
+								"ref": "23340"
+							},
+							"explanation": "This paper presents NNReverse, a method for automatically extracting neural network architectures from compiled binary code, which is relevant to algorithm extraction but focuses narrowly on reverse engineering model architectures rather than converting neural networks into verifiable code that preserves their capabilities. The paper's security-focused approach of extracting model details is somewhat tangential to the safety-oriented goals of translating black-box systems into provably safe implementations.",
+							"sub_nodes": null
+						},
+						{
+							"id": "b7bcd811-7571-4f2a-b2e6-fd0f3322748f",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2404.14349",
+								"arxiv_id": "2404.14349",
+								"url": "https://arxiv.org/abs/2404.14349",
+								"title": "Automatic Discovery of Visual Circuits",
+								"published_date": "2024-04-22T00:00:00.000Z",
+								"abstract": "To date, most discoveries of network subcomponents that implement human-interpretable computations in deep vision models have involved close study of single units and large amounts of human labor. We explore scalable methods for extracting the subgraph of a vision model's computational graph that underlies recognition of a specific visual concept. We introduce a new method for identifying these subgraphs: specifying a visual concept using a few examples, and then tracing the interdependence of neuron activations across layers, or their functional connectivity. We find that our approach extracts circuits that causally affect model output, and that editing these circuits can defend large pretrained models from adversarial attacks.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "50145"
+							},
+							"explanation": "This paper presents a method for automatically identifying and extracting interpretable neural circuits from vision models that are responsible for specific visual concepts, which is relevant to algorithm extraction by providing a concrete approach for making black-box neural networks more transparent and understandable. The ability to identify and edit these circuits also demonstrates potential for translating neural network components into more verifiable implementations.",
+							"sub_nodes": null
+						},
+						{
+							"id": "897df7ba-a391-445a-80d1-93974c9d25ad",
+							"title": null,
+							"paper": {
+								"id": "http://arxiv.org/abs/2401.04978",
+								"arxiv_id": "2401.04978",
+								"url": "http://arxiv.org/abs/2401.04978",
+								"title": "Closed-form interpretation of neural network classifiers with symbolic gradients",
+								"published_date": "2024-01-10T00:00:00.000Z",
+								"abstract": "\n I introduce a unified framework for finding a closed-form interpretation of any single neuron in an artificial neural network. Using this framework I demonstrate how to interpret neural network classifiers to reveal closed-form expressions of the concepts encoded in their decision boundaries. In contrast to neural network-based regression, for classification, it is in general impossible to express the neural network in the form of a symbolic equation even if the neural network itself bases its classification on a quantity that can be written as a closed-form equation. The interpretation framework is based on embedding trained neural networks into an equivalence class of functions that encode the same concept. I interpret these neural networks by finding an intersection between the equivalence class and human-readable equations defined by a symbolic search space. The approach is not limited to classifiers or full neural networks and can be applied to arbitrary neurons in hidden layers or latent spaces.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "74442"
+							},
+							"explanation": "This paper presents a method for extracting human-readable mathematical equations that represent how individual neurons and neural network classifiers make decisions, which is relevant to algorithm extraction by providing a technique to convert neural network components into transparent, interpretable mathematical expressions. However, the approach is limited to interpreting individual neurons and classification boundaries rather than extracting complete algorithmic behavior.",
+							"sub_nodes": null
+						},
+						{
+							"id": "5ac598e2-41e3-40d0-9a92-ddfba18f11bb",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2407.00886",
+								"arxiv_id": "2407.00886",
+								"url": "https://arxiv.org/abs/2407.00886",
+								"title": "Efficient Automated Circuit Discovery in Transformers using Contextual Decomposition",
+								"published_date": "2024-07-01T00:00:00.000Z",
+								"abstract": "Automated mechanistic interpretation research has attracted great interest due to its potential to scale explanations of neural network internals to large models. Existing automated circuit discovery work relies on activation patching or its approximations to identify subgraphs in models for specific tasks (circuits). They often suffer from slow runtime, approximation errors, and specific requirements of metrics, such as non-zero gradients. In this work, we introduce contextual decomposition for transformers (CD-T) to build interpretable circuits in large language models. CD-T can produce circuits of arbitrary level of abstraction, and is the first able to produce circuits as fine-grained as attention heads at specific sequence positions efficiently. CD-T consists of a set of mathematical equations to isolate contribution of model features. Through recursively computing contribution of all nodes in a computational graph of a model using CD-T followed by pruning, we are able to reduce circuit discovery runtime from hours to seconds compared to state-of-the-art baselines. On three standard circuit evaluation datasets (indirect object identification, greater-than comparisons, and docstring completion), we demonstrate that CD-T outperforms ACDC and EAP by better recovering the manual circuits with an average of 97% ROC AUC under low runtimes. In addition, we provide evidence that faithfulness of CD-T circuits is not due to random chance by showing our circuits are 80% more faithful than random circuits of up to 60% of the original model size. Finally, we show CD-T circuits are able to perfectly replicate original models' behavior (faithfulness $ = 1$) using fewer nodes than the baselines for all tasks. Our results underscore the great promise of CD-T for efficient automated mechanistic interpretability, paving the way for new insights into the workings of large language models.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "10674"
+							},
+							"explanation": "This paper presents a new method called CD-T for efficiently identifying and extracting interpretable circuits (functional subgraphs) from transformer models, which is relevant to algorithm extraction by providing a way to decompose black-box neural networks into more transparent, understandable components while preserving their functionality.",
+							"sub_nodes": null
+						},
+						{
+							"id": "83d626c7-760e-48f8-84f9-17a08bb2a635",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2405.10927",
+								"arxiv_id": "2405.10927",
+								"url": "https://arxiv.org/abs/2405.10927",
+								"title": "Using Degeneracy in the Loss Landscape for Mechanistic Interpretability",
+								"published_date": "2024-05-17T00:00:00.000Z",
+								"abstract": "Mechanistic Interpretability aims to reverse engineer the algorithms implemented by neural networks by studying their weights and activations. An obstacle to reverse engineering neural networks is that many of the parameters inside a network are not involved in the computation being implemented by the network. These degenerate parameters may obfuscate internal structure. Singular learning theory teaches us that neural network parameterizations are biased towards being more degenerate, and parameterizations with more degeneracy are likely to generalize further. We identify 3 ways that network parameters can be degenerate: linear dependence between activations in a layer; linear dependence between gradients passed back to a layer; ReLUs which fire on the same subset of datapoints. We also present a heuristic argument that modular networks are likely to be more degenerate, and we develop a metric for identifying modules in a network that is based on this argument. We propose that if we can represent a neural network in a way that is invariant to reparameterizations that exploit the degeneracies, then this representation is likely to be more interpretable, and we provide some evidence that such a representation is likely to have sparser interactions. We introduce the Interaction Basis, a tractable technique to obtain a representation that is invariant to degeneracies from linear dependence of activations or Jacobians.",
+								"citation_count": 5,
+								"influential_citation_count": 0,
+								"ref": "29579"
+							},
+							"explanation": "This paper develops methods to identify and handle redundant or degenerate parameters in neural networks, aiming to create more interpretable representations that could help reverse engineer the underlying algorithms, which directly supports the goal of extracting transparent implementations from black-box AI systems. The authors propose a technique called the \"Interaction Basis\" that can help reveal the core computational structure of neural networks by removing obfuscating parameters.",
+							"sub_nodes": null
+						},
+						{
+							"id": "aa61683a-e446-4330-ab69-9f5b6e92c255",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2005.00130",
+								"arxiv_id": "2005.00130",
+								"url": "https://arxiv.org/abs/2005.00130",
+								"title": "Hide-and-Seek: A Template for Explainable AI",
+								"published_date": "2020-04-30T00:00:00.000Z",
+								"abstract": "Lack of transparency has been the Achilles heal of Neural Networks and their wider adoption in industry. Despite significant interest this shortcoming has not been adequately addressed. This study proposes a novel framework called Hide-and-Seek (HnS) for training Interpretable Neural Networks and establishes a theoretical foundation for exploring and comparing similar ideas. Extensive experimentation indicates that a high degree of interpretability can be imputed into Neural Networks, without sacrificing their predictive power.",
+								"citation_count": 5,
+								"influential_citation_count": 0,
+								"ref": "45760"
+							},
+							"explanation": "This paper proposes a framework called Hide-and-Seek for making neural networks more interpretable during training, which relates to the sub-goal of algorithm extraction by potentially making it easier to understand and translate the learned algorithms within neural networks into verifiable code, though it focuses more on interpretability during training rather than post-hoc extraction.",
+							"sub_nodes": null
+						},
+						{
+							"id": "247a5c6a-2852-4884-8b3f-c5da4feb2355",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2112.00826",
+								"arxiv_id": "2112.00826",
+								"url": "https://arxiv.org/abs/2112.00826",
+								"title": "Inducing Causal Structure for Interpretable Neural Networks",
+								"published_date": "2021-12-01T00:00:00.000Z",
+								"abstract": "In many areas, we have well-founded insights about causal structure that would be useful to bring into our trained models while still allowing them to learn in a data-driven fashion. To achieve this, we present the new method of interchange intervention training (IIT). In IIT, we (1) align variables in a causal model (e.g., a deterministic program or Bayesian network) with representations in a neural model and (2) train the neural model to match the counterfactual behavior of the causal model on a base input when aligned representations in both models are set to be the value they would be for a source input. IIT is fully differentiable, flexibly combines with other objectives, and guarantees that the target causal model is a causal abstraction of the neural model when its loss is zero. We evaluate IIT on a structural vision task (MNIST-PVR), a navigational language task (ReaSCAN), and a natural language inference task (MQNLI). We compare IIT against multi-task training objectives and data augmentation. In all our experiments, IIT achieves the best results and produces neural models that are more interpretable in the sense that they more successfully realize the target causal model.",
+								"citation_count": 65,
+								"influential_citation_count": 5,
+								"ref": "45929"
+							},
+							"explanation": "This paper presents a method called interchange intervention training (IIT) that allows neural networks to learn causal structures aligned with known causal models, making the networks more interpretable while preserving their performance. This is relevant to algorithm extraction as it provides a way to make neural networks more transparent and verifiable by incorporating known causal relationships into their structure, though it requires having a causal model to align with rather than extracting one from a black box.",
+							"sub_nodes": null
+						},
+						{
+							"id": "fb34c5e6-4170-4f7f-8887-3c476e75c832",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2406.11779",
+								"arxiv_id": "2406.11779",
+								"url": "https://arxiv.org/abs/2406.11779",
+								"title": "Compact Proofs of Model Performance via Mechanistic Interpretability",
+								"published_date": "2024-06-17T00:00:00.000Z",
+								"abstract": "We propose using mechanistic interpretability -- techniques for reverse engineering model weights into human-interpretable algorithms -- to derive and compactly prove formal guarantees on model performance. We prototype this approach by formally proving accuracy lower bounds for a small transformer trained on Max-of-K, validating proof transferability across 151 random seeds and four values of K. We create 102 different computer-assisted proof strategies and assess their length and tightness of bound on each of our models. Using quantitative metrics, we find that shorter proofs seem to require and provide more mechanistic understanding. Moreover, we find that more faithful mechanistic understanding leads to tighter performance bounds. We confirm these connections by qualitatively examining a subset of our proofs. Finally, we identify compounding structureless errors as a key challenge for using mechanistic interpretability to generate compact proofs on model performance.",
+								"citation_count": 4,
+								"influential_citation_count": 0,
+								"ref": "26994"
+							},
+							"explanation": "This paper explores using mechanistic interpretability to reverse-engineer neural networks into human-understandable algorithms and generate formal proofs of their behavior, demonstrating this approach on a small transformer model and analyzing how proof quality relates to mechanistic understanding - directly addressing the sub-goal of converting black-box AI systems into verifiable code.",
+							"sub_nodes": null
+						},
+						{
+							"id": "61eb265d-87fd-4b97-93c6-0743a92a94e8",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2404.14082",
+								"arxiv_id": "2404.14082",
+								"url": "https://arxiv.org/abs/2404.14082",
+								"title": "Mechanistic Interpretability for AI Safety - A Review",
+								"published_date": "2024-04-22T00:00:00.000Z",
+								"abstract": "Understanding AI systems' inner workings is critical for ensuring value alignment and safety. This review explores mechanistic interpretability: reverse engineering the computational mechanisms and representations learned by neural networks into human-understandable algorithms and concepts to provide a granular, causal understanding. We establish foundational concepts such as features encoding knowledge within neural activations and hypotheses about their representation and computation. We survey methodologies for causally dissecting model behaviors and assess the relevance of mechanistic interpretability to AI safety. We examine benefits in understanding, control, alignment, and risks such as capability gains and dual-use concerns. We investigate challenges surrounding scalability, automation, and comprehensive interpretation. We advocate for clarifying concepts, setting standards, and scaling techniques to handle complex models and behaviors and expand to domains such as vision and reinforcement learning. Mechanistic interpretability could help prevent catastrophic outcomes as AI systems become more powerful and inscrutable.",
+								"citation_count": 49,
+								"influential_citation_count": 2,
+								"ref": "45328"
+							},
+							"explanation": "This paper reviews methods for reverse engineering neural networks to understand their internal mechanisms and representations, which directly supports the goal of extracting transparent algorithms from black-box AI systems. The focus on mechanistic interpretability techniques and their scalability challenges is highly relevant to developing reliable methods for converting opaque AI systems into verifiable implementations while preserving their capabilities.",
+							"sub_nodes": null
+						},
+						{
+							"id": "b8bda9e0-047a-4029-aecf-feca16864bcf",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2405.17653",
+								"arxiv_id": "2405.17653",
+								"url": "https://arxiv.org/abs/2405.17653",
+								"title": "InversionView: A General-Purpose Method for Reading Information from Neural Activations",
+								"published_date": "2024-05-27T00:00:00.000Z",
+								"abstract": "The inner workings of neural networks can be better understood if we can fully decipher the information encoded in neural activations. In this paper, we argue that this information is embodied by the subset of inputs that give rise to similar activations. We propose InversionView, which allows us to practically inspect this subset by sampling from a trained decoder model conditioned on activations. This helps uncover the information content of activation vectors, and facilitates understanding of the algorithms implemented by transformer models. We present four case studies where we investigate models ranging from small transformers to GPT-2. In these studies, we show that InversionView can reveal clear information contained in activations, including basic information about tokens appearing in the context, as well as more complex information, such as the count of certain tokens, their relative positions, and abstract knowledge about the subject. We also provide causally verified circuits to confirm the decoded information.",
+								"citation_count": 2,
+								"influential_citation_count": 0,
+								"ref": "38611"
+							},
+							"explanation": "This paper presents InversionView, a method for understanding what information is encoded in neural networks' internal activations by reconstructing inputs that would produce similar activation patterns, which is relevant to algorithm extraction by helping reveal how neural networks process and represent information internally. The approach demonstrates the ability to decode both simple and complex information from model activations, which could aid in translating neural network behaviors into more transparent, verifiable implementations.",
+							"sub_nodes": null
+						},
+						{
+							"id": "a094ffb6-836e-4b7e-9bed-fc7af6df0fab",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2105.07831",
+								"arxiv_id": "2105.07831",
+								"url": "https://arxiv.org/abs/2105.07831",
+								"title": "How to Explain Neural Networks: an Approximation Perspective",
+								"published_date": "2021-05-17T00:00:00.000Z",
+								"abstract": "The lack of interpretability has hindered the large-scale adoption of AI technologies. However, the fundamental idea of interpretability, as well as how to put it into practice, remains unclear. We provide notions of interpretability based on approximation theory in this study. We first implement this approximation interpretation on a specific model (fully connected neural network) and then propose to use MLP as a universal interpreter to explain arbitrary black-box models. Extensive experiments demonstrate the effectiveness of our approach.",
+								"citation_count": 1,
+								"influential_citation_count": 0,
+								"ref": "70892"
+							},
+							"explanation": "This paper proposes using approximation theory and multilayer perceptrons (MLPs) as a universal approach to interpret and explain the behavior of black-box neural networks, which relates to the sub-goal by offering a potential method for making AI systems more transparent, though it doesn't fully address the challenge of extracting or translating the underlying algorithms into verifiable code.",
+							"sub_nodes": null
+						},
+						{
+							"id": "bb745783-a61c-4728-958a-183207e8e784",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2101.08393",
+								"arxiv_id": "2101.08393",
+								"url": "https://arxiv.org/abs/2101.08393",
+								"title": "Distilling Interpretable Models into Human-Readable Code",
+								"published_date": "2021-01-21T00:00:00.000Z",
+								"abstract": "The goal of model distillation is to faithfully transfer teacher model knowledge to a model which is faster, more generalizable, more interpretable, or possesses other desirable characteristics. Human-readability is an important and desirable standard for machine-learned model interpretability. Readable models are transparent and can be reviewed, manipulated, and deployed like traditional source code. As a result, such models can be improved outside the context of machine learning and manually edited if desired. Given that directly training such models is difficult, we propose to train interpretable models using conventional methods, and then distill them into concise, human-readable code. The proposed distillation methodology approximates a model's univariate numerical functions with piecewise-linear curves in a localized manner. The resulting curve model representations are accurate, concise, human-readable, and well-regularized by construction. We describe a piecewise-linear curve-fitting algorithm that produces high-quality results efficiently and reliably across a broad range of use cases. We demonstrate the effectiveness of the overall distillation technique and our curve-fitting algorithm using four datasets across the tasks of classification, regression, and ranking.",
+								"citation_count": 2,
+								"influential_citation_count": 0,
+								"ref": "73952"
+							},
+							"explanation": "This paper presents a method for converting complex ML models into human-readable code by approximating their numerical functions with piecewise-linear curves, which directly supports the sub-goal of extracting transparent, verifiable implementations from black-box AI systems, though it focuses on simpler models rather than advanced neural networks.",
+							"sub_nodes": null
+						},
+						{
+							"id": "06ce83da-4ebc-4d67-afa8-6fe0c7630286",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2011.08596",
+								"arxiv_id": "2011.08596",
+								"url": "https://arxiv.org/abs/2011.08596",
+								"title": "Learning outside the Black-Box: The pursuit of interpretable models",
+								"published_date": "2020-11-17T00:00:00.000Z",
+								"abstract": "Machine Learning has proved its ability to produce accurate models but the deployment of these models outside the machine learning community has been hindered by the difficulties of interpreting these models. This paper proposes an algorithm that produces a continuous global interpretation of any given continuous black-box function. Our algorithm employs a variation of projection pursuit in which the ridge functions are chosen to be Meijer G-functions, rather than the usual polynomial splines. Because Meijer G-functions are differentiable in their parameters, we can tune the parameters of the representation by gradient descent; as a consequence, our algorithm is efficient. Using five familiar data sets from the UCI repository and two familiar machine learning algorithms, we demonstrate that our algorithm produces global interpretations that are both highly accurate and parsimonious (involve a small number of terms). Our interpretations permit easy understanding of the relative importance of features and feature interactions. Our interpretation algorithm represents a leap forward from the previous state of the art.",
+								"citation_count": 24,
+								"influential_citation_count": 3,
+								"ref": "09352"
+							},
+							"explanation": "This paper presents an algorithm that can convert complex black-box machine learning models into more interpretable mathematical representations using Meijer G-functions, which could be a stepping stone toward extracting and translating AI systems into verifiable code, though it focuses primarily on interpretation rather than formal verification or safety guarantees.",
+							"sub_nodes": null
+						},
+						{
+							"id": "8a0394de-4aa4-4b46-89f0-ca3243cbfb03",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2403.08652",
+								"arxiv_id": "2403.08652",
+								"url": "https://arxiv.org/abs/2403.08652",
+								"title": "Extracting explanations, justification, and uncertainty from black-box deep neural networks",
+								"published_date": "2024-03-13T00:00:00.000Z",
+								"abstract": "Deep Neural Networks (DNNs) do not inherently compute or exhibit empirically-justified task confidence. In mission critical applications, it is important to both understand associated DNN reasoning and its supporting evidence. In this paper, we propose a novel Bayesian approach to extract explanations, justifications, and uncertainty estimates from DNNs. Our approach is efficient both in terms of memory and computation, and can be applied to any black box DNN without any retraining, including applications to anomaly detection and out-of-distribution detection tasks. We validate our approach on the CIFAR-10 dataset, and show that it can significantly improve the interpretability and reliability of DNNs.",
+								"citation_count": 1,
+								"influential_citation_count": 0,
+								"ref": "85348"
+							},
+							"explanation": "This paper proposes a Bayesian method to extract explanations and uncertainty estimates from existing deep neural networks without retraining them, which partially addresses the sub-goal by making black-box AI systems more transparent and interpretable, though it falls short of fully converting them into verifiable code that preserves their capabilities.",
+							"sub_nodes": null
+						},
+						{
+							"id": "0803d196-2993-4429-99cf-248bd5b5571f",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2407.13594",
+								"arxiv_id": "2407.13594",
+								"url": "https://arxiv.org/abs/2407.13594",
+								"title": "Mechanistically Interpreting a Transformer-based 2-SAT Solver: An Axiomatic Approach",
+								"published_date": "2024-07-18T00:00:00.000Z",
+								"abstract": "Mechanistic interpretability aims to reverse engineer the computation performed by a neural network in terms of its internal components. Although there is a growing body of research on mechanistic interpretation of neural networks, the notion of a mechanistic interpretation itself is often ad-hoc. Inspired by the notion of abstract interpretation from the program analysis literature that aims to develop approximate semantics for programs, we give a set of axioms that formally characterize a mechanistic interpretation as a description that approximately captures the semantics of the neural network under analysis in a compositional manner. We use these axioms to guide the mechanistic interpretability analysis of a Transformer-based model trained to solve the well-known 2-SAT problem. We are able to reverse engineer the algorithm learned by the model -- the model first parses the input formulas and then evaluates their satisfiability via enumeration of different possible valuations of the Boolean input variables. We also present evidence to support that the mechanistic interpretation of the analyzed model indeed satisfies the stated axioms.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "38234"
+							},
+							"explanation": "This paper develops a formal framework for understanding how transformer neural networks process information internally and applies it to reverse engineer the specific algorithm learned by a transformer solving 2-SAT problems, demonstrating progress toward extracting interpretable algorithms from neural networks. This directly relates to the algorithm extraction sub-goal by showing how we can convert a black-box neural network's learned behavior into an understandable, verifiable algorithm while preserving its capabilities.",
+							"sub_nodes": null
+						},
+						{
+							"id": "6160cff9-163d-452d-8178-7c63a6f23c1d",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2410.07476",
+								"arxiv_id": "2410.07476",
+								"url": "https://arxiv.org/abs/2410.07476",
+								"title": "Unifying and Verifying Mechanistic Interpretations: A Case Study with Group Operations",
+								"published_date": "2024-10-09T00:00:00.000Z",
+								"abstract": "A recent line of work in mechanistic interpretability has focused on reverse-engineering the computation performed by neural networks trained on the binary operation of finite groups. We investigate the internals of one-hidden-layer neural networks trained on this task, revealing previously unidentified structure and producing a more complete description of such models that unifies the explanations of previous works. Notably, these models approximate equivariance in each input argument. We verify that our explanation applies to a large fraction of networks trained on this task by translating it into a compact proof of model performance, a quantitative evaluation of model understanding. In particular, our explanation yields a guarantee of model accuracy that runs in 30% the time of brute force and gives a>=95% accuracy bound for 45% of the models we trained. We were unable to obtain nontrivial non-vacuous accuracy bounds using only explanations from previous works.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "09059"
+							},
+							"explanation": "This paper demonstrates progress in understanding and formally verifying how neural networks learn to perform group operations by extracting and proving properties about their internal mechanisms, which directly relates to the goal of converting black-box neural networks into transparent, verifiable implementations while preserving their capabilities.",
+							"sub_nodes": null
+						},
+						{
+							"id": "ca2cb43b-5988-4356-92eb-e8bdcf8d4db1",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2304.14997",
+								"arxiv_id": "2304.14997",
+								"url": "https://arxiv.org/abs/2304.14997",
+								"title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+								"published_date": "2023-04-28T00:00:00.000Z",
+								"abstract": "Through considerable effort and intuition, several recent works have reverse-engineered nontrivial behaviors of transformer models. This paper systematizes the mechanistic interpretability process they followed. First, researchers choose a metric and dataset that elicit the desired model behavior. Then, they apply activation patching to find which abstract neural network units are involved in the behavior. By varying the dataset, metric, and units under investigation, researchers can understand the functionality of each component. We automate one of the process' steps: to identify the circuit that implements the specified behavior in the model's computational graph. We propose several algorithms and reproduce previous interpretability results to validate them. For example, the ACDC algorithm rediscovered 5/5 of the component types in a circuit in GPT-2 Small that computes the Greater-Than operation. ACDC selected 68 of the 32,000 edges in GPT-2 Small, all of which were manually found by previous work. Our code is available at https://github.com/ArthurConmy/Automatic-Circuit-Discovery.",
+								"citation_count": 200,
+								"influential_citation_count": 25,
+								"ref": "76843"
+							},
+							"explanation": "This paper develops automated methods for identifying the specific neural circuits responsible for particular behaviors in transformer models, which is relevant to algorithm extraction by helping systematically reverse-engineer how neural networks implement specific computational functions rather than treating them as black boxes.",
+							"sub_nodes": null
+						}
+					]
+				},
+				{
+					"id": "32b9c633-2fb1-4bbc-9d13-672bfa548e95",
+					"title": "Governance and Enforcement",
+					"description": "Implement a global system of policies, standards, and enforcement mechanisms that ensures only provably safe AI systems can be deployed. This includes coordinating international cooperation and creating incentive structures that make compliance universal.",
+					"questions": null,
+					"breakdowns": [
+						{
+							"id": "11b4ceb6-dc9d-451f-9a90-e5910631ea18",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2404.13719",
+								"arxiv_id": "2404.13719",
+								"url": "https://arxiv.org/abs/2404.13719",
+								"title": "A Practical Multilevel Governance Framework for Autonomous and Intelligent Systems",
+								"published_date": "2024-04-21T00:00:00.000Z",
+								"abstract": "Autonomous and intelligent systems (AIS) facilitate a wide range of beneficial applications across a variety of different domains. However, technical characteristics such as unpredictability and lack of transparency, as well as potential unintended consequences, pose considerable challenges to the current governance infrastructure. Furthermore, the speed of development and deployment of applications outpaces the ability of existing governance institutions to put in place effective ethical-legal oversight. New approaches for agile, distributed and multilevel governance are needed. This work presents a practical framework for multilevel governance of AIS. The framework enables mapping actors onto six levels of decision-making including the international, national and organizational levels. Furthermore, it offers the ability to identify and evolve existing tools or create new tools for guiding the behavior of actors within the levels. Governance mechanisms enable actors to shape and enforce regulations and other tools, which when complemented with good practices contribute to effective and comprehensive governance.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "17651"
+							},
+							"explanation": "The paper presents a comprehensive multilevel governance framework that approaches AI safety governance as an interconnected system operating across six levels: international, national, domain, organizational, team, and individual. The core insight is that effective governance requires coordination and alignment across all these levels, with both top-down enforcement and bottom-up participation mechanisms working in concert.\n\nThe breakdown reflects this multilevel approach while organizing it around key functional requirements for achieving the goal. Multi-Level Policy Infrastructure provides the basic framework and rules, while Enforcement Mechanisms and Universal Incentive Alignment ensure these rules are followed. Participatory Governance ensures the system remains legitimate and informed by all stakeholders, while Adaptive Oversight ensures it remains effective as technology evolves. This structure separates distinct functional needs while maintaining the paper's emphasis on their interconnection.\n\nThese sub-goals work together as an integrated system: the policy infrastructure defines what must be done, enforcement mechanisms ensure it is done, incentive structures make stakeholders want to do it, participatory governance keeps it grounded in reality, and adaptive oversight keeps it current and effective. This reflects the paper's emphasis on both formal structures (policies, enforcement) and dynamic elements (participation, adaptation) as essential to effective governance. Each sub-goal addresses a distinct and necessary function while supporting the others, creating a comprehensive approach to ensuring only provably safe AI systems are deployed.",
+							"sub_nodes": [
+								{
+									"id": "90a3a239-984d-4259-943d-9cd64573eb8f",
+									"title": "Multi-Level Policy Infrastructure",
+									"description": "Establish coordinated governance frameworks across international, national, and industry levels that define requirements and standards for AI system safety. This includes creating formal mechanisms for policy coordination between levels and ensuring comprehensive coverage of all relevant aspects of AI system development and deployment.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "c9ca0139-6070-4c31-bc92-0e647f97baa4",
+									"title": "Enforcement Mechanisms",
+									"description": "Develop and implement mechanisms to verify compliance and enforce safety standards across all governance levels. This includes both technical verification systems and institutional oversight processes to ensure standards are being met, with clear consequences for non-compliance.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "67431ae3-1970-4e4e-875b-498736e4e8df",
+									"title": "Participatory Governance",
+									"description": "Create systems and processes that enable meaningful participation from all stakeholder groups in the development and refinement of governance frameworks. This includes establishing formal channels for bottom-up input and ensuring representation from technical, business, and civil society perspectives.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "ff97da29-0f1f-455e-8f30-3629c627d600",
+									"title": "Adaptive Oversight",
+									"description": "Implement systems for continuous monitoring, evaluation, and updating of governance frameworks to maintain effectiveness as AI technology evolves. This includes mechanisms for rapid response to emerging risks and the ability to evolve standards based on real-world evidence.",
+									"questions": null,
+									"breakdowns": null
+								},
+								{
+									"id": "dd2d19a8-e8d8-4bea-8828-7a57d6e3b512",
+									"title": "Universal Incentive Alignment",
+									"description": "Design and implement incentive structures that make compliance with safety standards the most attractive option for all stakeholders. This includes both positive incentives for compliance and mechanisms to make non-compliance economically and operationally unfavorable.",
+									"questions": null,
+									"breakdowns": null
+								}
+							]
+						},
+						{
+							"id": "ebde5e6c-8e09-4ec8-b1b8-bd526f8abe30",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2308.15514",
+								"arxiv_id": "2308.15514",
+								"url": "https://arxiv.org/abs/2308.15514",
+								"title": "International Governance of Civilian AI: A Jurisdictional Certification Approach",
+								"published_date": "2023-08-29T00:00:00.000Z",
+								"abstract": "This report describes trade-offs in the design of international governance arrangements for civilian artificial intelligence (AI) and presents one approach in detail. This approach represents the extension of a standards, licensing, and liability regime to the global level. We propose that states establish an International AI Organization (IAIO) to certify state jurisdictions (not firms or AI projects) for compliance with international oversight standards. States can give force to these international standards by adopting regulations prohibiting the import of goods whose supply chains embody AI from non-IAIO-certified jurisdictions. This borrows attributes from models of existing international organizations, such as the International Civilian Aviation Organization (ICAO), the International Maritime Organization (IMO), and the Financial Action Task Force (FATF). States can also adopt multilateral controls on the export of AI product inputs, such as specialized hardware, to non-certified jurisdictions. Indeed, both the import and export standards could be required for certification. As international actors reach consensus on risks of and minimum standards for advanced AI, a jurisdictional certification regime could mitigate a broad range of potential harms, including threats to public safety.",
+								"citation_count": 19,
+								"influential_citation_count": 1,
+								"ref": "22750"
+							},
+							"explanation": "This paper proposes an international governance framework where a central organization (IAIO) would certify countries' AI oversight standards and enable trade restrictions with non-compliant jurisdictions, similar to existing models like ICAO and IMO. This directly addresses the governance sub-goal by outlining a specific mechanism for implementing and enforcing global AI safety standards through international cooperation and economic incentives.",
+							"sub_nodes": null
+						},
+						{
+							"id": "442cc3fa-2c35-40d2-9dca-e93ad670aa92",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2412.17114",
+								"arxiv_id": "2412.17114",
+								"url": "https://arxiv.org/abs/2412.17114",
+								"title": "On the ETHOS of AI Agents: An Ethical Technology and Holistic Oversight System",
+								"published_date": "2024-12-22T00:00:00.000Z",
+								"abstract": "In a world increasingly defined by machine intelligence, the future depends on how we govern the development and integration of AI into society. Recent initiatives, such as the EU AI Act, EDPB opinion, U.S. Bipartisan House Task Force and NIST AI Risk Management Report, highlight the urgent need for robust governance frameworks to address the challenges posed by advancing AI technologies. However, existing frameworks fail to adequately address the rise of AI agents or the ongoing debate between centralized and decentralized governance models. To bridge these gaps, we propose the Ethical Technology and Holistic Oversight System framework, which leverages Web3 technologies, including blockchain, smart contracts, decentralized autonomous organizations, and soulbound tokens, to establish a decentralized global registry for AI agents. ETHOS incorporates the concept of AI specific legal entities, enabling these systems to assume limited liability and ensuring accountability through mechanisms like insurance and compliance monitoring. Additionally, the framework emphasizes the need for a collaborative, participatory approach to AI governance, engaging diverse stakeholders through public education, transparency, and international coordination. ETHOS balances innovation with ethical accountability, providing a forward looking strategy for the responsible integration of AI agents into society. Finally, this exploration reflects the emergence of a new interdisciplinary field we define as Systems Thinking at the Intersection of AI, Web3, and Society.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "63414"
+							},
+							"explanation": "This paper proposes a decentralized governance framework called ETHOS that uses blockchain and Web3 technologies to create a global registry and oversight system for AI agents, with mechanisms for accountability and compliance monitoring - directly addressing the need for coordinated international governance structures to ensure AI safety. The framework's focus on establishing universal standards and enforcement mechanisms through decentralized technologies makes it highly relevant to implementing global policies for safe AI deployment.",
+							"sub_nodes": null
+						},
+						{
+							"id": "fff23c75-7bec-462f-ab9c-b5ec4539a296",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2307.03718",
+								"arxiv_id": "2307.03718",
+								"url": "https://arxiv.org/abs/2307.03718",
+								"title": "Frontier AI Regulation: Managing Emerging Risks to Public Safety",
+								"published_date": "2023-07-06T00:00:00.000Z",
+								"abstract": "Advanced AI models hold the promise of tremendous benefits for humanity, but society needs to proactively manage the accompanying risks. In this paper, we focus on what we term\"frontier AI\"models: highly capable foundation models that could possess dangerous capabilities sufficient to pose severe risks to public safety. Frontier AI models pose a distinct regulatory challenge: dangerous capabilities can arise unexpectedly; it is difficult to robustly prevent a deployed model from being misused; and, it is difficult to stop a model's capabilities from proliferating broadly. To address these challenges, at least three building blocks for the regulation of frontier models are needed: (1) standard-setting processes to identify appropriate requirements for frontier AI developers, (2) registration and reporting requirements to provide regulators with visibility into frontier AI development processes, and (3) mechanisms to ensure compliance with safety standards for the development and deployment of frontier AI models. Industry self-regulation is an important first step. However, wider societal discussions and government intervention will be needed to create standards and to ensure compliance with them. We consider several options to this end, including granting enforcement powers to supervisory authorities and licensure regimes for frontier AI models. Finally, we propose an initial set of safety standards. These include conducting pre-deployment risk assessments; external scrutiny of model behavior; using risk assessments to inform deployment decisions; and monitoring and responding to new information about model capabilities and uses post-deployment. We hope this discussion contributes to the broader conversation on how to balance public safety risks and innovation benefits from advances at the frontier of AI development.",
+								"citation_count": 90,
+								"influential_citation_count": 5,
+								"ref": "20384"
+							},
+							"explanation": "This paper proposes a regulatory framework for advanced AI systems, outlining specific requirements around registration, safety standards, and compliance mechanisms that would need to be implemented at both industry and government levels - directly addressing the governance aspects of ensuring safe AI deployment. The paper's focus on creating standardized safety requirements and enforcement mechanisms aligns closely with the sub-goal of implementing global policies and standards for AI safety.",
+							"sub_nodes": null
+						},
+						{
+							"id": "fbd19cea-9592-40e1-ae05-efd108eee392",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2410.09645",
+								"arxiv_id": "2410.09645",
+								"url": "https://arxiv.org/abs/2410.09645",
+								"title": "AI Model Registries: A Foundational Tool for AI Governance",
+								"published_date": "2024-10-12T00:00:00.000Z",
+								"abstract": "In this report, we propose the implementation of national registries for frontier AI models as a foundational tool for AI governance. We explore the rationale, design, and implementation of such registries, drawing on comparisons with registries in analogous industries to make recommendations for a registry that is efficient, unintrusive, and which will bring AI governance closer to parity with the governmental insight into other high-impact industries. We explore key information that should be collected, including model architecture, model size, compute and data used during training, and we survey the viability and utility of evaluations developed specifically for AI. Our proposal is designed to provide governmental insight and enhance AI safety while fostering innovation and minimizing the regulatory burden on developers. By providing a framework that respects intellectual property concerns and safeguards sensitive information, this registry approach supports responsible AI development without impeding progress. We propose that timely and accurate registration should be encouraged primarily through injunctive action, by requiring third parties to use only registered models, and secondarily through direct financial penalties for non-compliance. By providing a comprehensive framework for AI model registries, we aim to support policymakers in developing foundational governance structures to monitor and mitigate risks associated with advanced AI systems.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "92309"
+							},
+							"explanation": "This paper proposes implementing national registries for advanced AI models as a governance mechanism, requiring developers to register key information about their models while balancing oversight with innovation - directly addressing the sub-goal's focus on creating enforceable policies and standards for AI safety compliance. The registry approach provides a concrete framework for tracking and regulating AI development while creating incentive structures for compliance through both requirements on third-party use and financial penalties.",
+							"sub_nodes": null
+						},
+						{
+							"id": "c3e5aaa0-b742-4c0c-8091-eb1ed4ea5c05",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2311.10748",
+								"arxiv_id": "2311.10748",
+								"url": "https://arxiv.org/abs/2311.10748",
+								"title": "An international treaty to implement a global compute cap for advanced artificial intelligence",
+								"published_date": "2023-11-01T00:00:00.000Z",
+								"abstract": "This paper presents an international treaty to reduce risks from the development of advanced artificial intelligence (AI). The main provision of the treaty is a global compute cap: a ban on the development of AI systems above an agreed-upon computational resource threshold. The treaty also proposes the development and testing of emergency response plans, negotiations to establish an international agency to enforce the treaty, the establishment of new communication channels and whistleblower protections, and a commitment to avoid an AI arms race. We hope this treaty serves as a useful template for global leaders as they implement governance regimes to protect civilization from the dangers of advanced artificial intelligence.",
+								"citation_count": 3,
+								"influential_citation_count": 0,
+								"ref": "32490"
+							},
+							"explanation": "This paper proposes an international treaty centered on implementing a global cap on computational resources used for AI development, along with supporting governance mechanisms like emergency response plans and enforcement agencies, which directly addresses the sub-goal of creating global policies and enforcement mechanisms to ensure AI safety. The proposal's focus on international cooperation and universal compliance through treaty obligations makes it highly relevant to establishing coordinated governance structures for AI development.",
+							"sub_nodes": null
+						},
+						{
+							"id": "529bbd86-12d2-4360-a199-8411bd59821f",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2403.08501",
+								"arxiv_id": "2403.08501",
+								"url": "https://arxiv.org/abs/2403.08501",
+								"title": "Governing Through the Cloud: The Intermediary Role of Compute Providers in AI Regulation",
+								"published_date": "2024-03-13T00:00:00.000Z",
+								"abstract": "As jurisdictions around the world take their first steps toward regulating the most powerful AI systems, such as the EU AI Act and the US Executive Order 14110, there is a growing need for effective enforcement mechanisms that can verify compliance and respond to violations. We argue that compute providers should have legal obligations and ethical responsibilities associated with AI development and deployment, both to provide secure infrastructure and to serve as intermediaries for AI regulation. Compute providers can play an essential role in a regulatory ecosystem via four key capacities: as securers, safeguarding AI systems and critical infrastructure; as record keepers, enhancing visibility for policymakers; as verifiers of customer activities, ensuring oversight; and as enforcers, taking actions against rule violations. We analyze the technical feasibility of performing these functions in a targeted and privacy-conscious manner and present a range of technical instruments. In particular, we describe how non-confidential information, to which compute providers largely already have access, can provide two key governance-relevant properties of a computational workload: its type-e.g., large-scale training or inference-and the amount of compute it has consumed. Using AI Executive Order 14110 as a case study, we outline how the US is beginning to implement record keeping requirements for compute providers. We also explore how verification and enforcement roles could be added to establish a comprehensive AI compute oversight scheme. We argue that internationalization will be key to effective implementation, and highlight the critical challenge of balancing confidentiality and privacy with risk mitigation as the role of compute providers in AI regulation expands.",
+								"citation_count": 4,
+								"influential_citation_count": 0,
+								"ref": "58812"
+							},
+							"explanation": "This paper examines how cloud computing providers can serve as key intermediaries in AI governance by acting as securers, record keepers, verifiers, and enforcers of AI regulations, directly supporting the sub-goal of implementing global enforcement mechanisms for AI safety through existing infrastructure. The authors analyze both technical feasibility and policy implications, using the US Executive Order 14110 as a case study to demonstrate how compute providers can help ensure compliance with AI safety regulations.",
+							"sub_nodes": null
+						},
+						{
+							"id": "0427fc3a-fc64-4e09-902f-87d8f3d509a4",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2310.20563",
+								"arxiv_id": "2310.20563",
+								"url": "https://arxiv.org/abs/2310.20563",
+								"title": "Taking control: Policies to address extinction risks from AI",
+								"published_date": "2023-10-31T00:00:00.000Z",
+								"abstract": "This paper provides policy recommendations to reduce extinction risks from advanced artificial intelligence (AI). First, we briefly provide background information about extinction risks from AI. Second, we argue that voluntary commitments from AI companies would be an inappropriate and insufficient response. Third, we describe three policy proposals that would meaningfully address the threats from advanced AI: (1) establishing a Multinational AGI Consortium to enable democratic oversight of advanced AI (MAGIC), (2) implementing a global cap on the amount of computing power used to train an AI system (global compute cap), and (3) requiring affirmative safety evaluations to ensure that risks are kept below acceptable levels (gating critical experiments). MAGIC would be a secure, safety-focused, internationally-governed institution responsible for reducing risks from advanced AI and performing research to safely harness the benefits of AI. MAGIC would also maintain emergency response infrastructure (kill switch) to swiftly halt AI development or withdraw model deployment in the event of an AI-related emergency. The global compute cap would end the corporate race toward dangerous AI systems while enabling the vast majority of AI innovation to continue unimpeded. Gating critical experiments would ensure that companies developing powerful AI systems are required to present affirmative evidence that these models keep extinction risks below an acceptable threshold. After describing these recommendations, we propose intermediate steps that the international community could take to implement these proposals and lay the groundwork for international coordination around advanced AI.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "67983"
+							},
+							"explanation": "This paper directly addresses the governance sub-goal by proposing three specific policy mechanisms (MAGIC consortium, compute caps, and safety evaluations) to create a coordinated international framework for ensuring AI safety and preventing catastrophic risks through regulatory oversight and enforcement. The proposals aim to establish concrete institutional structures and standards that would make compliance with AI safety measures mandatory rather than voluntary.",
+							"sub_nodes": null
+						},
+						{
+							"id": "6b60f4d8-b01a-40e2-a12f-0ac9be1f5d6a",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2409.02779",
+								"arxiv_id": "2409.02779",
+								"url": "https://arxiv.org/abs/2409.02779",
+								"title": "Governing dual-use technologies: Case studies of international security agreements and lessons for AI governance",
+								"published_date": "2024-09-04T00:00:00.000Z",
+								"abstract": "International AI governance agreements and institutions may play an important role in reducing global security risks from advanced AI. To inform the design of such agreements and institutions, we conducted case studies of historical and contemporary international security agreements. We focused specifically on those arrangements around dual-use technologies, examining agreements in nuclear security, chemical weapons, biosecurity, and export controls. For each agreement, we examined four key areas: (a) purpose, (b) core powers, (c) governance structure, and (d) instances of non-compliance. From these case studies, we extracted lessons for the design of international AI agreements and governance institutions. We discuss the importance of robust verification methods, strategies for balancing power between nations, mechanisms for adapting to rapid technological change, approaches to managing trade-offs between transparency and security, incentives for participation, and effective enforcement mechanisms.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "33505"
+							},
+							"explanation": "This paper analyzes historical international agreements governing dual-use technologies (like nuclear and chemical weapons) to extract lessons for designing effective AI governance frameworks, with particular focus on verification, enforcement, and incentive structures - making it directly relevant to developing global policies and standards for ensuring AI safety compliance. The case studies examine how different governance approaches have succeeded or failed in practice, providing concrete insights for implementing international AI safety standards and enforcement mechanisms.",
+							"sub_nodes": null
+						},
+						{
+							"id": "d3478ba0-1c2c-443d-a856-be51b268f59e",
+							"title": null,
+							"paper": {
+								"id": "https://arxiv.org/abs/2408.06210",
+								"arxiv_id": "2408.06210",
+								"url": "https://arxiv.org/abs/2408.06210",
+								"title": "Certified Safe: A Schematic for Approval Regulation of Frontier AI",
+								"published_date": "2024-08-12T00:00:00.000Z",
+								"abstract": "Recent and unremitting capability advances have been accompanied by calls for comprehensive, rather than patchwork, regulation of frontier artificial intelligence (AI). Approval regulation is emerging as a promising candidate. An approval regulation scheme is one in which a firm cannot legally market, or in some cases develop, a product without explicit approval from a regulator on the basis of experiments performed upon the product that demonstrate its safety. This approach is used successfully by the FDA and FAA. Further, its application to frontier AI has been publicly supported by many prominent stakeholders. This report proposes an approval regulation schematic for only the largest AI projects in which scrutiny begins before training and continues through to post-deployment monitoring. The centerpieces of the schematic are two major approval gates, the first requiring approval for large-scale training and the second for deployment. Five main challenges make implementation difficult: noncompliance through unsanctioned deployment, specification of deployment readiness requirements, reliable model experimentation, filtering out safe models before the process, and minimizing regulatory overhead. This report makes a number of crucial recommendations to increase the feasibility of approval regulation, some of which must be followed urgently if such a regime is to succeed in the near future. Further recommendations, produced by this report's analysis, may improve the effectiveness of any regulatory regime for frontier AI.",
+								"citation_count": 0,
+								"influential_citation_count": 0,
+								"ref": "61606"
+							},
+							"explanation": "This paper proposes a two-stage approval regulation framework for large AI systems, similar to FDA/FAA models, where companies must obtain regulatory approval both before training and deployment of frontier AI systems - directly addressing how to implement practical governance mechanisms for ensuring AI safety. The proposal aligns closely with the governance sub-goal by outlining specific regulatory structures and approval processes that could help ensure only demonstrably safe AI systems are developed and deployed.",
+							"sub_nodes": null
+						}
+					]
+				}
+			]
+		}
+	]
+}
