@@ -4,7 +4,7 @@
 	import { removeHTMLTags } from '$lib/utils';
 </script>
 
-<div class="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] px-5 py-16">
+<div class="min-h-screen bg-gradient-to-b from-[#151515] to-[#212121] px-5 py-16">
 	<div class="mx-auto max-w-[900px]">
 		<h1
 			class="mb-12 bg-gradient-to-r from-purple-900 via-purple-700 to-purple-900 bg-clip-text text-center text-5xl font-semibold tracking-tight text-transparent sm:text-7xl"
