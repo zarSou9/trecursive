@@ -347,7 +347,7 @@
 							{
 								title: 'Collapse All',
 								key: 'c',
-								func: () => tree && setCollapsed(getAllCollapsed(tree))
+								func: () => tree && setCollapsed(getAllCollapsed(fullTree))
 							}
 						])
 			]}
@@ -382,13 +382,14 @@
 										tooltip={(titlePosNode.node.mini_description?.[0].toUpperCase() || '') +
 											(titlePosNode.node.mini_description?.slice(1) || '') ||
 											titlePosNode.node.description}
-										tooltipClassName="pt-2"
+										tooltipClassName="pt-2 max-w-[clamp(310px,83%,500px)]"
+										toolTipContainerClassName="line-clamp-[12]"
 										showOnHover={false}
 										delay={300}
 										style="font-size: {Math.min(
 											18,
 											Math.max(
-												13.5,
+												13,
 												(
 													settings.titlesMode.avgTextCharSizes[titlePosNode.depth] ||
 													settings.titlesMode.defaultTitleCharSize
