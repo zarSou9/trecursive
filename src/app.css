@@ -22,7 +22,7 @@ html,
 body {
 	background-color: #0f0f0f;
 	font-family: 'Inter', sans-serif;
-	color: #f0f0f0;
+	color: #e7e7e7;
 	scrollbar-color: #6e6e6e #404040;
 	overscroll-behavior: none;
 }

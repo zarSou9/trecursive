@@ -85,7 +85,7 @@
 								"ref": "57124"
 							},
 							"explanation": "This paper surveys different formal methods approaches (theorem proving, model checking, and lightweight FM) for verifying security properties of critical systems, comparing their practical applications and tradeoffs. This is directly relevant to the automated formal verification sub-goal, as it provides an overview of existing techniques that could be built upon to verify safety properties of AGI systems, though the paper focuses specifically on cyber security rather than AI safety.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "f5bc2d23-71ac-4be6-99a2-ab8136b9672d",
@@ -102,7 +102,7 @@
 								"ref": "24955"
 							},
 							"explanation": "This paper proposes a \"certified control\" architecture where a formally verifiable runtime monitor checks safety certificates produced by the main controller of an autonomous vehicle, allowing complex perception and control systems to be safely deployed without having to formally verify the entire system. This approach is relevant to automated formal verification by demonstrating how to make formal verification more tractable by strategically verifying only a small trusted component rather than an entire complex system.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "a6160dc7-c89f-4acf-b81f-b2f757ab82d8",
@@ -119,7 +119,7 @@
 								"ref": "54662"
 							},
 							"explanation": "This paper proposes a formalism-driven development process and supporting framework called Seniz that enables developers to build provably correct decentralized systems through formal verification methods, which is relevant to the automated formal verification sub-goal as it presents a practical approach for integrating formal verification into complex system development.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "4e3b43a7-27b9-4395-b33b-e7ecad6b2aa1",
@@ -136,7 +136,7 @@
 								"ref": "25414"
 							},
 							"explanation": "This paper presents VERIFAI, a software toolkit that enables formal verification and testing of AI/ML systems through simulation-guided analysis and specification checking, which directly supports the sub-goal of automated formal verification by providing practical tools for verifying AI system compliance with specifications, though it focuses more on finding violations than proving complete correctness.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "e6e410b0-b21c-4496-9f23-c7c164b13111",
@@ -153,7 +153,7 @@
 								"ref": "49407"
 							},
 							"explanation": "This paper presents ActivFORMS, an approach for engineering self-adaptive systems that uses formal models and verification throughout the system lifecycle to ensure correctness of adaptive behavior, which is relevant to automated formal verification but focuses more narrowly on verifying self-adaptive systems rather than general AGI systems. The approach demonstrates formal verification techniques being successfully applied to runtime systems, though at a much smaller scale than would be needed for AGI verification.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "59adf53b-2a6e-48ec-8b8b-274e8957d3e2",
@@ -170,7 +170,7 @@
 								"ref": "03861"
 							},
 							"explanation": "This paper presents a framework (NNLander-VeriF) for formally verifying neural network-based autonomous aircraft landing systems by converting geometric camera models into neural networks that can be combined with the control network, enabling verification of the complete closed-loop system using existing neural network verification tools. This work demonstrates progress on automated formal verification of complex AI systems, though at a more limited scale than would be needed for AGI systems.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "c8b63371-cbb4-4eab-b256-f3356c179216",
@@ -187,7 +187,7 @@
 								"ref": "46920"
 							},
 							"explanation": "This paper presents a formal verification system built in Coq that can automatically verify security properties of Ethereum smart contracts through a combination of symbolic execution and theorem proving. While this demonstrates progress in automated formal verification of complex software systems, it focuses specifically on smart contracts rather than the broader scale and complexity needed for AGI systems.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "3d13f6ad-a72c-4632-8aa0-b032994e12ec",
@@ -204,7 +204,7 @@
 								"ref": "35298"
 							},
 							"explanation": "This paper presents DataProVe, a tool that automatically verifies whether system architectures comply with specified data protection policies through logic-based proofs. While this demonstrates progress in automated formal verification of specific security properties, it appears limited in scope compared to the comprehensive verification needs for AGI systems outlined in the sub-goal.",
-							"sub_nodes": null
+							"sub_nodes": []
 						}
 					]
 				},
@@ -282,7 +282,7 @@
 								"ref": "01184"
 							},
 							"explanation": "This paper presents GuardNN, a secure hardware accelerator architecture for deep neural networks that aims to protect both data and model parameters through hardware-based security mechanisms, demonstrating minimal performance overhead. While this work shows progress in securing AI hardware components, it focuses primarily on privacy and integrity protection rather than enforcing safety constraints or achieving tamper-proof security against superintelligent systems as required by the sub-goal.",
-							"sub_nodes": null
+							"sub_nodes": []
 						}
 					]
 				},
@@ -421,7 +421,7 @@
 								"ref": "78403"
 							},
 							"explanation": "This paper presents a method for making black-box neural networks more interpretable and controllable by enabling interventions on internal concepts, even without being explicitly designed for interpretability, which relates to the sub-goal by offering a potential approach for making AI systems more transparent and verifiable while preserving their capabilities. However, the paper focuses on relatively simple classification tasks rather than extracting complete algorithms from complex AI systems.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "4e13a6fe-c378-46cb-962f-319f77d29fcf",
@@ -438,7 +438,7 @@
 								"ref": "24733"
 							},
 							"explanation": "This paper proposes a method to abstract deep neural networks into more interpretable Bayesian networks by identifying and mapping learned hidden features, which is relevant to algorithm extraction as it provides a way to make black-box neural networks more transparent and analyzable, though it falls short of full capability-preserving code translation.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "d231435a-ec2d-4b59-a42f-30f7b9e133d6",
@@ -455,7 +455,7 @@
 								"ref": "21101"
 							},
 							"explanation": "This paper presents a framework for automatically extracting and verifying high-level mathematical formulas from low-level implementations of deep learning operators, which directly supports the sub-goal by providing a method to make black-box neural network components more transparent and verifiable while preserving their functionality. The approach combines multiple formal methods techniques to synthesize readable and provably correct mathematical descriptions of neural network operations.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "514aa879-442e-444f-afc3-66e5d3cb56af",
@@ -472,7 +472,7 @@
 								"ref": "16789"
 							},
 							"explanation": "This paper focuses on developing methods to translate high-level behavioral specifications into formal verification queries that can be used with neural network solvers, which is relevant to algorithm extraction by helping bridge the gap between human-interpretable specifications and the internal representations of neural networks. While this work approaches the translation direction opposite to the sub-goal (going from specifications to neural networks rather than neural networks to verifiable code), the techniques developed could inform bidirectional translation methods.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "5876121d-40bd-4fcc-a357-1f76b9274fef",
@@ -489,7 +489,7 @@
 								"ref": "04892"
 							},
 							"explanation": "This paper presents \"deep distilling,\" a method that can automatically convert neural networks into human-readable and verifiable computer code while preserving their functionality, directly addressing the sub-goal of extracting algorithms from black-box AI systems into transparent implementations. The approach shows promise in generating concise code that can generalize beyond training data and, in some cases, exactly recover known underlying rules.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "1913388d-1831-441e-b7bb-60d976502e3f",
@@ -506,7 +506,7 @@
 								"ref": "09357"
 							},
 							"explanation": "This paper presents NEUROSPF, a tool that translates trained neural networks into analyzable Java code and enables symbolic analysis of the network's behavior through techniques like coverage testing and constraint-based repair. This work is relevant to algorithm extraction as it provides a concrete method for converting neural networks into more transparent and verifiable code representations, though it may not fully preserve the original capabilities.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "0f65c998-b13a-4527-bab9-77609243597d",
@@ -523,7 +523,7 @@
 								"ref": "31130"
 							},
 							"explanation": "This paper presents a method for training Transformer models that can be automatically converted into human-readable programs, making their internal algorithms transparent and analyzable - directly addressing the sub-goal of extracting interpretable algorithms from neural networks. The approach demonstrates success on various tasks while maintaining performance comparable to standard Transformers.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "e70d5fd6-8943-4988-851f-6054dcd15fd6",
@@ -540,7 +540,7 @@
 								"ref": "68560"
 							},
 							"explanation": "This paper presents a method to convert existing trained neural networks into more interpretable models by adding a layer of human-understandable concepts, which is relevant to algorithm extraction as it provides a way to make black-box AI systems more transparent and analyzable without requiring retraining from scratch. The approach could be a stepping stone toward extracting and understanding the learned algorithms within neural networks, though it falls short of full algorithm extraction or translation to verifiable code.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "dcaa5abf-b709-42cd-8bed-27e8f052e110",
@@ -557,7 +557,7 @@
 								"ref": "16080"
 							},
 							"explanation": "This paper presents BTD, a tool for decompiling neural network executables back into their original model specifications, which directly supports the sub-goal by demonstrating a method to make black-box AI systems (in executable form) more transparent and analyzable by extracting their underlying neural network architecture and parameters.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "9d6e2728-f9b6-4ca2-99ee-195b030c98e1",
@@ -574,7 +574,7 @@
 								"ref": "42473"
 							},
 							"explanation": "This paper introduces Neural Interpretation, a system that can execute Python code using neural networks while maintaining interpretability of the code's structure, which is relevant to algorithm extraction by demonstrating a potential bridge between neural and symbolic representations of programs. The approach allows for white-box analysis of program execution, which could contribute to making AI systems more transparent and verifiable.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "1f48c131-a6cd-47fd-8d2b-ed8116a47831",
@@ -591,7 +591,7 @@
 								"ref": "23340"
 							},
 							"explanation": "This paper presents NNReverse, a method for automatically extracting neural network architectures from compiled binary code, which is relevant to algorithm extraction but focuses narrowly on reverse engineering model architectures rather than converting neural networks into verifiable code that preserves their capabilities. The paper's security-focused approach of extracting model details is somewhat tangential to the safety-oriented goals of translating black-box systems into provably safe implementations.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "b7bcd811-7571-4f2a-b2e6-fd0f3322748f",
@@ -608,7 +608,7 @@
 								"ref": "50145"
 							},
 							"explanation": "This paper presents a method for automatically identifying and extracting interpretable neural circuits from vision models that are responsible for specific visual concepts, which is relevant to algorithm extraction by providing a concrete approach for making black-box neural networks more transparent and understandable. The ability to identify and edit these circuits also demonstrates potential for translating neural network components into more verifiable implementations.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "897df7ba-a391-445a-80d1-93974c9d25ad",
@@ -625,7 +625,7 @@
 								"ref": "74442"
 							},
 							"explanation": "This paper presents a method for extracting human-readable mathematical equations that represent how individual neurons and neural network classifiers make decisions, which is relevant to algorithm extraction by providing a technique to convert neural network components into transparent, interpretable mathematical expressions. However, the approach is limited to interpreting individual neurons and classification boundaries rather than extracting complete algorithmic behavior.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "5ac598e2-41e3-40d0-9a92-ddfba18f11bb",
@@ -642,7 +642,7 @@
 								"ref": "10674"
 							},
 							"explanation": "This paper presents a new method called CD-T for efficiently identifying and extracting interpretable circuits (functional subgraphs) from transformer models, which is relevant to algorithm extraction by providing a way to decompose black-box neural networks into more transparent, understandable components while preserving their functionality.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "83d626c7-760e-48f8-84f9-17a08bb2a635",
@@ -659,7 +659,7 @@
 								"ref": "29579"
 							},
 							"explanation": "This paper develops methods to identify and handle redundant or degenerate parameters in neural networks, aiming to create more interpretable representations that could help reverse engineer the underlying algorithms, which directly supports the goal of extracting transparent implementations from black-box AI systems. The authors propose a technique called the \"Interaction Basis\" that can help reveal the core computational structure of neural networks by removing obfuscating parameters.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "aa61683a-e446-4330-ab69-9f5b6e92c255",
@@ -676,7 +676,7 @@
 								"ref": "45760"
 							},
 							"explanation": "This paper proposes a framework called Hide-and-Seek for making neural networks more interpretable during training, which relates to the sub-goal of algorithm extraction by potentially making it easier to understand and translate the learned algorithms within neural networks into verifiable code, though it focuses more on interpretability during training rather than post-hoc extraction.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "247a5c6a-2852-4884-8b3f-c5da4feb2355",
@@ -693,7 +693,7 @@
 								"ref": "45929"
 							},
 							"explanation": "This paper presents a method called interchange intervention training (IIT) that allows neural networks to learn causal structures aligned with known causal models, making the networks more interpretable while preserving their performance. This is relevant to algorithm extraction as it provides a way to make neural networks more transparent and verifiable by incorporating known causal relationships into their structure, though it requires having a causal model to align with rather than extracting one from a black box.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "fb34c5e6-4170-4f7f-8887-3c476e75c832",
@@ -710,7 +710,7 @@
 								"ref": "26994"
 							},
 							"explanation": "This paper explores using mechanistic interpretability to reverse-engineer neural networks into human-understandable algorithms and generate formal proofs of their behavior, demonstrating this approach on a small transformer model and analyzing how proof quality relates to mechanistic understanding - directly addressing the sub-goal of converting black-box AI systems into verifiable code.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "61eb265d-87fd-4b97-93c6-0743a92a94e8",
@@ -727,7 +727,7 @@
 								"ref": "45328"
 							},
 							"explanation": "This paper reviews methods for reverse engineering neural networks to understand their internal mechanisms and representations, which directly supports the goal of extracting transparent algorithms from black-box AI systems. The focus on mechanistic interpretability techniques and their scalability challenges is highly relevant to developing reliable methods for converting opaque AI systems into verifiable implementations while preserving their capabilities.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "b8bda9e0-047a-4029-aecf-feca16864bcf",
@@ -744,7 +744,7 @@
 								"ref": "38611"
 							},
 							"explanation": "This paper presents InversionView, a method for understanding what information is encoded in neural networks' internal activations by reconstructing inputs that would produce similar activation patterns, which is relevant to algorithm extraction by helping reveal how neural networks process and represent information internally. The approach demonstrates the ability to decode both simple and complex information from model activations, which could aid in translating neural network behaviors into more transparent, verifiable implementations.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "a094ffb6-836e-4b7e-9bed-fc7af6df0fab",
@@ -761,7 +761,7 @@
 								"ref": "70892"
 							},
 							"explanation": "This paper proposes using approximation theory and multilayer perceptrons (MLPs) as a universal approach to interpret and explain the behavior of black-box neural networks, which relates to the sub-goal by offering a potential method for making AI systems more transparent, though it doesn't fully address the challenge of extracting or translating the underlying algorithms into verifiable code.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "bb745783-a61c-4728-958a-183207e8e784",
@@ -778,7 +778,7 @@
 								"ref": "73952"
 							},
 							"explanation": "This paper presents a method for converting complex ML models into human-readable code by approximating their numerical functions with piecewise-linear curves, which directly supports the sub-goal of extracting transparent, verifiable implementations from black-box AI systems, though it focuses on simpler models rather than advanced neural networks.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "06ce83da-4ebc-4d67-afa8-6fe0c7630286",
@@ -795,7 +795,7 @@
 								"ref": "09352"
 							},
 							"explanation": "This paper presents an algorithm that can convert complex black-box machine learning models into more interpretable mathematical representations using Meijer G-functions, which could be a stepping stone toward extracting and translating AI systems into verifiable code, though it focuses primarily on interpretation rather than formal verification or safety guarantees.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "8a0394de-4aa4-4b46-89f0-ca3243cbfb03",
@@ -812,7 +812,7 @@
 								"ref": "85348"
 							},
 							"explanation": "This paper proposes a Bayesian method to extract explanations and uncertainty estimates from existing deep neural networks without retraining them, which partially addresses the sub-goal by making black-box AI systems more transparent and interpretable, though it falls short of fully converting them into verifiable code that preserves their capabilities.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "0803d196-2993-4429-99cf-248bd5b5571f",
@@ -829,7 +829,7 @@
 								"ref": "38234"
 							},
 							"explanation": "This paper develops a formal framework for understanding how transformer neural networks process information internally and applies it to reverse engineer the specific algorithm learned by a transformer solving 2-SAT problems, demonstrating progress toward extracting interpretable algorithms from neural networks. This directly relates to the algorithm extraction sub-goal by showing how we can convert a black-box neural network's learned behavior into an understandable, verifiable algorithm while preserving its capabilities.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "6160cff9-163d-452d-8178-7c63a6f23c1d",
@@ -846,7 +846,7 @@
 								"ref": "09059"
 							},
 							"explanation": "This paper demonstrates progress in understanding and formally verifying how neural networks learn to perform group operations by extracting and proving properties about their internal mechanisms, which directly relates to the goal of converting black-box neural networks into transparent, verifiable implementations while preserving their capabilities.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "ca2cb43b-5988-4356-92eb-e8bdcf8d4db1",
@@ -863,7 +863,7 @@
 								"ref": "76843"
 							},
 							"explanation": "This paper develops automated methods for identifying the specific neural circuits responsible for particular behaviors in transformer models, which is relevant to algorithm extraction by helping systematically reverse-engineer how neural networks implement specific computational functions rather than treating them as black boxes.",
-							"sub_nodes": null
+							"sub_nodes": []
 						}
 					]
 				},
@@ -941,7 +941,7 @@
 								"ref": "22750"
 							},
 							"explanation": "This paper proposes an international governance framework where a central organization (IAIO) would certify countries' AI oversight standards and enable trade restrictions with non-compliant jurisdictions, similar to existing models like ICAO and IMO. This directly addresses the governance sub-goal by outlining a specific mechanism for implementing and enforcing global AI safety standards through international cooperation and economic incentives.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "442cc3fa-2c35-40d2-9dca-e93ad670aa92",
@@ -958,7 +958,7 @@
 								"ref": "63414"
 							},
 							"explanation": "This paper proposes a decentralized governance framework called ETHOS that uses blockchain and Web3 technologies to create a global registry and oversight system for AI agents, with mechanisms for accountability and compliance monitoring - directly addressing the need for coordinated international governance structures to ensure AI safety. The framework's focus on establishing universal standards and enforcement mechanisms through decentralized technologies makes it highly relevant to implementing global policies for safe AI deployment.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "fff23c75-7bec-462f-ab9c-b5ec4539a296",
@@ -975,7 +975,7 @@
 								"ref": "20384"
 							},
 							"explanation": "This paper proposes a regulatory framework for advanced AI systems, outlining specific requirements around registration, safety standards, and compliance mechanisms that would need to be implemented at both industry and government levels - directly addressing the governance aspects of ensuring safe AI deployment. The paper's focus on creating standardized safety requirements and enforcement mechanisms aligns closely with the sub-goal of implementing global policies and standards for AI safety.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "fbd19cea-9592-40e1-ae05-efd108eee392",
@@ -992,7 +992,7 @@
 								"ref": "92309"
 							},
 							"explanation": "This paper proposes implementing national registries for advanced AI models as a governance mechanism, requiring developers to register key information about their models while balancing oversight with innovation - directly addressing the sub-goal's focus on creating enforceable policies and standards for AI safety compliance. The registry approach provides a concrete framework for tracking and regulating AI development while creating incentive structures for compliance through both requirements on third-party use and financial penalties.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "c3e5aaa0-b742-4c0c-8091-eb1ed4ea5c05",
@@ -1009,7 +1009,7 @@
 								"ref": "32490"
 							},
 							"explanation": "This paper proposes an international treaty centered on implementing a global cap on computational resources used for AI development, along with supporting governance mechanisms like emergency response plans and enforcement agencies, which directly addresses the sub-goal of creating global policies and enforcement mechanisms to ensure AI safety. The proposal's focus on international cooperation and universal compliance through treaty obligations makes it highly relevant to establishing coordinated governance structures for AI development.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "529bbd86-12d2-4360-a199-8411bd59821f",
@@ -1026,7 +1026,7 @@
 								"ref": "58812"
 							},
 							"explanation": "This paper examines how cloud computing providers can serve as key intermediaries in AI governance by acting as securers, record keepers, verifiers, and enforcers of AI regulations, directly supporting the sub-goal of implementing global enforcement mechanisms for AI safety through existing infrastructure. The authors analyze both technical feasibility and policy implications, using the US Executive Order 14110 as a case study to demonstrate how compute providers can help ensure compliance with AI safety regulations.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "0427fc3a-fc64-4e09-902f-87d8f3d509a4",
@@ -1043,7 +1043,7 @@
 								"ref": "67983"
 							},
 							"explanation": "This paper directly addresses the governance sub-goal by proposing three specific policy mechanisms (MAGIC consortium, compute caps, and safety evaluations) to create a coordinated international framework for ensuring AI safety and preventing catastrophic risks through regulatory oversight and enforcement. The proposals aim to establish concrete institutional structures and standards that would make compliance with AI safety measures mandatory rather than voluntary.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "6b60f4d8-b01a-40e2-a12f-0ac9be1f5d6a",
@@ -1060,7 +1060,7 @@
 								"ref": "33505"
 							},
 							"explanation": "This paper analyzes historical international agreements governing dual-use technologies (like nuclear and chemical weapons) to extract lessons for designing effective AI governance frameworks, with particular focus on verification, enforcement, and incentive structures - making it directly relevant to developing global policies and standards for ensuring AI safety compliance. The case studies examine how different governance approaches have succeeded or failed in practice, providing concrete insights for implementing international AI safety standards and enforcement mechanisms.",
-							"sub_nodes": null
+							"sub_nodes": []
 						},
 						{
 							"id": "d3478ba0-1c2c-443d-a856-be51b268f59e",
@@ -1077,7 +1077,7 @@
 								"ref": "61606"
 							},
 							"explanation": "This paper proposes a two-stage approval regulation framework for large AI systems, similar to FDA/FAA models, where companies must obtain regulatory approval both before training and deployment of frontier AI systems - directly addressing how to implement practical governance mechanisms for ensuring AI safety. The proposal aligns closely with the governance sub-goal by outlining specific regulatory structures and approval processes that could help ensure only demonstrably safe AI systems are developed and deployed.",
-							"sub_nodes": null
+							"sub_nodes": []
 						}
 					]
 				}

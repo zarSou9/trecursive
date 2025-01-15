@@ -1,4 +1,4 @@
-import type { Node, PosNode, VerticalTreeSettings } from './types';
+import type { Node, PosNode, HashMap, VerticalTreeSettings } from './types';
 
 function getSubNodes(node: Node, collapsedNodes: string[]) {
 	if (!node.breakdown) return [];
@@ -11,17 +11,7 @@ function positionTree(t: Node, collapsedNodes: string[], settings: VerticalTreeS
 	let totalWidth = 0;
 	let positionedNodes: PosNode[] = [];
 
-	const {
-		minNodeWidth,
-		nodeWidthBranchingFactorMultiplier,
-		nodeHeight,
-		verticalSpacing,
-		siblingNodeSpacing,
-		nodeGroupSpacing
-	} = settings;
-
-	const branchingFactor = calculateAvgBranchingFactor(t) + 2;
-	const nodeWidth = Math.max(minNodeWidth, branchingFactor * nodeWidthBranchingFactorMultiplier);
+	const { nodeWidth, nodeHeight, verticalSpacing, siblingNodeSpacing, nodeGroupSpacing } = settings;
 
 	positionEndNodes(t);
 	while (findPositioned(t)?.left === undefined) {
@@ -35,8 +25,7 @@ function positionTree(t: Node, collapsedNodes: string[], settings: VerticalTreeS
 	return {
 		positionedNodes,
 		totalHeight,
-		totalWidth,
-		nodeWidth
+		totalWidth
 	};
 
 	function isEndNode(node: Node) {
@@ -104,13 +93,16 @@ function positionTree(t: Node, collapsedNodes: string[], settings: VerticalTreeS
 	}
 }
 
-function choosePlans(fullNode: any, depth = 0) {
+function chooseBreakdowns(fullNode: any, selectedBreakdowns: HashMap, depth = 0) {
 	if (!depth) fullNode = JSON.parse(JSON.stringify(fullNode));
 	if (fullNode.breakdowns?.[0]) {
-		fullNode.breakdown = fullNode.breakdowns?.[0];
+		const selectedId = selectedBreakdowns[fullNode.id];
+		if (selectedId) fullNode.breakdown = fullNode.breakdowns.find((b: any) => b.id === selectedId);
+		else fullNode.breakdown = fullNode.breakdowns[0];
 		for (let subNode of fullNode.breakdown.sub_nodes) {
-			choosePlans(subNode, depth + 1);
+			chooseBreakdowns(subNode, selectedBreakdowns, depth + 1);
 		}
+		fullNode.otherBreakdowns = fullNode.breakdowns.filter((b: any) => b !== fullNode.breakdown);
 		delete fullNode.breakdowns;
 	}
 	return fullNode as Node;
@@ -171,7 +163,7 @@ function getAllParentIDs(nodeID: string | undefined, root: Node | undefined): st
 
 export {
 	positionTree,
-	choosePlans,
+	chooseBreakdowns,
 	getAllCollapsed,
 	getSubNodes,
 	calculateAvgBranchingFactor,

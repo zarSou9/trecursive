@@ -29,6 +29,7 @@ type Node = {
 	description: string;
 	mini_description?: string;
 	breakdown?: Breakdown;
+	otherBreakdowns?: Breakdown[];
 	research_questions?: ResearchQuestion[];
 };
 
@@ -90,6 +91,7 @@ type TreeDefinition = {
 	title: string;
 	tree: any;
 	note?: string;
+	breakdownName?: string;
 	customSettings?: CustomTreeSettings;
 	canvasPadding?: number;
 };
@@ -111,15 +113,7 @@ type CustomHorizontalTreeSettings = {
 	avgTextCharSizes?: CharSize[];
 	defaultTitleCharSize?: CharSize;
 	horizontalSpacingAdditions?: number[];
-};
-
-type CustomVerticalTreeSettings = {
-	minNodeWidth?: number;
-	nodeWidthBranchingFactorMultiplier?: number;
-	nodeHeight?: number;
-	verticalSpacing?: number;
-	siblingNodeSpacing?: number;
-	nodeGroupSpacing?: number;
+	widthAddition?: number;
 };
 
 type HorizontalTreeSettings = {
@@ -129,11 +123,19 @@ type HorizontalTreeSettings = {
 	avgTextCharSizes: CharSize[];
 	defaultTitleCharSize: CharSize;
 	horizontalSpacingAdditions: number[];
+	widthAddition: number;
+};
+
+type CustomVerticalTreeSettings = {
+	nodeWidth?: number;
+	nodeHeight?: number;
+	verticalSpacing?: number;
+	siblingNodeSpacing?: number;
+	nodeGroupSpacing?: number;
 };
 
 type VerticalTreeSettings = {
-	minNodeWidth: number;
-	nodeWidthBranchingFactorMultiplier: number;
+	nodeWidth: number;
 	nodeHeight: number;
 	verticalSpacing: number;
 	siblingNodeSpacing: number;
@@ -142,8 +144,11 @@ type VerticalTreeSettings = {
 
 type MiniMiddle = { x: number; y: number; id: string };
 
+type HashMap = { [id: string]: string | undefined };
+
 export {
 	DropDownItem,
+	HashMap,
 	TreeDefinition,
 	Node,
 	Paper,

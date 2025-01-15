@@ -9,7 +9,7 @@ function reorderTree(tree: Node) {
 	return tree;
 }
 
-function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings = {}) {
+function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 	const horizontalSpacing = settings.horizontalSpacing || 100;
 	const siblingNodeSpacing = settings.siblingNodeSpacing || 40;
 	const nodeGroupSpacing = settings.nodeGroupSpacing || 60;
@@ -190,7 +190,7 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings = {
 	}
 
 	function setNonEndTops(posNode: TitlePosNode | undefined) {
-		if (posNode?.top !== undefined || !posNode?.children) return;
+		if (posNode?.top !== undefined || !posNode?.children?.length) return;
 		for (let subNode of posNode.children) setNonEndTops(subNode);
 		const minSubTop = posNode.children[0].top || 0;
 		const maxSubTop = posNode.children[posNode.children.length - 1].top || 0;

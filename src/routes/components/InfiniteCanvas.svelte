@@ -53,6 +53,9 @@
 		if (z < minZoom) goFull();
 	};
 
+	const disableShortcuts = { v: false };
+	setContext('disableShortcuts', disableShortcuts);
+
 	const usingCanvasTouch: Writable<boolean> = getContext('usingCanvasTouchStore');
 	const isMobile: Writable<boolean> = getContext('isMobileStore');
 
@@ -240,6 +243,7 @@
 	}
 
 	function shortCuts(e: KeyboardEvent) {
+		if (disableShortcuts.v) return;
 		const k = e.key;
 		if ((e.ctrlKey || e.metaKey) && k === '=') {
 			e.preventDefault();

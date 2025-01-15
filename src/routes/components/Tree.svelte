@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {
-		choosePlans,
+		chooseBreakdowns,
 		getAllCollapsed,
 		getAllParentIDs,
 		getParentNode,
@@ -12,6 +12,7 @@
 	import type {
 		Node as NodeType,
 		PosNode,
+		HashMap,
 		TitlePosNode,
 		TreeDefinition,
 		TreeSettings
@@ -25,6 +26,7 @@
 	import { positionHorizontalTree } from '$lib/horizontalTreeLogic';
 	import { mergeWithDefaults, mixColors, sendTipOnce } from '$lib/utils';
 	import ToolTipItem from '$lib/components/general/ToolTipItem.svelte';
+	import { defaultSettings } from '$lib/trees/allTrees';
 
 	const {
 		title,
@@ -32,6 +34,7 @@
 		tree: fullTree,
 		note = '',
 		customSettings = {},
+		breakdownName = 'breakdown',
 		canvasPadding = 1500
 	}: TreeDefinition = $props();
 
@@ -40,48 +43,6 @@
 
 	let tree: NodeType | undefined = $state(undefined);
 
-	const defaultSettings: TreeSettings = {
-		defaultMode: {
-			minNodeWidth: 1700,
-			nodeWidthBranchingFactorMultiplier: 500,
-			nodeHeight: 1800,
-			verticalSpacing: 130,
-			siblingNodeSpacing: 500,
-			nodeGroupSpacing: 600
-		},
-		titlesMode: {
-			horizontalSpacing: 600,
-			siblingNodeSpacing: 40,
-			nodeGroupSpacing: 70,
-			avgTextCharSizes: [
-				{
-					textSize: 70,
-					charW: 34
-				},
-				{
-					textSize: 50,
-					charW: 24.5
-				},
-				{
-					textSize: 30,
-					charW: 14.7
-				},
-				{
-					textSize: 22,
-					charW: 10.7
-				},
-				{
-					textSize: 18,
-					charW: 8.8
-				}
-			],
-			defaultTitleCharSize: {
-				textSize: 15,
-				charW: 7.287
-			},
-			horizontalSpacingAdditions: [350, 70, 70]
-		}
-	};
 	const settings = mergeWithDefaults(defaultSettings, customSettings);
 
 	let positionedNodes: PosNode[] = $state([]);
@@ -96,7 +57,6 @@
 	// $inspect(textw / test.length);
 
 	let openModal = $state(() => {});
-	let goalWidth = $state(settings.defaultMode.minNodeWidth);
 	let containerDiv: HTMLDivElement | undefined = $state();
 	let navToNode: ((middle: number, top: number, dur?: number) => void) | undefined =
 		$state(undefined);
@@ -111,22 +71,24 @@
 	const collapsedNodes = $state(
 		createLocalStore(`collapsedNodesStore-${pathName}`, getAllCollapsed(fullTree))
 	);
+	const selectedBreakdowns = $state(
+		createLocalStore(`selectedBreakdowns-${pathName}`, {} as HashMap)
+	);
+
 	const nodeAction = writable(null as null | string);
 
-	activateTree();
+	loadTree();
 
 	$effect(() => {
 		subHighlighted = lastNavedNode.sub || '';
 	});
 
-	function setCollapsed(collapsed: string[], addedId?: string) {
+	function setCollapsed(collapsed: string[], centeredNodeID?: string) {
 		if (!tree) return;
-		let prevParentPosNode;
-		let parentNode: NodeType | undefined;
-		if (addedId) {
-			parentNode = getParentNode(addedId, tree);
-			prevParentPosNode = positionedNodes.find((pos) => pos.node.id === parentNode?.id);
-			if (!prevParentPosNode) return;
+		let prevCenteredPosNode;
+		if (centeredNodeID) {
+			prevCenteredPosNode = positionedNodes.find((pos) => pos.node.id === centeredNodeID);
+			if (!prevCenteredPosNode) return;
 		}
 		collapsedNodes.set(collapsed);
 		const positionedResult = positionTree(tree, collapsed, settings.defaultMode);
@@ -134,13 +96,12 @@
 		positionedNodes = positionedResult.positionedNodes;
 		totalHeight = positionedResult.totalHeight;
 		totalWidth = positionedResult.totalWidth;
-		goalWidth = positionedResult.nodeWidth;
 
-		if (prevParentPosNode) {
-			const parentPosNode = positionedNodes.find((pos) => pos.node.id === parentNode?.id);
-			if (!parentPosNode) return;
-			const offsetX = (parentPosNode.left || 0) - (prevParentPosNode.left || 0);
-			const offsetY = (parentPosNode.top || 0) - (prevParentPosNode.top || 0);
+		if (prevCenteredPosNode) {
+			const centeredPosNode = positionedNodes.find((pos) => pos.node.id === centeredNodeID);
+			if (!centeredPosNode) return;
+			const offsetX = (centeredPosNode.left || 0) - (prevCenteredPosNode.left || 0);
+			const offsetY = (centeredPosNode.top || 0) - (prevCenteredPosNode.top || 0);
 			moveByOffset?.(offsetX, offsetY);
 		}
 
@@ -155,7 +116,7 @@
 
 		titlePositionedNodes = positionedResult.positionedNodes;
 		totalTitleHeight = positionedResult.totalHeight;
-		totalTitleWidth = positionedResult.totalWidth;
+		totalTitleWidth = positionedResult.totalWidth + settings.titlesMode.widthAddition;
 
 		setTimeout(() => goFullIfOut(), 1);
 
@@ -164,9 +125,12 @@
 		// }
 	}
 
-	function activateTree() {
-		tree = choosePlans(fullTree);
-		setCollapsed($collapsedNodes);
+	function loadTree(
+		selectBreakdown: undefined | { nodeID: string; breakdownID: string } = undefined
+	) {
+		if (selectBreakdown) $selectedBreakdowns[selectBreakdown.nodeID] = selectBreakdown.breakdownID;
+		tree = chooseBreakdowns(fullTree, $selectedBreakdowns);
+		setCollapsed($collapsedNodes, selectBreakdown?.nodeID);
 		setTitlePosNodes();
 	}
 
@@ -207,7 +171,7 @@
 				}
 			} else {
 				navToNode?.(
-					canvasPadding + (lastNavedNode.posNode.left || 0) + goalWidth / 2,
+					canvasPadding + (lastNavedNode.posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
 					canvasPadding + (lastNavedNode.posNode.top || 0) - 80,
 					node_dur
 				);
@@ -445,7 +409,7 @@
 						{#each positionedNodes as posNode (posNode.node.id)}
 							<div
 								role="presentation"
-								style="width: {goalWidth}px; height: {settings.defaultMode
+								style="width: {settings.defaultMode.nodeWidth}px; height: {settings.defaultMode
 									.nodeHeight}px; top: {posNode.top}px; left: {posNode.left}px"
 								class="absolute"
 							>
@@ -467,7 +431,10 @@
 										if ($collapsedNodes.includes(miniNode.id)) {
 											handleNavNode(miniNode.id);
 										} else {
-											setCollapsed([...$collapsedNodes, miniNode.id], miniNode.id);
+											setCollapsed(
+												[...$collapsedNodes, miniNode.id],
+												getParentNode(miniNode.id, tree)?.id
+											);
 										}
 									}}
 									goalHeight={settings.defaultMode.nodeHeight}
@@ -476,6 +443,8 @@
 									{subHighlighted}
 									{containerDiv}
 									{totalHeight}
+									{breakdownName}
+									{loadTree}
 									{totalWidth}
 								/>
 							</div>
@@ -485,7 +454,7 @@
 									height={totalHeight}
 									pointA={posNode.miniSubMiddles?.find((mini) => mini.id === posSubNode.node.id)}
 									pointB={{
-										x: (posSubNode.left || 0) + goalWidth / 2,
+										x: (posSubNode.left || 0) + settings.defaultMode.nodeWidth / 2,
 										y: (posSubNode.top || 0) - 30
 									}}
 									strokeWidth={1.5}
