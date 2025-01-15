@@ -31,7 +31,7 @@
 
 	{#if dropdownOpen}
 		<div
-			use:clickOutside={() => (dropdownOpen = false)}
+			use:clickOutside={() => setTimeout(() => (dropdownOpen = false))}
 			transition:slide={{ duration: 200 }}
 			class="absolute right-0 top-[calc(100%+4px)] z-[1] min-w-[150px] rounded-md border border-gray-700 bg-gray-900 py-1 shadow-lg"
 		>

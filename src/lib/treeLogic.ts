@@ -93,7 +93,7 @@ function positionTree(t: Node, collapsedNodes: string[], settings: VerticalTreeS
 	}
 }
 
-function chooseBreakdowns(fullNode: any, selectedBreakdowns: HashMap, depth = 0) {
+function chooseBreakdowns(fullNode: any, selectedBreakdowns: HashMap = {}, depth = 0) {
 	if (!depth) fullNode = JSON.parse(JSON.stringify(fullNode));
 	if (fullNode.breakdowns?.[0]) {
 		const selectedId = selectedBreakdowns[fullNode.id];

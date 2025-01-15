@@ -111,8 +111,10 @@
 		}, 1);
 	}
 	function setTitlePosNodes() {
-		if (!tree) return;
-		const positionedResult = positionHorizontalTree(tree, settings.titlesMode);
+		const positionedResult = positionHorizontalTree(
+			chooseBreakdowns(fullTree),
+			settings.titlesMode
+		);
 
 		titlePositionedNodes = positionedResult.positionedNodes;
 		totalTitleHeight = positionedResult.totalHeight;
