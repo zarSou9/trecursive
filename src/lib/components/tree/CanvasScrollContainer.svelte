@@ -9,13 +9,17 @@
 		children?: import('svelte').Snippet;
 	}
 
-	const isUsingMouse: Writable<boolean> = getContext('isUsingMouse') || writable(false);
+	let mouseIn = false;
 
-	const wheelHandlerDefault = (
-		e: WheelEvent & {
-			currentTarget: EventTarget & HTMLDivElement;
-		}
-	) => {
+	let { className = '', styleName = '', children, ...rest }: Props = $props();
+</script>
+
+<!-- svelte-ignore a11y_mouse_events_have_key_events -->
+<div
+	role="presentation"
+	onmousemove={() => (mouseIn = true)}
+	onmouseleave={() => (mouseIn = false)}
+	onwheel={(e) => {
 		if (e.ctrlKey || !mouseIn) return;
 		const el = e.currentTarget;
 		const isScrollingUp = e.deltaY < 0;
@@ -29,26 +33,8 @@
 		} else {
 			e.stopPropagation();
 		}
-	};
-	let onWheelHandler = $state(wheelHandlerDefault);
-
-	isUsingMouse.subscribe((v) => {
-		if (v) onWheelHandler = (e) => e.stopPropagation();
-		else onWheelHandler = wheelHandlerDefault;
-	});
-
-	let mouseIn = false;
-
-	let { className = '', styleName = '', children, ...rest }: Props = $props();
-</script>
-
-<!-- svelte-ignore a11y_mouse_events_have_key_events -->
-<div
-	role="presentation"
-	onmousemove={() => (mouseIn = true)}
-	onmouseleave={() => (mouseIn = false)}
-	onwheel={onWheelHandler}
-	class="overflow-auto scrollbar-custom [&::-webkit-scrollbar-track]:bg-[#0000] {className}"
+	}}
+	class="scrollbar-custom overflow-auto [&::-webkit-scrollbar-track]:bg-[#0000] {className}"
 	style="scrollbar-color: #6e6e6e #0000; {styleName}"
 	{...rest}
 >
