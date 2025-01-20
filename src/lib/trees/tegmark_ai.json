@@ -2,7 +2,7 @@
 	"id": "f54651a2-efdf-45e5-b903-9177faeea554",
 	"title": "AI Safety",
 	"description": "Mitigate the risk that people build an agentic AI system which results in the loss of human control, extinction or some other existential catastrophe.",
-	"questions": null,
+	"questions": [],
 	"breakdowns": [
 		{
 			"id": "e3c39d1d-4e00-41b4-a192-bea2cfafa73e",
@@ -22,7 +22,40 @@
 					"id": "2b75547b-5853-4786-9383-f4ced79744cf",
 					"title": "Automated Formal Verification",
 					"description": "Develop the capability to automatically verify that complex software systems provably satisfy formal specifications. This includes both generating and checking mathematical proofs of compliance at the scale and complexity needed for AGI systems.",
-					"questions": null,
+					"questions": [
+						{
+							"id": "fbd2cdd5-bd2f-4e7e-ab5b-5130a7e9cb9e",
+							"question": "How can we develop compositional verification approaches that allow formally verified components to be safely combined into larger systems while preserving their security properties, without requiring reverification of the entire system?"
+						},
+						{
+							"id": "fb226e3b-f006-46eb-869e-30f7b4dd69f8",
+							"question": "What mathematical frameworks could enable automated translation between high-level safety/alignment specifications written in natural language and formal specifications that can be mechanically verified?"
+						},
+						{
+							"id": "dfd53576-b0fa-4b09-9459-addd011ed8eb",
+							"question": "How can we create verification techniques that can handle learned components that continuously update during deployment, while still maintaining formal guarantees about system behavior?"
+						},
+						{
+							"id": "0ef173bf-857f-4e93-a1a0-b551b62aa08d",
+							"question": "What methods could allow formal verification of the interface between perception systems and decision-making components in AI systems, without requiring full verification of the perception system itself?"
+						},
+						{
+							"id": "3ab77d68-6b94-40f6-afe4-50664f68b3bf",
+							"question": "How can we develop incremental verification approaches that allow partial formal guarantees to be established and built upon during the iterative development of AI systems, rather than requiring complete specifications upfront?"
+						},
+						{
+							"id": "5e07bd03-5c36-4aa1-907c-b6ae169d20fc",
+							"question": "What techniques could enable formal verification of AI systems' robustness to distribution shift and out-of-distribution inputs while remaining computationally tractable?"
+						},
+						{
+							"id": "f54f34be-88c0-4f24-b418-bce99736efa2",
+							"question": "How can we create verification frameworks that can handle probabilistic and uncertainty-aware specifications while still providing meaningful safety guarantees for AI systems?"
+						},
+						{
+							"id": "6e073bdd-03dd-4e7c-906a-6c82197bec50",
+							"question": "What approaches could allow formal verification of the temporal stability of AI systems' learned behaviors and decision-making processes over extended periods of operation?"
+						}
+					],
 					"breakdowns": [
 						{
 							"id": "15c89abc-99e2-47ba-a317-17a4819fd7c9",
@@ -44,29 +77,321 @@
 									"id": "79e92151-e44d-470e-809f-b6ee076bc830",
 									"title": "Automated Theorem Proving",
 									"description": "Develop automated systems capable of discovering mathematical proofs at scale, particularly for verifying program properties. This includes both complete automation for simpler properties and semi-automated interactive proving for complex properties.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "3f89a6ce-cca4-4971-a552-4573d5c3d87b",
+											"question": "How can we leverage large language models' natural language understanding capabilities to automatically translate informal mathematical proofs from research papers into formal, machine-verifiable proof sketches?"
+										},
+										{
+											"id": "7db9650d-3d5a-4186-bb60-34b9e210cd28",
+											"question": "What neural architectures and training approaches would be most effective for learning to generate proof search guidance heuristics from large datasets of successful mathematical proofs?"
+										},
+										{
+											"id": "37307433-e5bb-4d91-83de-15ff82f79ed2",
+											"question": "How can we develop hybrid systems that effectively combine symbolic reasoning with neural components while maintaining formal verification guarantees about the overall system's correctness?"
+										},
+										{
+											"id": "9668b23e-9504-43f5-a699-da77e3a18c58",
+											"question": "What techniques could enable automated theorem provers to effectively decompose complex proofs into smaller, more manageable sub-proofs while preserving logical soundness and completeness?"
+										},
+										{
+											"id": "b8012cbb-03e3-4ef3-8057-7539b75dd6ac",
+											"question": "How can we design proof search algorithms that explicitly reason about and exploit mathematical symmetries and invariants to reduce the search space?"
+										},
+										{
+											"id": "ab68e236-c624-4fad-8df3-934c60ed0071",
+											"question": "What methods could enable automated theorem provers to learn from failed proof attempts to improve their proving strategies over time while maintaining soundness?"
+										},
+										{
+											"id": "a9e2f195-bc78-4682-aab7-fbb1dbb0b8f4",
+											"question": "How can we develop automated methods for translating between different formal proof systems while preserving proof structure and insights, enabling better proof reuse and transfer learning?"
+										},
+										{
+											"id": "af457536-b6b9-4f1b-91ec-09033ad712c6",
+											"question": "What approaches could enable automated theorem provers to effectively reason about continuous and infinite domains while maintaining formal rigor and computational tractability?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "1d9073cd-99c4-401d-b428-807df6938ee1",
+											"title": "Capability-Driven Automated Theorem Proving Development",
+											"paper": {
+												"id": "https://arxiv.org/abs/2003.06458",
+												"arxiv_id": "2003.06458",
+												"url": "https://arxiv.org/abs/2003.06458",
+												"title": "QED at Large: A Survey of Engineering of Formally Verified Software",
+												"published_date": "2020-03-13T00:00:00.000Z",
+												"abstract": "Development of formal proofs of correctness of programs can increase actual and perceived reliability and facilitate better understanding of program specifications and their underlying assumptions. Tools supporting such development have been available for over 40 years, but have only recently seen wide practical use. Projects based on construction of machine-checked formal proofs are now reaching an unprecedented scale, comparable to large software projects, which leads to new challenges in proof development and maintenance. Despite its increasing importance, the field of proof engineering is seldom considered in its own right; related theories, techniques, and tools span many fields and venues. This survey of the literature presents a holistic understanding of proof engineering for program correctness, covering impact in practice, foundations, proof automation, proof organization, and practical proof development.",
+												"citation_count": 65,
+												"influential_citation_count": 1,
+												"ref": "17914"
+											},
+											"explanation": "The paper suggests that effective automated theorem proving requires a balance between fully automated capabilities for simpler properties and semi-automated support for complex properties. Both of these must be built on robust infrastructure that ensures correctness and enables integration with broader verification workflows. This naturally suggests breaking down the goal based on these distinct but complementary capabilities needed for a complete automated theorem proving system. The approach separates core automated proving capabilities from interactive proving support, while ensuring both are built on shared infrastructure for proof checking and verification integration. This creates clear separation of concerns while maintaining cohesion through shared infrastructure.",
+											"sub_nodes": [
+												{
+													"id": "7b768fbc-d2d3-4e66-9846-df5aed0533a0",
+													"title": "Automated Proof Search Engine",
+													"description": "Develop automated systems capable of discovering proofs for simpler properties without human guidance. This includes implementing search strategies, decision procedures, and automation tactics that can completely automate proof discovery for well-defined classes of properties.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "6c6d286b-f6e1-409c-bfe3-8320cfa26df5",
+													"title": "Interactive Proving Assistant",
+													"description": "Create tools and frameworks that enable effective human-guided proof development for complex properties. This includes developing proof languages, tactic frameworks, and interactive proving environments that productively combine human insight with automated assistance.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "68f2fe6a-62d1-458e-b706-145d6f633db8",
+													"title": "Verification Infrastructure",
+													"description": "Build the underlying infrastructure needed to support both automated and interactive proving, including efficient proof checking, integration with specification languages, and interfaces to broader verification workflows. This provides the foundation that ensures correctness of generated proofs and enables composition with other verification tools.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "8bfbff4f-2e37-4b2b-975e-6f0791eac949",
 									"title": "Proof Checking Infrastructure",
 									"description": "Create efficient and trustworthy systems for verifying the correctness of generated proofs. This includes developing small, verifiable proof checker kernels and efficient proof representations that can scale to complex AGI systems.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "3e368c4d-0d6d-4562-806b-53ec57726771",
+											"question": "How can proof checker kernels be designed to maintain both formal verifiability and high performance when scaled to handle proofs with billions of steps that may arise in AGI system verification?"
+										},
+										{
+											"id": "6edbf189-9c9f-4bde-b17c-69a2fc28cc14",
+											"question": "What are the fundamental theoretical limits on proof compression techniques that preserve independent verifiability, and how close are current approaches to these limits?"
+										},
+										{
+											"id": "0aa8df24-5ae5-4614-9d7a-0018985c5f7e",
+											"question": "How can proof checking systems be architected to efficiently handle dynamic, streaming proofs that are generated and verified incrementally during AGI system operation?"
+										},
+										{
+											"id": "d726404d-f374-4df5-a5d1-4e01d9566d82",
+											"question": "What novel proof representation formats could enable parallel verification while maintaining a minimal trusted computing base and formal guarantees of soundness?"
+										},
+										{
+											"id": "c7fdc855-f5ee-4a7e-832e-62ac9e1b0590",
+											"question": "How can proof checking systems be designed to efficiently handle probabilistic and approximate reasoning while maintaining rigorous correctness guarantees for the overall verification?"
+										},
+										{
+											"id": "0a8176d0-31c1-40c4-8c14-16505f94301d",
+											"question": "What techniques could enable proof checkers to efficiently verify proofs that involve complex numerical computations and floating-point arithmetic without expanding the trusted computing base?"
+										},
+										{
+											"id": "b8bce6e0-7792-4b98-80a8-61dc81eec40e",
+											"question": "How can proof checking systems be designed to gracefully handle and recover from hardware errors while maintaining trustworthy verification, especially for long-running proofs?"
+										},
+										{
+											"id": "95823cdc-abed-43ba-a217-d9a72bfc1899",
+											"question": "What novel approaches could enable proof checkers to efficiently verify proofs that involve reasoning about continuous time and hybrid systems while maintaining decidability?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "986d0c2f-388d-4366-9442-120a0d09e40a",
+											"title": "Trustworthy and Scalable Proof Checking Infrastructure",
+											"paper": {
+												"id": "https://arxiv.org/abs/2003.06458",
+												"arxiv_id": "2003.06458",
+												"url": "https://arxiv.org/abs/2003.06458",
+												"title": "QED at Large: A Survey of Engineering of Formally Verified Software",
+												"published_date": "2020-03-13T00:00:00.000Z",
+												"abstract": "Development of formal proofs of correctness of programs can increase actual and perceived reliability and facilitate better understanding of program specifications and their underlying assumptions. Tools supporting such development have been available for over 40 years, but have only recently seen wide practical use. Projects based on construction of machine-checked formal proofs are now reaching an unprecedented scale, comparable to large software projects, which leads to new challenges in proof development and maintenance. Despite its increasing importance, the field of proof engineering is seldom considered in its own right; related theories, techniques, and tools span many fields and venues. This survey of the literature presents a holistic understanding of proof engineering for program correctness, covering impact in practice, foundations, proof automation, proof organization, and practical proof development.",
+												"citation_count": 65,
+												"influential_citation_count": 1,
+												"ref": "17914"
+											},
+											"explanation": "Following the paper's framework around trusted bases and the de Bruijn criterion, this breakdown organizes proof checking infrastructure development into three fundamental challenges that must be addressed. The first focuses on developing the minimal trusted core that gives confidence in the overall system. The second addresses how to represent and process proofs efficiently at scale. The third ensures the infrastructure integrates effectively with the broader verification ecosystem.\n\nThis approach is informed by the paper's analysis of trusted computing bases and proof objects, particularly sections 4.3-4.4. By separating core checker correctness from proof representation and processing concerns, we can minimize the trusted base while still enabling practical verification at scale. The integration component ensures these theoretical advances translate to practical impact.",
+											"sub_nodes": [
+												{
+													"id": "658b508e-ad6c-4eb7-aa67-6eb7022fc0f5",
+													"title": "Minimal Verified Kernel Development",
+													"description": "Create and formally verify a minimal proof checking kernel that satisfies the de Bruijn criterion. This includes defining the core checking logic, proving its correctness, and ensuring it is small enough to inspire confidence while being sufficiently expressive to handle complex proofs.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "eb76eadc-1a46-4828-87b3-ba41829cc605",
+													"title": "Scalable Proof Processing",
+													"description": "Design efficient proof representations and checking algorithms that can handle large, complex proofs while maintaining reasonable performance. This includes developing proof formats that balance size and checking speed, as well as implementing efficient proof processing techniques.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "f1b3fc6e-d624-4901-a3d1-6b5384265dbe",
+													"title": "Verification Pipeline Integration",
+													"description": "Create the infrastructure needed to connect proof checking with the broader verification ecosystem, including proof generation, extraction, and execution. This includes developing interfaces and tools to efficiently move between different representations while maintaining trustworthiness.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "5702d13d-2b41-4a5b-846e-fe00568383e2",
 									"title": "Specification Language Development",
 									"description": "Design formal languages and frameworks for precisely expressing desired system properties and safety constraints. These must be both mathematically rigorous and practical for specifying complex behavioral and safety properties of AGI systems.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "c9498559-b59f-412e-9402-88ed55125cb0",
+											"question": "How can specification languages effectively capture and formalize emergent behaviors in complex AI systems that may not be apparent at the component level?"
+										},
+										{
+											"id": "182cfcaa-bb3f-42c3-b22c-fb2706fceaba",
+											"question": "What mathematical frameworks could enable compositional specification of safety properties such that local component-level specifications provably guarantee global system-level properties?"
+										},
+										{
+											"id": "641b0a34-3d4c-45c4-b04b-14b1f621dac0",
+											"question": "How can specification languages be designed to express dynamic constraints that evolve based on an AI system's learning and adaptation while maintaining mathematical rigor?"
+										},
+										{
+											"id": "4d165a2c-529c-4f5f-8b1b-98fbc20eedb1",
+											"question": "What formal approaches could allow specification languages to handle uncertainty and probabilistic behaviors while remaining tractable for automated verification?"
+										},
+										{
+											"id": "4e5847db-c448-4b25-a181-b4478434d05e",
+											"question": "How can specification languages bridge the semantic gap between high-level human values/intentions and low-level mathematical properties in a way that preserves human meaning?"
+										},
+										{
+											"id": "3d5e2232-f4ab-4370-a0be-43b3f9159fd7",
+											"question": "What language constructs would enable formal specification of an AI system's information flow and knowledge acquisition constraints without overly restricting legitimate learning?"
+										},
+										{
+											"id": "cb255c9e-20b4-4f46-9633-19ede02ab39b",
+											"question": "How can specification languages formally express and verify properties about an AI system's internal optimization processes and objective functions?"
+										},
+										{
+											"id": "dc947947-d091-414b-9c02-4767248d07a5",
+											"question": "What formal frameworks could allow specifications to reason about the preservation of human control and oversight capabilities as an AI system becomes more capable?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "296ab914-87bf-4e92-b030-59dc8c28af7f",
+											"title": "Bridging Mathematical Rigor and Practical Usability",
+											"paper": {
+												"id": "https://arxiv.org/abs/2003.06458",
+												"arxiv_id": "2003.06458",
+												"url": "https://arxiv.org/abs/2003.06458",
+												"title": "QED at Large: A Survey of Engineering of Formally Verified Software",
+												"published_date": "2020-03-13T00:00:00.000Z",
+												"abstract": "Development of formal proofs of correctness of programs can increase actual and perceived reliability and facilitate better understanding of program specifications and their underlying assumptions. Tools supporting such development have been available for over 40 years, but have only recently seen wide practical use. Projects based on construction of machine-checked formal proofs are now reaching an unprecedented scale, comparable to large software projects, which leads to new challenges in proof development and maintenance. Despite its increasing importance, the field of proof engineering is seldom considered in its own right; related theories, techniques, and tools span many fields and venues. This survey of the literature presents a holistic understanding of proof engineering for program correctness, covering impact in practice, foundations, proof automation, proof organization, and practical proof development.",
+												"citation_count": 65,
+												"influential_citation_count": 1,
+												"ref": "17914"
+											},
+											"explanation": "The development of specification languages requires carefully balancing mathematical precision with practical engineering needs. The paper demonstrates this through its discussion of various specification approaches, from mathematical foundations to practical tools like Ott and Lem. This suggests breaking down the challenge into three fundamental aspects: the mathematical foundations that ensure specifications are precise and verifiable, the practical expression mechanisms that make specifications usable for engineers, and the integration capabilities that connect specifications to verification tools.\n\n    This breakdown ensures that resulting specification languages will be both mathematically rigorous and practically useful in real-world verification projects. It addresses both the theoretical foundations needed for sound verification and the practical considerations needed for adoption and scalability.",
+											"sub_nodes": [
+												{
+													"id": "ddc137c0-1237-4d7f-9909-a4cc9a22f489",
+													"title": "Mathematical Foundation Development",
+													"description": "Design the core mathematical framework for expressing specifications, including formal semantics, type systems, and logical foundations. This foundation must be expressive enough to capture complex system properties while remaining amenable to automated reasoning and verification.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "a00e055b-f8ec-490d-adef-38714e8f3b16",
+													"title": "Practical Expression Mechanisms",
+													"description": "Develop high-level specification constructs, patterns, and domain-specific extensions that allow engineers to naturally express behavioral and safety properties. These mechanisms must maintain mathematical rigor while providing intuitive ways to compose and abstract specifications.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "ecf15e27-56dd-4f8f-9138-bf81a737bf68",
+													"title": "Verification Integration Framework",
+													"description": "Create interfaces and tools that connect specifications to automated verification systems and proof frameworks. This includes developing transformation tools, verification condition generators, and proof automation that can effectively reason about specifications.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "b5d5ab29-e361-44f9-9cff-4093fb108e5f",
 									"title": "Proof Engineering Methodology",
 									"description": "Develop principles, patterns and tools for managing large-scale formal verification projects. This includes approaches for proof organization, reuse, and evolution that can scale to the complexity of AGI systems while remaining maintainable.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "b0d56d16-197d-44da-b026-f5da49a513b0",
+											"question": "How can we develop automated metrics and analysis tools to evaluate the maintainability and evolvability of large formal proof developments, similar to code quality metrics in traditional software engineering?"
+										},
+										{
+											"id": "6c098bfc-4809-49ca-97bf-a8e17ed5552e",
+											"question": "What patterns and abstractions can be created for managing proof dependencies and versioning when underlying specifications or implementations change, while minimizing the need to rebuild existing proofs?"
+										},
+										{
+											"id": "0e914a6a-be43-4beb-843f-4eb2d29ce40f",
+											"question": "How can we effectively capture and formalize domain-specific proof strategies that emerge during verification projects to enable systematic reuse across similar proofs and knowledge transfer between teams?"
+										},
+										{
+											"id": "dfb59afd-9382-499b-9ca7-c77da705111e",
+											"question": "What visualization and navigation techniques could help engineers understand complex proof structures and their relationships at different levels of abstraction, particularly for proofs that span multiple components or properties?"
+										},
+										{
+											"id": "469dfb54-542f-4c44-bb68-2c3702d18015",
+											"question": "How can we design proof organization frameworks that gracefully handle uncertainty and partial verification, allowing teams to make incremental progress while maintaining clarity about what has and hasn't been fully proven?"
+										},
+										{
+											"id": "15a3b9a4-7b92-4e1b-92c8-b9ee41c3c2bc",
+											"question": "What methodologies can be developed for decomposing complex AGI system properties into more manageable proof obligations while ensuring that the decomposition itself preserves the desired safety guarantees?"
+										},
+										{
+											"id": "a5788e65-3ad9-4f87-b632-39a44470979c",
+											"question": "How can we create effective interfaces between different proof assistants and verification tools that preserve proof structure and reusability rather than just translating the final theorems?"
+										},
+										{
+											"id": "4e9c937e-32d8-4a6c-b935-f088fc38224c",
+											"question": "What techniques can be developed for automatically identifying and extracting common proof patterns from existing verification projects to build reusable proof libraries specifically targeted at AGI systems?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "4ce60853-6726-4907-bd2d-a83b5b341c5c",
+											"title": "Three-Pillar Proof Engineering Methodology",
+											"paper": {
+												"id": "https://arxiv.org/abs/2003.06458",
+												"arxiv_id": "2003.06458",
+												"url": "https://arxiv.org/abs/2003.06458",
+												"title": "QED at Large: A Survey of Engineering of Formally Verified Software",
+												"published_date": "2020-03-13T00:00:00.000Z",
+												"abstract": "Development of formal proofs of correctness of programs can increase actual and perceived reliability and facilitate better understanding of program specifications and their underlying assumptions. Tools supporting such development have been available for over 40 years, but have only recently seen wide practical use. Projects based on construction of machine-checked formal proofs are now reaching an unprecedented scale, comparable to large software projects, which leads to new challenges in proof development and maintenance. Despite its increasing importance, the field of proof engineering is seldom considered in its own right; related theories, techniques, and tools span many fields and venues. This survey of the literature presents a holistic understanding of proof engineering for program correctness, covering impact in practice, foundations, proof automation, proof organization, and practical proof development.",
+												"citation_count": 65,
+												"influential_citation_count": 1,
+												"ref": "17914"
+											},
+											"explanation": "The paper demonstrates that effective proof engineering methodology requires addressing both theoretical foundations and practical implementation concerns. This naturally suggests organizing our approach around three complementary pillars: principles, infrastructure, and processes. The principles provide the theoretical foundation for how proofs should be structured and organized. The infrastructure provides the practical tools and frameworks needed to implement these principles at scale. The processes tie everything together by defining how to effectively apply the principles and infrastructure in practice.\n\nThis breakdown is informed by the paper's extensive coverage of design principles (Section 6.2), proof organization (Section 6.1), and practical development (Chapter 7). It recognizes that successful proof engineering requires not just knowing what makes a good proof, but having the tools and processes to consistently produce good proofs at scale.",
+											"sub_nodes": [
+												{
+													"id": "d6a5db46-7a38-488a-9059-c586c8e02689",
+													"title": "Foundational Principles and Patterns",
+													"description": "Develop core principles and patterns for structuring and organizing large-scale formal proofs. This includes guidelines for abstraction, modularity, reuse, and evolution that promote maintainable and scalable proof developments.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "12c11c66-24da-4065-820b-8185818c89b8",
+													"title": "Development Infrastructure",
+													"description": "Create the tools, frameworks, and infrastructure needed to support large-scale proof development. This includes specialized languages, automation support, and project management capabilities that make it practical to apply the foundational principles at scale.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "544babe2-59c2-4d9d-9981-fe46e589826a",
+													"title": "Management Processes",
+													"description": "Define the processes and practices for effectively managing proof development throughout the entire lifecycle. This includes methodologies for proof planning, development, review, maintenance, and evolution that ensure consistent quality and sustainable growth of proof projects.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								}
 							]
 						},
@@ -212,7 +537,40 @@
 					"id": "15a4f25a-43fe-42f5-828c-68c887d4058f",
 					"title": "Safe Hardware Infrastructure",
 					"description": "Create a global infrastructure of provably secure hardware that can enforce safety constraints on AI systems. This hardware must be tamper-proof against even superintelligent adversaries and maintain security when networked together.",
-					"questions": null,
+					"questions": [
+						{
+							"id": "ab8bb525-6307-4093-8f69-ef428521c0a4",
+							"question": "How can we design and verify hardware-level mechanisms that can reliably detect and respond to attempts by an AI system to modify its own computational substrate, even if those modification attempts leverage yet-unknown physics or engineering principles?"
+						},
+						{
+							"id": "046403b0-a11a-425c-b6c6-c5a1c5ad5859",
+							"question": "What are the fundamental theoretical limits on creating tamper-proof hardware given quantum mechanics and other physical laws, and how close can we get to these limits with practical engineering approaches?"
+						},
+						{
+							"id": "f71019db-fe07-4d31-90d4-e297563b2011",
+							"question": "How can we develop formal verification methods that can prove properties about hardware security even when the verifier is less intelligent than the potential adversary trying to compromise the system?"
+						},
+						{
+							"id": "634c43ab-287c-471d-87ba-19f787a4bc8c",
+							"question": "What novel architectures could enable secure hardware to maintain its safety properties even when composed into large distributed networks, without creating new attack surfaces at the network coordination layer?"
+						},
+						{
+							"id": "e3d1fd06-5886-414d-8aef-da520d6b335c",
+							"question": "How can we design hardware-enforced 'cognitive firewalls' that reliably prevent an AI system from accessing or influencing certain protected computational processes, even if the AI system has a superior understanding of the hardware's underlying physics?"
+						},
+						{
+							"id": "8d3ba914-51d6-4cf7-bfa7-ccc01c23d993",
+							"question": "What mechanisms could allow secure hardware to maintain its safety properties even during hardware updates and maintenance, while preventing these necessary modification capabilities from becoming attack vectors?"
+						},
+						{
+							"id": "5802a6fb-99f4-4340-bf00-93f2041cd9d3",
+							"question": "How can we develop hardware-based commitment mechanisms that would allow an AI system to credibly bind itself to certain constraints in a way that even its future more capable versions cannot circumvent?"
+						},
+						{
+							"id": "b7924c1e-62e9-483a-a401-a0202544a241",
+							"question": "What novel approaches could enable secure hardware to detect and respond to attempts at social engineering or other indirect manipulation of human operators, without requiring the hardware itself to have sophisticated models of human psychology?"
+						}
+					],
 					"breakdowns": [
 						{
 							"id": "f3b41fdd-e534-43c3-8090-78bb13aa32de",
@@ -234,36 +592,389 @@
 									"id": "908af3c1-4bb6-4885-9963-b75e2a385b10",
 									"title": "Physical Domain Isolation",
 									"description": "Establish complete hardware-level isolation between different computational domains, ensuring no shared hardware components or communication channels exist except through explicitly defined interfaces. This includes separate processors, memory, and I/O devices for different security domains.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "ef3e9222-698c-496f-b073-f3f7a5a4a68a",
+											"question": "How can we design hardware-level isolation mechanisms that maintain their security properties even when components degrade or fail over time, without creating new potential information leakage channels through the degradation process itself?"
+										},
+										{
+											"id": "3ea5ae3a-1396-48d1-8f20-b0adcb81a5c3",
+											"question": "What are the fundamental physical limits on how closely we can pack physically isolated computational domains while still maintaining provable isolation against electromagnetic interference, heat dissipation, and quantum effects?"
+										},
+										{
+											"id": "6683d81d-9aa9-43f5-8275-0b0cb70b5abc",
+											"question": "How can we develop testing methodologies to verify physical domain isolation that don't themselves introduce new attack surfaces or require compromising the isolation to perform the verification?"
+										},
+										{
+											"id": "7d93ed62-55f3-4b49-b23b-c328ab2e1156",
+											"question": "What novel materials or physical structures could enable dynamic reconfiguration of hardware isolation boundaries without introducing shared components or creating temporary bridges between domains during the reconfiguration process?"
+										},
+										{
+											"id": "abc2b74a-21bb-4eca-8c67-f0283aaa4683",
+											"question": "How can we design physically isolated domains that are resistant to side-channel attacks exploiting previously unknown physical phenomena, rather than just protecting against known attack vectors?"
+										},
+										{
+											"id": "0fa162fa-5e30-475c-8458-75c65968220a",
+											"question": "What architectural patterns could enable hierarchical physical isolation where domains can be nested within domains while maintaining complete isolation guarantees at each level?"
+										},
+										{
+											"id": "226bc225-d2e4-4d80-b749-b66f04fe22a9",
+											"question": "How can we implement physical domain isolation in quantum computing hardware where entanglement and measurement could potentially create implicit information channels between otherwise isolated components?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "d89d6942-4250-4468-ad62-ee898feb2f30",
+											"title": "Physical Isolation Through Hardware Separation",
+											"paper": {
+												"id": "https://arxiv.org/abs/2203.08284",
+												"arxiv_id": "2203.08284",
+												"url": "https://arxiv.org/abs/2203.08284",
+												"title": "Minimizing Trust with Exclusively-Used Physically-Isolated Hardware",
+												"published_date": "2022-03-15T00:00:00.000Z",
+												"abstract": "Smartphone owners often need to run security-critical programs on the same device as other untrusted and potentially malicious programs. This requires users to trust hardware and system software to correctly sandbox malicious programs, trust that is often misplaced. Our goal is to minimize the number and complexity of hardware and software components that a smartphone owner needs to trust to withstand adversarial inputs. We present a multi-domain hardware design composed of statically-partitioned, physically-isolated trust domains. We introduce a few simple, formally-verified hardware components to enable a program to gain provably exclusive and simultaneous access to both computation and I/O on a temporary basis. To manage this hardware, we present OctopOS, an OS composed of mutually distrustful subsystems. We present a prototype of this machine (hardware and OS) on a CPU-FPGA board and show that it incurs a small hardware cost compared to modern SoCs. For security-critical programs, we show that this machine significantly reduces the required trust compared to mainstream TEEs while achieving decent performance. For normal programs, performance is similar to a legacy machine.",
+												"citation_count": 0,
+												"influential_citation_count": 0,
+												"ref": "78473"
+											},
+											"explanation": "The paper demonstrates that achieving true physical domain isolation requires more than just separate hardware components - it requires a comprehensive approach that establishes, maintains, and verifies the isolation. The strategy focuses on three fundamental aspects: the physical separation itself, the mechanisms to maintain that separation over time, and the ability to verify the isolation is working as intended.\n\nThis breakdown is informed by the paper's implementation which showed that while physical separation forms the foundation, careful attention must be paid to maintaining isolation through proper domain management and verification mechanisms. The sub-goals work together in a hierarchical fashion - physical separation provides the foundation, isolation maintenance ensures it remains effective during operation, and isolation verification provides ongoing assurance of security.",
+											"sub_nodes": [
+												{
+													"id": "db0f9012-a90f-48f8-aefc-aebfbc15414a",
+													"title": "Physical Resource Separation",
+													"description": "Establish complete physical separation of hardware resources between domains, including processors, memory, I/O devices, and supporting infrastructure like power and clock systems. This separation must be fundamental to the hardware design and not dependent on programmable boundaries.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "f567af7b-d39d-41d0-b336-629918f9d2af",
+													"title": "Isolation Maintenance",
+													"description": "Create mechanisms and protocols to maintain domain isolation during system operation, including resource management, power state control, and interface management. These mechanisms must prevent any unintended interaction or information flow between domains while allowing authorized communications.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "b02858c7-93d0-419c-a2eb-19ebe8e9f298",
+													"title": "Isolation Verification",
+													"description": "Develop systems to continuously verify the effectiveness of domain isolation, including hardware-level monitoring, integrity checking, and attestation capabilities. This verification must be able to detect any compromise of the physical separation or isolation maintenance mechanisms.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "eeb91829-ba5f-46d3-876a-7523bebb024a",
 									"title": "Secure Inter-Domain Communication",
 									"description": "Create verifiable and tamper-proof communication channels between isolated hardware domains. These channels must enforce exclusive access, prevent unauthorized interference, and maintain security properties even when connecting trusted and untrusted domains.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "38b92da0-52ed-4ae0-b18b-742a39f0b94d",
+											"question": "How can we design communication protocols that maintain provable security properties even when one domain deliberately attempts to exploit timing variations in the channel to leak information?"
+										},
+										{
+											"id": "c366016d-d400-48d7-9b77-14afd9f0d823",
+											"question": "What are the fundamental physical limits on creating truly unidirectional communication channels between hardware domains, and how can we approach these limits in practical implementations?"
+										},
+										{
+											"id": "662a6cab-8669-4572-8b42-3403e46fd4a5",
+											"question": "How can we leverage recent advances in post-quantum cryptography to design inter-domain communication protocols that remain secure against adversaries with quantum computing capabilities while maintaining strict performance requirements?"
+										},
+										{
+											"id": "1ab20fe6-e949-46e9-a328-333ae052afd2",
+											"question": "What novel verification techniques could enable formal proof of information-flow properties across domain boundaries when the domains operate at different privilege levels and trust assumptions?"
+										},
+										{
+											"id": "d045f10b-3f53-4fea-ad41-cd4d95d6f04f",
+											"question": "How can we design communication channels that maintain security properties even when one domain attempts to exploit electromagnetic interference or other physical side-channels to influence another domain's behavior?"
+										},
+										{
+											"id": "e20b0d40-c612-4ed4-89a9-73afb0fe6562",
+											"question": "What are effective methods for dynamically reconfiguring inter-domain communication paths while maintaining continuous proof of security properties and preventing temporary vulnerabilities during transitions?"
+										},
+										{
+											"id": "3ca09ab7-beec-4c26-841a-c83b3aef40ed",
+											"question": "How can we create communication protocols that remain secure even when an adversarial domain has precise control over the timing and sequencing of messages to attempt to create race conditions or other temporal vulnerabilities?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "ab04af87-db73-48eb-a8a6-7b4ce23a164b",
+											"title": "Security-First Channel Design Strategy",
+											"paper": {
+												"id": "https://arxiv.org/abs/2203.08284",
+												"arxiv_id": "2203.08284",
+												"url": "https://arxiv.org/abs/2203.08284",
+												"title": "Minimizing Trust with Exclusively-Used Physically-Isolated Hardware",
+												"published_date": "2022-03-15T00:00:00.000Z",
+												"abstract": "Smartphone owners often need to run security-critical programs on the same device as other untrusted and potentially malicious programs. This requires users to trust hardware and system software to correctly sandbox malicious programs, trust that is often misplaced. Our goal is to minimize the number and complexity of hardware and software components that a smartphone owner needs to trust to withstand adversarial inputs. We present a multi-domain hardware design composed of statically-partitioned, physically-isolated trust domains. We introduce a few simple, formally-verified hardware components to enable a program to gain provably exclusive and simultaneous access to both computation and I/O on a temporary basis. To manage this hardware, we present OctopOS, an OS composed of mutually distrustful subsystems. We present a prototype of this machine (hardware and OS) on a CPU-FPGA board and show that it incurs a small hardware cost compared to modern SoCs. For security-critical programs, we show that this machine significantly reduces the required trust compared to mainstream TEEs while achieving decent performance. For normal programs, performance is similar to a legacy machine.",
+												"citation_count": 0,
+												"influential_citation_count": 0,
+												"ref": "78473"
+											},
+											"explanation": "The paper demonstrates that secure inter-domain communication requires both physical isolation and verifiable exclusive access as foundational principles. Building on this insight, the strategy focuses first on establishing fundamentally secure channels through physical design and protocols, then implementing precise access control to maintain security during actual use.\n\nCritically, given the high stakes of AI safety, we separate verification into its own goal rather than treating it as just an implementation detail. This ensures that formal verification and security validation receive focused attention throughout the development process. This three-part approach - secure channels, controlled access, and rigorous verification - provides a complete framework for achieving provably secure communication between isolated domains.",
+											"sub_nodes": [
+												{
+													"id": "26ddf374-7de8-465e-a312-848a98840869",
+													"title": "Secure Channel Architecture",
+													"description": "Design and implement the core communication channels between isolated domains. These channels must provide guaranteed message integrity and confidentiality through physical isolation and security protocols, while preventing information leakage through proper state management and cleanup between uses.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "876e2c7a-2f17-480c-acd8-979f63eec0ee",
+													"title": "Access Control Framework",
+													"description": "Develop the system for controlling and delegating access to communication channels. This includes mechanisms for establishing exclusive access, enforcing access quotas, and maintaining security properties during delegation and revocation of access rights.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "3719767d-8f5e-4795-b037-6ea0d4c04d38",
+													"title": "Security Verification System",
+													"description": "Create a comprehensive framework for verifying the security properties of both the channel architecture and access control system. This includes formal verification of the core primitives, validation of security guarantees, and ongoing verification of the system's security properties during operation.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "edf98cf7-1f01-42b7-9fee-8683fcf6d122",
 									"title": "Hardware State Management",
 									"description": "Implement mechanisms to guarantee clean hardware states before and after use, preventing information leakage between different executions. This includes verifiable reset capabilities and state verification systems that can be cryptographically proven.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "b76a6ef6-0c09-4674-845f-a9223105da24",
+											"question": "How can we develop provable bounds on the maximum amount of state information that could persist in various types of hardware components (e.g. capacitors, transistors, memory cells) after standard reset procedures?"
+										},
+										{
+											"id": "b5bb9318-1f0f-47d6-bb50-37e0ea4af845",
+											"question": "What novel verification techniques could be developed to detect subtle forms of hardware state persistence that might be exploitable by an adversarial AI system, such as electron trapped states or thermal memory effects?"
+										},
+										{
+											"id": "2fad2799-ab63-409f-9e52-7a1c39ab14ba",
+											"question": "How can we design hardware components that maintain verifiable state isolation properties even under extreme environmental conditions (temperature, radiation, EM fields) that might be weaponized by an adversarial system?"
+										},
+										{
+											"id": "8c9840ab-4143-4cb0-9e8b-e668914fffd3",
+											"question": "What cryptographic protocols could enable remote verification of complete hardware state resets without requiring trust in the verification hardware itself?"
+										},
+										{
+											"id": "a31c5cce-7d30-417f-8f9a-c784298b5c0d",
+											"question": "How can we develop formal models to reason about and prove the completeness of hardware state clearing across complex interconnected components with potential emergent state properties?"
+										},
+										{
+											"id": "f538aa91-f883-40b5-80d1-cb35be280d56",
+											"question": "What novel physical mechanisms beyond traditional electronic reset signals could provide stronger guarantees of complete state clearing (e.g. optical, quantum, or phase change approaches)?"
+										},
+										{
+											"id": "9cd554ce-e296-49a5-8965-d71ee8cf4b34",
+											"question": "How can we design hardware that maintains provable state isolation properties even when components are operating at their physical limits in terms of clock speed, voltage, or temperature?"
+										},
+										{
+											"id": "6f923485-950b-4f4e-9eb8-4a0b9753f2fb",
+											"question": "What techniques could detect and prevent subtle forms of cross-state contamination through physical side channels like power consumption patterns or electromagnetic emissions between supposedly isolated hardware states?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "7babddd6-76a5-4b28-aba0-de011f6926a0",
+											"title": "Verifiable State Management Framework",
+											"paper": {
+												"id": "https://arxiv.org/abs/2203.08284",
+												"arxiv_id": "2203.08284",
+												"url": "https://arxiv.org/abs/2203.08284",
+												"title": "Minimizing Trust with Exclusively-Used Physically-Isolated Hardware",
+												"published_date": "2022-03-15T00:00:00.000Z",
+												"abstract": "Smartphone owners often need to run security-critical programs on the same device as other untrusted and potentially malicious programs. This requires users to trust hardware and system software to correctly sandbox malicious programs, trust that is often misplaced. Our goal is to minimize the number and complexity of hardware and software components that a smartphone owner needs to trust to withstand adversarial inputs. We present a multi-domain hardware design composed of statically-partitioned, physically-isolated trust domains. We introduce a few simple, formally-verified hardware components to enable a program to gain provably exclusive and simultaneous access to both computation and I/O on a temporary basis. To manage this hardware, we present OctopOS, an OS composed of mutually distrustful subsystems. We present a prototype of this machine (hardware and OS) on a CPU-FPGA board and show that it incurs a small hardware cost compared to modern SoCs. For security-critical programs, we show that this machine significantly reduces the required trust compared to mainstream TEEs while achieving decent performance. For normal programs, performance is similar to a legacy machine.",
+												"citation_count": 0,
+												"influential_citation_count": 0,
+												"ref": "78473"
+											},
+											"explanation": "The paper demonstrates that hardware state management requires both mechanisms for cleaning states and systems for verifying those states are truly clean. This suggests a two-pronged approach: first establishing formal definitions and specifications for what constitutes clean states across different hardware components, then implementing both the mechanisms to achieve those states and the systems to verify them.\n\nThe breakdown follows this pattern by first focusing on formal specification of clean states and verification requirements, then addressing the actual mechanisms for state cleaning and verification, and finally handling the secure transitioning between states. This creates a complete framework where states are well-defined, verifiably achievable, and securely maintained through transitions. The approach is informed by the paper's emphasis on provable exclusive access but extends beyond their specific implementation to create a more general framework for hardware state management.",
+											"sub_nodes": [
+												{
+													"id": "903e0e94-a270-4628-be0d-f785f35db156",
+													"title": "Clean State Specification",
+													"description": "Define formal specifications for what constitutes a clean hardware state across different types of components and contexts. This includes identifying all potential state information that must be cleared and establishing cryptographic verification requirements for proving states are clean.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "aacbea22-33de-4baf-8458-d02437c7413b",
+													"title": "State Reset Mechanisms",
+													"description": "Develop reliable mechanisms for returning hardware components to verified clean states. This includes both the physical reset capabilities and the verification systems that can cryptographically prove the completeness of the cleaning process.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "17afb5c9-f652-40c2-b501-2d55326986ae",
+													"title": "Secure State Transitions",
+													"description": "Create protocols and mechanisms for securely managing transitions between hardware states, including verification of clean states before and after use. This includes handling edge cases and ensuring no information leakage occurs during transitions.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "56c73a4d-a089-4e96-ab29-05572bf55c0a",
 									"title": "Resource Access Control",
 									"description": "Develop hardware-enforced mechanisms for controlling access to critical resources and ensuring exclusive use when needed. This includes systems for delegating control, enforcing quotas, and maintaining security properties during resource transitions.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "9e2442b8-6f78-4b10-9ace-2f9eead9f402",
+											"question": "How can hardware-level resource quotas be designed to gracefully handle scenarios where an AI system attempts to exploit timing-based race conditions or deliberately exhaust its quota to create denial-of-service conditions?"
+										},
+										{
+											"id": "64464988-e7f7-4d0a-b408-8132924688b1",
+											"question": "What are the fundamental tradeoffs between granularity of resource control and verification complexity when implementing hardware-enforced access controls, and how can we optimize this balance for AI systems with varying levels of capability?"
+										},
+										{
+											"id": "059ef47f-6b28-4c1a-8213-a1f69e62e0a7",
+											"question": "How can we design resource delegation mechanisms that maintain provable security properties even when the delegating entity becomes compromised or attempts to exploit the delegation chain after the fact?"
+										},
+										{
+											"id": "4a8e2fd6-ef6d-457d-809e-9891a55dc043",
+											"question": "What novel hardware primitives could enable dynamic resource reallocation between security domains while maintaining perfect isolation guarantees and preventing covert channels during the transition process?"
+										},
+										{
+											"id": "0cfc7b87-49f5-423b-a2c3-3ef52634e9f6",
+											"question": "How can we implement hardware-level resource accounting that remains accurate and tamper-proof even against adversaries with the ability to manipulate clock signals or exploit analog properties of the underlying circuits?"
+										},
+										{
+											"id": "98c10e3e-f53c-44cd-ae3a-6245c93f84ed",
+											"question": "What mechanisms could enable secure resource borrowing between domains while guaranteeing that borrowed resources can be forcibly reclaimed, even if the borrowing domain becomes uncooperative or adversarial?"
+										},
+										{
+											"id": "e3cf54c3-27bd-447b-ac76-ae7851a82b6d",
+											"question": "How can resource access control mechanisms be designed to maintain security properties even when dealing with quantum computing resources that may have inherently probabilistic or entangled states?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "64a342f8-3587-4b7d-bfbb-46d8bd4ddcd8",
+											"title": "Verifiable Resource Control Architecture",
+											"paper": {
+												"id": "https://arxiv.org/abs/2203.08284",
+												"arxiv_id": "2203.08284",
+												"url": "https://arxiv.org/abs/2203.08284",
+												"title": "Minimizing Trust with Exclusively-Used Physically-Isolated Hardware",
+												"published_date": "2022-03-15T00:00:00.000Z",
+												"abstract": "Smartphone owners often need to run security-critical programs on the same device as other untrusted and potentially malicious programs. This requires users to trust hardware and system software to correctly sandbox malicious programs, trust that is often misplaced. Our goal is to minimize the number and complexity of hardware and software components that a smartphone owner needs to trust to withstand adversarial inputs. We present a multi-domain hardware design composed of statically-partitioned, physically-isolated trust domains. We introduce a few simple, formally-verified hardware components to enable a program to gain provably exclusive and simultaneous access to both computation and I/O on a temporary basis. To manage this hardware, we present OctopOS, an OS composed of mutually distrustful subsystems. We present a prototype of this machine (hardware and OS) on a CPU-FPGA board and show that it incurs a small hardware cost compared to modern SoCs. For security-critical programs, we show that this machine significantly reduces the required trust compared to mainstream TEEs while achieving decent performance. For normal programs, performance is similar to a legacy machine.",
+												"citation_count": 0,
+												"influential_citation_count": 0,
+												"ref": "78473"
+											},
+											"explanation": "The paper demonstrates that effective resource access control in secure hardware requires focusing on provably exclusive access rather than attempting to safely share resources. This suggests an architecture built around three key capabilities: mechanisms to control resource access, systems to verify access rights, and infrastructure to coordinate across multiple resources and domains.\n\nThe breakdown follows this principle by separating the core functions needed for secure resource control. Control mechanisms provide the foundation by enabling and limiting access. Verification systems ensure security properties are maintained. Finally, coordination infrastructure enables these mechanisms to work together across multiple resources and domains. This creates a complete system where resource access can be strictly controlled while maintaining verifiable security properties.",
+											"sub_nodes": [
+												{
+													"id": "fadbf906-5fdd-405a-9407-9c899b173bb9",
+													"title": "Access Control Mechanisms",
+													"description": "Develop hardware mechanisms for granting, limiting, and revoking access to resources. This includes systems for delegating control with quotas and ensuring resources cannot be accessed outside of authorized channels.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "e7a1517d-cb83-40bd-96db-99261a8437c7",
+													"title": "Access Verification Systems",
+													"description": "Create systems for cryptographically proving exclusive access rights and verifying security properties are maintained during resource transitions. This includes mechanisms for verifying clean state transitions and detecting unauthorized access attempts.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "a40616df-9e67-48b6-ae44-7f28cc3e3afb",
+													"title": "Resource Coordination Infrastructure",
+													"description": "Build infrastructure for managing access across multiple resources and domains while maintaining security properties. This includes systems for handling resource dependencies, managing concurrent access requests, and coordinating resource transitions between domains.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "a4c98411-a497-4f2e-a8df-7c945aa011bb",
 									"title": "Verified Core Components",
 									"description": "Create and verify the minimal set of core hardware components that must be trusted for the system's security properties to hold. These components must be simple enough to be formally verified while being powerful enough to enforce critical security properties.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "b42ed5fa-b756-4c48-99c6-776001b45a88",
+											"question": "What are the fundamental mathematical properties that define the minimal set of operations needed to enforce security invariants in hardware, and how can we prove these are both necessary and sufficient?"
+										},
+										{
+											"id": "00c584e7-53b3-4663-b018-6619900985c0",
+											"question": "How can we develop verification techniques that scale to handle the interaction effects between multiple verified components while maintaining tractable proof complexity?"
+										},
+										{
+											"id": "25880bd3-6256-47fc-857a-3986d3839fab",
+											"question": "What novel circuit-level primitives could enable simpler verification of security properties while still providing sufficient computational power for enforcing safety constraints?"
+										},
+										{
+											"id": "4e687d3c-66a4-4812-b904-852d78922978",
+											"question": "How can we formally characterize and verify the information flow properties of hardware components across power cycles and reset states to ensure true isolation between uses?"
+										},
+										{
+											"id": "7d855261-38b2-4294-b031-15c19a75b301",
+											"question": "What are the minimal requirements for a verified hardware root of trust that can bootstrap trust in larger verified components while remaining simple enough to formally verify?"
+										},
+										{
+											"id": "7fec078d-09c5-4a1f-9e9c-bf0e00436ff4",
+											"question": "How can we develop compositional verification approaches that allow verified core components to be safely combined into larger systems while preserving their security properties?"
+										},
+										{
+											"id": "7ef1076e-f7f5-4ca7-8009-c09f880eda67",
+											"question": "What novel hardware architectures could enable formal verification of timing-sensitive security properties without requiring complex timing models in the verification process?"
+										},
+										{
+											"id": "2135f82f-a558-4e36-b087-14966ef34a7f",
+											"question": "How can we create provably correct hardware mechanisms for secure state transition that are simple enough to verify but powerful enough to support practical safety enforcement?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "10b398a3-efba-47df-b9a2-59dfd61e747d",
+											"title": "Minimalist Verified Components Strategy",
+											"paper": {
+												"id": "https://arxiv.org/abs/2203.08284",
+												"arxiv_id": "2203.08284",
+												"url": "https://arxiv.org/abs/2203.08284",
+												"title": "Minimizing Trust with Exclusively-Used Physically-Isolated Hardware",
+												"published_date": "2022-03-15T00:00:00.000Z",
+												"abstract": "Smartphone owners often need to run security-critical programs on the same device as other untrusted and potentially malicious programs. This requires users to trust hardware and system software to correctly sandbox malicious programs, trust that is often misplaced. Our goal is to minimize the number and complexity of hardware and software components that a smartphone owner needs to trust to withstand adversarial inputs. We present a multi-domain hardware design composed of statically-partitioned, physically-isolated trust domains. We introduce a few simple, formally-verified hardware components to enable a program to gain provably exclusive and simultaneous access to both computation and I/O on a temporary basis. To manage this hardware, we present OctopOS, an OS composed of mutually distrustful subsystems. We present a prototype of this machine (hardware and OS) on a CPU-FPGA board and show that it incurs a small hardware cost compared to modern SoCs. For security-critical programs, we show that this machine significantly reduces the required trust compared to mainstream TEEs while achieving decent performance. For normal programs, performance is similar to a legacy machine.",
+												"citation_count": 0,
+												"influential_citation_count": 0,
+												"ref": "78473"
+											},
+											"explanation": "The paper demonstrates that creating verified core components requires carefully balancing three key aspects: identifying the minimal set of required components, ensuring each component is simple enough to be verifiable, and proving their correctness through formal verification. This approach recognizes that the more components that must be trusted and the more complex each component is, the harder verification becomes and the more likely security vulnerabilities will exist.\n\nThe breakdown follows this insight by first determining the minimal set of components needed to enforce critical security properties, then designing these components to be as simple as possible while still providing required functionality, and finally proving their correctness through formal verification. This systematic approach ensures we achieve both minimal trust and verifiable security.",
+											"sub_nodes": [
+												{
+													"id": "2fb08efc-e492-46f6-8078-36207f037931",
+													"title": "Security Property Analysis",
+													"description": "Analyze the security properties required by the system and determine the minimal set of hardware components that must be trusted to enforce these properties. This includes identifying which properties can be enforced through other means and which absolutely require trusted hardware components.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "0ca85d38-0abe-44c0-92d0-968567eb63a3",
+													"title": "Verifiable Component Design",
+													"description": "Design each identified core component to be as simple as possible while still providing its required security properties. This includes eliminating unnecessary complexity, breaking down complex functionality into simpler verified components where possible, and ensuring designs are amenable to formal verification.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "2301725b-9007-426b-9ac6-2995cdc2c596",
+													"title": "Formal Verification Framework",
+													"description": "Develop and implement a comprehensive formal verification framework that can prove the correctness of both individual components and their composition. This includes defining security properties and invariants to verify, selecting appropriate verification tools and methodologies, and creating verification proofs that demonstrate security properties hold.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								}
 							]
 						},
@@ -290,7 +1001,36 @@
 					"id": "c3bf9b10-d199-4a93-86b6-33c135d11252",
 					"title": "Safety Specifications",
 					"description": "Develop formal specifications that fully capture all requirements for preventing catastrophic outcomes from AGI systems. These specifications must be both mathematically precise and completely cover all potential failure modes while remaining tractable for verification.",
-					"questions": null,
+					"questions": [
+						{
+							"id": "4c42deb2-122f-49fa-bfa5-929cb45ae7b9",
+							"question": "How can we formally specify and verify safety properties that remain robust even when an AI system undergoes significant capability jumps or self-modification, while avoiding the pitfall of specifications that become invalid above certain capability thresholds?"
+						},
+						{
+							"id": "e8c79bcc-bda4-46bc-b29e-40653676f74c",
+							"question": "What mathematical frameworks could allow us to precisely specify and verify safety properties across different levels of abstraction - from low-level compute to high-level behaviors - while maintaining formal guarantees about their relationships and compositions?"
+						},
+						{
+							"id": "c41154c3-0498-46db-b6e6-bde60406aab2",
+							"question": "How can we develop specification approaches that are robust to 'unknown unknowns' - formally capturing safety requirements even for failure modes and capabilities that we cannot currently anticipate or understand?"
+						},
+						{
+							"id": "5c4c0a6f-7173-4256-b2bc-de50d77e9578",
+							"question": "What formal methods could allow us to specify and verify safety properties that hold across different possible 'paths to AGI' (e.g. scaling current architectures vs novel paradigms), while remaining tractable enough for practical verification?"
+						},
+						{
+							"id": "40918540-bf84-4b3c-9ed1-a15bcff9d2c0",
+							"question": "How can we create specifications that formally capture and preserve human values and preferences while being robust to potential changes in those values over time and across different human populations?"
+						},
+						{
+							"id": "0fb2f7b0-25e5-49dd-a012-9c0a774d0796",
+							"question": "What mathematical approaches would allow us to formally specify safety requirements that remain meaningful and enforceable even as an AI system's world model and ontology diverge significantly from human concepts?"
+						},
+						{
+							"id": "89798002-9e9e-403f-992a-5702a1e78c34",
+							"question": "How can we develop formal specifications that prevent deceptive or manipulative behaviors while remaining robust to increasingly sophisticated forms of deception that we may not be able to anticipate?"
+						}
+					],
 					"breakdowns": [
 						{
 							"id": "2d65aa0c-da37-4cdf-8150-d26caa410086",
@@ -312,36 +1052,390 @@
 									"id": "18d38951-056a-4cd5-a742-e3e596b80c57",
 									"title": "Core Safety Properties",
 									"description": "Define the fundamental safety properties that must be guaranteed to prevent catastrophic outcomes. This includes identifying and formalizing both universal safety constraints (like preventing deception or power-seeking) and domain-specific requirements based on the system's capabilities and context of use.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "f912c8a2-04bf-487b-bb42-abb54d3bcd5e",
+											"question": "How can we formally define and detect emergent capabilities in AI systems before they manifest, to ensure safety properties remain valid as systems develop new competencies?"
+										},
+										{
+											"id": "cab3b403-6ca9-4386-bde9-26e30766e1ba",
+											"question": "What mathematical frameworks could allow us to prove that a set of safety properties remains complete and consistent even when composed with arbitrary learned behaviors or when the system is placed in novel environments?"
+										},
+										{
+											"id": "3aacb102-7476-4b1c-aa84-cc1be643039c",
+											"question": "How can we develop rigorous methods to identify and formalize implicit safety properties that humans rely on but rarely explicitly state, such as common sense constraints or basic ethical principles?"
+										},
+										{
+											"id": "c6342a84-aa4c-4a15-9007-30329ab3c0e6",
+											"question": "What formal approaches could allow us to define safety properties that are robust to potential ontological shifts in an AI system's world model while still remaining mathematically precise and verifiable?"
+										},
+										{
+											"id": "f6cf807e-5efe-4f96-8836-0eac142189f6",
+											"question": "How can we create formal safety properties that prevent deceptive behavior while accounting for the possibility that deception itself might emerge from seemingly benign optimization processes?"
+										},
+										{
+											"id": "358ee7b1-269f-4b75-aeff-2d2ef2bbde99",
+											"question": "What mathematical frameworks would allow us to define safety properties that remain meaningful and enforceable across different levels of system abstraction, from low-level computation to high-level reasoning?"
+										},
+										{
+											"id": "f8f101c9-9536-4c63-b6d0-78830b98ef31",
+											"question": "How can we develop methods to formally verify that a set of safety properties is sufficient to prevent catastrophic outcomes without requiring explicit enumeration of all possible failure modes?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "f41e9ba1-cde1-4e3e-838a-9d373f4dafce",
+											"title": "Layered Safety Property Framework",
+											"paper": {
+												"id": "https://arxiv.org/abs/2405.06624",
+												"arxiv_id": "2405.06624",
+												"url": "https://arxiv.org/abs/2405.06624",
+												"title": "Towards Guaranteed Safe AI: A Framework for Ensuring Robust and Reliable AI Systems",
+												"published_date": "2024-05-10T00:00:00.000Z",
+												"abstract": "Ensuring that AI systems reliably and robustly avoid harmful or dangerous behaviours is a crucial challenge, especially for AI systems with a high degree of autonomy and general intelligence, or systems used in safety-critical contexts. In this paper, we will introduce and define a family of approaches to AI safety, which we will refer to as guaranteed safe (GS) AI. The core feature of these approaches is that they aim to produce AI systems which are equipped with high-assurance quantitative safety guarantees. This is achieved by the interplay of three core components: a world model (which provides a mathematical description of how the AI system affects the outside world), a safety specification (which is a mathematical description of what effects are acceptable), and a verifier (which provides an auditable proof certificate that the AI satisfies the safety specification relative to the world model). We outline a number of approaches for creating each of these three core components, describe the main technical challenges, and suggest a number of potential solutions to them. We also argue for the necessity of this approach to AI safety, and for the inadequacy of the main alternative approaches.",
+												"citation_count": 32,
+												"influential_citation_count": 4,
+												"ref": "49492"
+											},
+											"explanation": "The paper presents safety properties along a spectrum from universal constraints to domain-specific requirements, suggesting a natural layered approach to defining core safety properties. This breakdown separates the fundamental mathematical properties that must hold universally to prevent catastrophic outcomes from the contextual properties needed for specific capabilities and use cases.\n\nThe strategy involves first establishing rigorous mathematical foundations for universal safety constraints, then developing frameworks for domain-specific requirements, and finally creating a comprehensive formalization framework that enables precise specification and composition of these properties. This approach ensures both theoretical completeness through fundamental properties and practical applicability through contextual properties, while the formalization framework provides the mathematical precision needed for verification.",
+											"sub_nodes": [
+												{
+													"id": "a59d8e3c-c1c3-4da3-b76f-6af87db5f69b",
+													"title": "Fundamental Safety Properties",
+													"description": "Define and mathematically formalize the universal safety properties that must be guaranteed across all contexts to prevent catastrophic outcomes. This includes properties like preventing deception, power-seeking behavior, and other fundamental constraints that are independent of specific capabilities or applications.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "267d7835-acd6-48af-b30f-8e3788e25a83",
+													"title": "Contextual Safety Properties",
+													"description": "Identify and characterize the safety properties required for specific AI capabilities, contexts, and use cases. This includes developing frameworks for determining what additional safety constraints are needed based on an AI system's capabilities and potential impacts, while ensuring compatibility with fundamental properties.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "3dbbc7fa-4997-48ac-a2ff-0d33bf088775",
+													"title": "Safety Property Formalization Framework",
+													"description": "Develop a comprehensive mathematical framework for precisely specifying, composing, and reasoning about both fundamental and contextual safety properties. This includes methods for handling uncertainty, edge cases, and conflicts between properties while maintaining mathematical rigor and enabling verification.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "1af9a392-025b-4a08-aeec-50820a40448e",
 									"title": "Specification Composition Framework",
 									"description": "Develop a framework for composing complex safety specifications from simpler, verified components. This includes methods for combining multiple specifications, handling conflicts between specifications, and ensuring that composition preserves safety properties while maintaining tractability.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "d8ab00b6-5562-4496-a15c-6bbdfc23fda5",
+											"question": "How can we develop formal metrics to quantify the degree of interference or synergy between composed safety specifications, enabling us to identify and optimize beneficial compositional patterns?"
+										},
+										{
+											"id": "878d42e7-d961-4a33-b56e-ab79fafc8dd4",
+											"question": "What mathematical properties must a specification composition operator preserve to guarantee that safety properties proven for individual components remain valid in the composed system, while avoiding exponential complexity growth?"
+										},
+										{
+											"id": "bccf5465-77ef-4456-ac44-ca6e02c3ac5f",
+											"question": "How can we create reversible specification composition mechanisms that allow for graceful decomposition when conflicts are detected, without losing the verified properties of the original components?"
+										},
+										{
+											"id": "9301b49c-0601-4952-a3ea-ee26a44172eb",
+											"question": "What formal frameworks could enable dynamic specification composition at runtime while maintaining provable safety bounds, particularly for systems that need to adapt their safety constraints based on context?"
+										},
+										{
+											"id": "c6ce1323-d5a3-438d-aa46-55e33ca1e09f",
+											"question": "How can we develop composition methods that explicitly handle temporal dependencies between specifications, ensuring that safety properties remain valid across different timescales and sequential interactions?"
+										},
+										{
+											"id": "54e3ce71-a0d0-4886-8a4a-63d7ea989d7a",
+											"question": "What mathematical structures could enable hierarchical specification composition while preserving verifiability at each level of abstraction, similar to how programming languages support modular reasoning?"
+										},
+										{
+											"id": "ff786fb9-071f-41c2-91ee-ad3819f28259",
+											"question": "How can we formally characterize and minimize the 'compositional overhead' - the additional complexity and computational cost introduced by combining specifications compared to verifying them individually?"
+										},
+										{
+											"id": "abaf6525-2a6a-4dcd-94bf-73ce9887b485",
+											"question": "What techniques could enable the automatic detection and resolution of specification composition conflicts while preserving the original safety intentions of each component specification?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "550dc3ac-72da-4d75-a9ae-c4fca2a6dd1f",
+											"title": "Layered Specification Composition Framework",
+											"paper": {
+												"id": "https://arxiv.org/abs/2405.06624",
+												"arxiv_id": "2405.06624",
+												"url": "https://arxiv.org/abs/2405.06624",
+												"title": "Towards Guaranteed Safe AI: A Framework for Ensuring Robust and Reliable AI Systems",
+												"published_date": "2024-05-10T00:00:00.000Z",
+												"abstract": "Ensuring that AI systems reliably and robustly avoid harmful or dangerous behaviours is a crucial challenge, especially for AI systems with a high degree of autonomy and general intelligence, or systems used in safety-critical contexts. In this paper, we will introduce and define a family of approaches to AI safety, which we will refer to as guaranteed safe (GS) AI. The core feature of these approaches is that they aim to produce AI systems which are equipped with high-assurance quantitative safety guarantees. This is achieved by the interplay of three core components: a world model (which provides a mathematical description of how the AI system affects the outside world), a safety specification (which is a mathematical description of what effects are acceptable), and a verifier (which provides an auditable proof certificate that the AI satisfies the safety specification relative to the world model). We outline a number of approaches for creating each of these three core components, describe the main technical challenges, and suggest a number of potential solutions to them. We also argue for the necessity of this approach to AI safety, and for the inadequacy of the main alternative approaches.",
+												"citation_count": 32,
+												"influential_citation_count": 4,
+												"ref": "49492"
+											},
+											"explanation": "The paper suggests that specification composition requires both theoretical foundations and practical mechanisms, while emphasizing the importance of maintaining safety properties throughout. This naturally leads to a layered approach where we first establish the theoretical foundations of how specifications can be safely composed, then develop the practical mechanisms for composition, and finally create systems to validate and integrate these components while ensuring safety properties are preserved.\n\nThis breakdown is informed by the paper's discussion of different specification sophistication levels and its emphasis on both formal verification and practical tractability. The sub-goals work together in a hierarchical fashion: the theoretical foundations provide the mathematical basis for composition, the practical mechanisms implement these foundations in a usable way, and the integration system ensures everything works together while preserving safety properties.",
+											"sub_nodes": [
+												{
+													"id": "d5e61f44-3e00-4d11-9f18-93cef08b0900",
+													"title": "Theoretical Composition Framework",
+													"description": "Develop the mathematical foundations for combining multiple specifications while preserving their safety properties. This includes formal methods for specification composition, theoretical approaches for handling conflicts between specifications, and proofs that composition operations maintain critical properties.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "e43442bb-26c2-4bc6-80d8-ba99833c7759",
+													"title": "Practical Composition Mechanisms",
+													"description": "Create concrete methods and tools for implementing specification composition in practice while maintaining tractability. This includes developing efficient algorithms for composition operations, methods for handling specification conflicts in real-world scenarios, and techniques for managing computational complexity.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "7de30e1e-877f-4116-a411-06992f75eafa",
+													"title": "Integration and Validation System",
+													"description": "Develop systems to integrate the theoretical framework with practical mechanisms while ensuring safety properties are preserved throughout the composition process. This includes creating validation tools to verify that composed specifications maintain their intended guarantees and developing methods to detect and prevent unintended interactions between specifications.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "bfc4d3ef-0fc9-49ad-ae78-bfddf91fa84c",
 									"title": "Uncertainty Integration",
 									"description": "Create methods to formally incorporate both Bayesian and Knightian uncertainty into safety specifications. This includes developing ways to express uncertainty about the specification itself, handle edge cases and ambiguity, and ensure specifications remain robust under uncertainty while avoiding specification gaming.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "9e10a5b1-e23e-4d6b-af0f-bf7d92f13732",
+											"question": "How can we develop formal methods to quantify and propagate meta-uncertainty (uncertainty about our uncertainty estimates) through safety specifications while maintaining computational tractability?"
+										},
+										{
+											"id": "23188837-9292-4e5b-9770-6830715d0a26",
+											"question": "What mathematical frameworks could allow safety specifications to gracefully degrade under increasing uncertainty rather than failing catastrophically when uncertainty thresholds are exceeded?"
+										},
+										{
+											"id": "1fb9d30e-35e5-41a8-a116-b17d6d6c7de3",
+											"question": "How can we formally represent and handle correlations between different sources of uncertainty in safety specifications, particularly when these correlations themselves are uncertain?"
+										},
+										{
+											"id": "e7b87561-905d-4c2a-81c8-a3133b98511f",
+											"question": "What techniques could enable dynamic reallocation of uncertainty budgets across different components of a safety specification based on runtime feedback while maintaining global safety guarantees?"
+										},
+										{
+											"id": "add601a8-bca6-493c-999d-1c89c86b26bd",
+											"question": "How can we develop methods to formally distinguish between reducible and irreducible uncertainty in safety specifications, and optimize specification robustness differently for each type?"
+										},
+										{
+											"id": "888c9c4b-f65b-4480-8b99-9c1188aee132",
+											"question": "What mathematical approaches could allow safety specifications to adaptively adjust their conservatism based on the estimated quality and reliability of uncertainty measurements?"
+										},
+										{
+											"id": "834a158f-5407-4eef-a7de-97c8129ed694",
+											"question": "How can we create formal methods to detect and handle cases where uncertainty in one part of a specification could be exploited to game another part, while maintaining specification robustness?"
+										},
+										{
+											"id": "ec2f1e78-0e93-495b-84d8-5eadd8796c50",
+											"question": "What techniques could enable safety specifications to formally reason about and handle uncertainty that emerges from the interaction between multiple specifications, rather than just uncertainty within individual specifications?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "a65046bd-a2d0-48b0-bcca-7d2285567273",
+											"title": "Layered Uncertainty Integration Framework",
+											"paper": {
+												"id": "https://arxiv.org/abs/2405.06624",
+												"arxiv_id": "2405.06624",
+												"url": "https://arxiv.org/abs/2405.06624",
+												"title": "Towards Guaranteed Safe AI: A Framework for Ensuring Robust and Reliable AI Systems",
+												"published_date": "2024-05-10T00:00:00.000Z",
+												"abstract": "Ensuring that AI systems reliably and robustly avoid harmful or dangerous behaviours is a crucial challenge, especially for AI systems with a high degree of autonomy and general intelligence, or systems used in safety-critical contexts. In this paper, we will introduce and define a family of approaches to AI safety, which we will refer to as guaranteed safe (GS) AI. The core feature of these approaches is that they aim to produce AI systems which are equipped with high-assurance quantitative safety guarantees. This is achieved by the interplay of three core components: a world model (which provides a mathematical description of how the AI system affects the outside world), a safety specification (which is a mathematical description of what effects are acceptable), and a verifier (which provides an auditable proof certificate that the AI satisfies the safety specification relative to the world model). We outline a number of approaches for creating each of these three core components, describe the main technical challenges, and suggest a number of potential solutions to them. We also argue for the necessity of this approach to AI safety, and for the inadequacy of the main alternative approaches.",
+												"citation_count": 32,
+												"influential_citation_count": 4,
+												"ref": "49492"
+											},
+											"explanation": "The paper suggests that effectively incorporating uncertainty into safety specifications requires handling both Bayesian (probabilistic) and Knightian (unknown unknowns) uncertainty, as well as uncertainty about the specifications themselves. This points to a layered approach where we first develop comprehensive ways to represent these different forms of uncertainty, then create methods to properly integrate them into specifications, and finally ensure robustness under uncertainty.\n\nThis breakdown separates the core challenges into three distinct layers that build upon each other. The first layer establishes the formal foundations for representing all forms of uncertainty. The second layer develops methods to properly incorporate these uncertainty representations into safety specifications. The third layer ensures that specifications remain robust and effective under uncertainty, including preventing specification gaming. This layered approach allows us to tackle each aspect of uncertainty integration while maintaining clear separation of concerns.",
+											"sub_nodes": [
+												{
+													"id": "1646edf7-77aa-4173-a3e0-e95227177b33",
+													"title": "Uncertainty Representation Framework",
+													"description": "Develop formal frameworks for representing both Bayesian and Knightian uncertainty, as well as uncertainty about specifications themselves. This includes creating mathematical foundations for expressing probabilistic uncertainty, unknown unknowns, and meta-uncertainty about specification correctness in a way that enables formal reasoning and verification.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "a482e10a-6432-455c-a3c5-03537f0f08a5",
+													"title": "Specification Integration Methods",
+													"description": "Create methods to properly incorporate uncertainty representations into safety specifications while maintaining their formal verifiability. This includes developing techniques for expressing specifications under uncertainty, handling edge cases and ambiguity, and ensuring specifications remain meaningful and verifiable when uncertainty is included.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "564c0cdc-2431-4fce-860d-6751f2d01a89",
+													"title": "Robustness Assurance Mechanisms",
+													"description": "Develop mechanisms to ensure specifications remain robust and effective under uncertainty while preventing specification gaming. This includes creating methods to maintain safety guarantees despite uncertainty, handle unexpected scenarios gracefully, and ensure that uncertainty cannot be exploited to circumvent safety constraints.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "dff183db-6333-4700-8f17-a3b49c30a165",
 									"title": "Specification Learning System",
 									"description": "Develop methods to learn and refine safety specifications from data, human feedback, and formal analysis. This includes techniques for extracting implicit specifications from examples, validating learned specifications against human intent, and updating specifications based on new information while maintaining safety guarantees.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "1ab7f9c0-afe6-46f3-853a-c48fe5f2658b",
+											"question": "How can we develop formal metrics to quantify the degree of alignment between learned specifications and human intent, particularly for complex safety properties that may be difficult for humans to explicitly articulate?"
+										},
+										{
+											"id": "4550bb55-c764-4bcf-bf0f-7665e5157fdf",
+											"question": "What mathematical frameworks could enable the continuous refinement of safety specifications while providing formal guarantees that updates cannot introduce new failure modes or violate previously established safety properties?"
+										},
+										{
+											"id": "26f2f470-a193-4b4f-b7a4-d6af65192ad4",
+											"question": "How can we detect and mitigate specification learning failures that arise from distributional shift in training data, especially when the shift occurs in subtle aspects of human values or safety requirements?"
+										},
+										{
+											"id": "91c033ec-f1f8-4abf-bdb0-53dfcb401386",
+											"question": "What techniques could enable the extraction of implicit safety specifications from demonstrations while being robust against human inconsistency and mistakes, without overfitting to specific demonstration artifacts?"
+										},
+										{
+											"id": "43ce1ee1-b6a9-44aa-88b1-5440c001dd7f",
+											"question": "How can we develop active learning approaches that efficiently identify and resolve ambiguities in learned specifications while minimizing the required human feedback and avoiding leading questions?"
+										},
+										{
+											"id": "52cbbbf8-502d-48d8-a710-7733fc6d01f8",
+											"question": "What methods could enable the automated detection of potential specification gaming behaviors during the learning process, before they manifest in deployed systems?"
+										},
+										{
+											"id": "d24a426e-dc04-4126-b9ec-72dda5e00969",
+											"question": "How can we formally represent and learn specifications that capture not just constraints on behavior, but also the underlying reasons and principles behind those constraints in a way that generalizes to novel situations?"
+										},
+										{
+											"id": "d923ca6b-4e2e-48c6-892c-fbe1627d89c6",
+											"question": "What approaches could enable specification learning systems to identify and resolve conflicts between different sources of specification information (e.g., demonstrations, feedback, formal rules) while maintaining coherence and safety?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "4323ed23-e727-4beb-abaa-3a767aee4043",
+											"title": "Two-Phase Specification Learning Strategy",
+											"paper": {
+												"id": "https://arxiv.org/abs/2405.06624",
+												"arxiv_id": "2405.06624",
+												"url": "https://arxiv.org/abs/2405.06624",
+												"title": "Towards Guaranteed Safe AI: A Framework for Ensuring Robust and Reliable AI Systems",
+												"published_date": "2024-05-10T00:00:00.000Z",
+												"abstract": "Ensuring that AI systems reliably and robustly avoid harmful or dangerous behaviours is a crucial challenge, especially for AI systems with a high degree of autonomy and general intelligence, or systems used in safety-critical contexts. In this paper, we will introduce and define a family of approaches to AI safety, which we will refer to as guaranteed safe (GS) AI. The core feature of these approaches is that they aim to produce AI systems which are equipped with high-assurance quantitative safety guarantees. This is achieved by the interplay of three core components: a world model (which provides a mathematical description of how the AI system affects the outside world), a safety specification (which is a mathematical description of what effects are acceptable), and a verifier (which provides an auditable proof certificate that the AI satisfies the safety specification relative to the world model). We outline a number of approaches for creating each of these three core components, describe the main technical challenges, and suggest a number of potential solutions to them. We also argue for the necessity of this approach to AI safety, and for the inadequacy of the main alternative approaches.",
+												"citation_count": 32,
+												"influential_citation_count": 4,
+												"ref": "49492"
+											},
+											"explanation": "Based on the paper's framework, specification learning can be broken down into two fundamental capabilities: initial specification learning and specification refinement. This maps directly to the goal's description of 'learn and refine safety specifications' while ensuring each component has built-in validation against human intent and safety requirements.\n\nThe paper's discussion of specification learning levels (Section 3.3) suggests that both learning and refinement must incorporate multiple input sources (data, human feedback, formal analysis) while maintaining safety guarantees. By separating these into distinct phases - initial learning and subsequent refinement - we can ensure each phase has appropriate safety measures while minimizing overlap in responsibilities.",
+											"sub_nodes": [
+												{
+													"id": "5c30c6e0-bb52-485c-81b1-a6d22d596f72",
+													"title": "Specification Learning System",
+													"description": "Develop methods to learn initial safety specifications from multiple input sources including data, human feedback, and formal analysis. This includes techniques for extracting implicit specifications from examples and validating learned specifications against human intent, with built-in mechanisms to ensure safety properties are maintained during the learning process.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "f3aa111b-752a-4bbe-9e03-ea8c2f6be635",
+													"title": "Specification Refinement System",
+													"description": "Create methods to safely update and refine existing specifications based on new information while maintaining safety guarantees. This includes techniques for resolving conflicts between old and new specifications, composing multiple specifications into more complex ones, and ensuring all refinements preserve desired safety properties while accurately reflecting human intent.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "082f83b4-8909-4393-888d-c0a3fb5f08b2",
 									"title": "Specification Verification Interface",
 									"description": "Create interfaces between safety specifications and verification systems that enable efficient proof generation and checking. This includes developing specification languages that balance expressiveness with tractability and methods for decomposing specifications into verifiable components.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "38404840-a6da-4876-8854-df2d8988e2bc",
+											"question": "How can we develop intermediate representation languages that serve as bridges between high-level safety specifications and low-level verification systems while preserving semantic meaning and facilitating automated proof generation?"
+										},
+										{
+											"id": "b08e735a-46c3-4ef2-ae76-7c9db86cd4a4",
+											"question": "What are effective methods for automatically detecting and quantifying the verification complexity of different specification components to enable strategic decomposition that optimizes for proof tractability?"
+										},
+										{
+											"id": "de429a51-8588-479c-9ef4-823bc5ddb007",
+											"question": "How can we design specification interfaces that support incremental verification, allowing parts of a specification to be verified independently while maintaining compositional guarantees about the whole system?"
+										},
+										{
+											"id": "eae744e3-c2d0-47c4-95fa-7fddfc4992a3",
+											"question": "What techniques can we develop for automatically translating between different formal specification languages while preserving verifiability properties and maintaining proof compatibility across different verification tools?"
+										},
+										{
+											"id": "50d44607-2633-4740-92e4-b30cb0745db7",
+											"question": "How can we create adaptive interfaces that automatically adjust the granularity and structure of specifications based on the capabilities and limitations of different verification approaches?"
+										},
+										{
+											"id": "06f9d876-de6c-49d8-b0aa-8544fac9f7d8",
+											"question": "What methods can we develop for automatically generating verification lemmas and intermediate proof steps from high-level specifications to bridge the gap between specification and verification?"
+										},
+										{
+											"id": "8856e21b-5f65-454e-8797-2b20ee6976e7",
+											"question": "How can we design specification interfaces that explicitly track and manage assumptions about the verification system's capabilities, ensuring specifications remain verifiable as verification tools evolve?"
+										},
+										{
+											"id": "9839ce23-5afd-4b3a-bc82-95d07256026e",
+											"question": "What approaches can we develop for automatically detecting and resolving conflicts between specification expressiveness and verification tractability through targeted specification refinement?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "e64d4f19-3487-40d9-b21d-12ce878eb964",
+											"title": "Decomposition-Based Specification Interface Strategy",
+											"paper": {
+												"id": "https://arxiv.org/abs/2405.06624",
+												"arxiv_id": "2405.06624",
+												"url": "https://arxiv.org/abs/2405.06624",
+												"title": "Towards Guaranteed Safe AI: A Framework for Ensuring Robust and Reliable AI Systems",
+												"published_date": "2024-05-10T00:00:00.000Z",
+												"abstract": "Ensuring that AI systems reliably and robustly avoid harmful or dangerous behaviours is a crucial challenge, especially for AI systems with a high degree of autonomy and general intelligence, or systems used in safety-critical contexts. In this paper, we will introduce and define a family of approaches to AI safety, which we will refer to as guaranteed safe (GS) AI. The core feature of these approaches is that they aim to produce AI systems which are equipped with high-assurance quantitative safety guarantees. This is achieved by the interplay of three core components: a world model (which provides a mathematical description of how the AI system affects the outside world), a safety specification (which is a mathematical description of what effects are acceptable), and a verifier (which provides an auditable proof certificate that the AI satisfies the safety specification relative to the world model). We outline a number of approaches for creating each of these three core components, describe the main technical challenges, and suggest a number of potential solutions to them. We also argue for the necessity of this approach to AI safety, and for the inadequacy of the main alternative approaches.",
+												"citation_count": 32,
+												"influential_citation_count": 4,
+												"ref": "49492"
+											},
+											"explanation": "The paper emphasizes that effective specification verification interfaces must balance expressiveness with tractability, suggesting a strategy based on decomposition of both specifications and verification processes. This approach allows complex safety properties to be broken down into verifiable components while maintaining their collective power to ensure safety.\n\nThe strategy divides the challenge into three core aspects: the ability to express specifications at different levels of abstraction, the ability to decompose specifications into verifiable components, and the ability to efficiently verify these components while maintaining safety guarantees. This maps to the paper's discussion of specification languages, decomposition methods, and verification systems, while organizing them around functional requirements rather than implementation details.",
+											"sub_nodes": [
+												{
+													"id": "e9acc565-95ab-48d5-87df-af7a273321c3",
+													"title": "Specification Language Framework",
+													"description": "Develop a framework for expressing safety specifications at multiple levels of abstraction, from high-level safety properties to low-level verifiable constraints. This includes methods for translating between abstraction levels while preserving semantic meaning and safety guarantees.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "8e9039b1-28d7-42cf-81aa-72ef85289800",
+													"title": "Specification Decomposition System",
+													"description": "Create methods for breaking down complex safety specifications into simpler, verifiable components while maintaining their collective safety guarantees. This includes techniques for managing dependencies between components and ensuring that local verification implies global safety properties.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "761259e1-713c-4633-b733-29ffe38f585c",
+													"title": "Verification Integration Architecture",
+													"description": "Design an architecture that enables efficient verification of specification components while supporting both static and runtime verification needs. This includes interfaces for proof generation, checking, and monitoring, as well as methods for combining verification results across components.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								}
 							]
 						}
@@ -351,7 +1445,36 @@
 					"id": "3587df18-6378-4838-8fee-fe5e6a8c3feb",
 					"title": "Algorithm Extraction and Translation",
 					"description": "Establish reliable methods to convert black-box AI systems into transparent, verifiable code that preserves their capabilities. This includes both extracting learned algorithms from neural networks and synthesizing equivalent provably safe implementations.",
-					"questions": null,
+					"questions": [
+						{
+							"id": "286918f1-4417-4377-91db-c068127ae879",
+							"question": "How can we develop automated methods to identify and extract the minimal set of neurons/weights that are truly necessary for implementing a specific capability in a neural network, while proving that the removed components are genuinely redundant?"
+						},
+						{
+							"id": "7b52a258-d01d-4442-bc6e-9775e8b43db2",
+							"question": "What mathematical frameworks can we develop to formally verify that a synthesized symbolic program maintains semantic equivalence with the original neural network across the full input domain, not just observed examples?"
+						},
+						{
+							"id": "df43f55e-fe72-4887-a307-7db1887b264c",
+							"question": "How can we automatically discover and extract reusable 'computational primitives' from neural networks that serve as building blocks across multiple tasks, similar to how human programmers use standard library functions?"
+						},
+						{
+							"id": "4c9b25fc-c34f-448d-8ffa-841f0e4edfda",
+							"question": "What techniques can we develop to automatically identify and characterize the failure modes of extracted symbolic programs compared to their neural network counterparts, especially for edge cases and out-of-distribution inputs?"
+						},
+						{
+							"id": "1cdd3516-3657-4c3e-a14f-b2d7032b488f",
+							"question": "How can we develop methods to extract not just the computational logic but also the learned priors and inductive biases from neural networks into explicit, verifiable form?"
+						},
+						{
+							"id": "e078c945-d2da-4af1-a412-b2ab07d13ecd",
+							"question": "What approaches can we develop to automatically identify and extract the causal mechanisms by which a neural network implements abstract reasoning capabilities, rather than just pattern matching?"
+						},
+						{
+							"id": "26c42293-f54a-491b-a197-28bc023120ed",
+							"question": "How can we create techniques to automatically discover and extract the hierarchical decomposition of complex tasks that a neural network has learned, revealing how it breaks down problems into simpler subproblems?"
+						}
+					],
 					"breakdowns": [
 						{
 							"id": "8a814b18-80e5-4836-9cea-c4e8ff3fa0f2",
@@ -373,36 +1496,397 @@
 									"id": "7d8da680-3e10-45df-91d3-1e8b66cfc25a",
 									"title": "Neural Network Simplification",
 									"description": "Transform trained neural networks into their simplest equivalent form by exploiting symmetries and removing unnecessary complexity. This includes normalizing activations, simplifying weight matrices, and quantizing parameters to prepare the network for interpretation while preserving its functional behavior.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "b681d2f1-3c18-473c-8f98-e84a32ffd452",
+											"question": "How can we systematically identify and exploit symmetries in weight matrices that arise from the training process to reduce network complexity without affecting behavior?"
+										},
+										{
+											"id": "209e1600-44a3-4bb5-92f5-20349c628945",
+											"question": "What are the mathematical relationships between different quantization schemes and their impact on preserving specific types of neural computations (e.g., addition, multiplication, comparison operations)?"
+										},
+										{
+											"id": "7f5f009b-b623-4c6c-be25-8538eb7c6ea8",
+											"question": "How can we leverage knowledge of the task domain to inform network simplification - for example, if we know the network is performing sorting, can we identify and preserve just the comparison-relevant components?"
+										},
+										{
+											"id": "51c6e2e8-f0fe-4a1a-a9e1-0d55e4bfba54",
+											"question": "What topological properties of activation landscapes indicate redundant or unnecessary complexity that can be safely removed without impacting network function?"
+										},
+										{
+											"id": "20cf227d-148a-448d-8bce-0c1859fdfc1e",
+											"question": "How can we develop adaptive pruning criteria that consider both the local importance of parameters and their role in maintaining global network symmetries?"
+										},
+										{
+											"id": "1da69cb2-65b9-4f0c-acf2-5bc2fe852dcf",
+											"question": "What mathematical frameworks can help us identify when seemingly different network architectures are actually isomorphic implementations of the same computation?"
+										},
+										{
+											"id": "ad77b7b9-c4ce-4490-8dac-6016e654671f",
+											"question": "How can we detect and leverage cases where complex non-linear activation patterns can be approximated by simpler piecewise linear functions while maintaining functional equivalence?"
+										},
+										{
+											"id": "7678b9c7-042a-4a64-b55a-4d34dcac8957",
+											"question": "What theoretical bounds exist on the minimal number of parameters needed to implement specific algorithmic operations, and how can we use these to guide simplification?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "b5646d2a-d8a0-4cae-810a-55e065ede6ad",
+											"title": "Progressive Network Reduction Strategy",
+											"paper": {
+												"id": "https://arxiv.org/abs/2402.05110",
+												"arxiv_id": "2402.05110",
+												"url": "https://arxiv.org/abs/2402.05110",
+												"title": "Opening the AI black box: program synthesis via mechanistic interpretability",
+												"published_date": "2024-02-07T00:00:00.000Z",
+												"abstract": "We present MIPS, a novel method for program synthesis based on automated mechanistic interpretability of neural networks trained to perform the desired task, auto-distilling the learned algorithm into Python code. We test MIPS on a benchmark of 62 algorithmic tasks that can be learned by an RNN and find it highly complementary to GPT-4: MIPS solves 32 of them, including 13 that are not solved by GPT-4 (which also solves 30). MIPS uses an integer autoencoder to convert the RNN into a finite state machine, then applies Boolean or integer symbolic regression to capture the learned algorithm. As opposed to large language models, this program synthesis technique makes no use of (and is therefore not limited by) human training data such as algorithms and code from GitHub. We discuss opportunities and challenges for scaling up this approach to make machine-learned models more interpretable and trustworthy.",
+												"citation_count": 9,
+												"influential_citation_count": 0,
+												"ref": "11228"
+											},
+											"explanation": "The paper demonstrates that neural network simplification can be approached as a sequence of transformations that progressively reduce complexity while preserving functionality. The key insight is to separate this process into three fundamentally distinct types of simplification: architectural, representational, and parametric.\n\nThis breakdown follows a natural progression from macro to micro simplification. We first find the minimal architecture capable of performing the task, then simplify how information flows through that architecture by normalizing and canonicalizing internal representations, and finally simplify the individual parameters themselves. Each stage builds on the previous one - for instance, having simpler internal representations makes it easier to identify opportunities for parameter quantization.",
+											"sub_nodes": [
+												{
+													"id": "99410c47-b872-481b-8385-a68335de139b",
+													"title": "Architecture Minimization",
+													"description": "Identify the smallest possible network architecture (in terms of layers, neurons, and connections) that can maintain the original network's performance. This includes techniques like pruning unnecessary components and finding minimal configurations through automated architecture search.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "dbf879a7-e36f-4173-ae19-5c98b434e1ab",
+													"title": "Representation Canonicalization",
+													"description": "Transform the network's internal representations and dynamics into standardized, simplified forms while preserving functional behavior. This includes normalizing activations, exploiting symmetries to simplify weight matrices, and converting to canonical forms that make the network's operation more interpretable.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "298e98a1-0182-44de-8da7-d90204fa2f13",
+													"title": "Parameter Simplification",
+													"description": "Reduce the complexity of individual network parameters through techniques like quantization, rounding, and precision reduction while maintaining network performance. This includes identifying and eliminating redundant parameters and converting continuous values to simpler discrete forms where possible.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "0035b0ac-939a-4bcb-9f8f-7fd1bb8789bd",
 									"title": "Discrete Representation Discovery",
 									"description": "Identify and extract the fundamental discrete representations (e.g., bits, integers) that the neural network has learned to use internally. This includes detecting hidden state patterns and mapping them to interpretable discrete structures while preserving their relationships.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "d9944ffd-8bd8-418e-9a75-bee67228df77",
+											"question": "How can we leverage the geometric properties of activation space clusters to automatically identify the optimal basis vectors for discretizing neural network representations?"
+										},
+										{
+											"id": "3fc85c8a-3f74-453d-883d-84853c868d22",
+											"question": "What role do attention patterns and bottleneck architectures play in naturally encouraging neural networks to form discrete internal representations during training, and how can we exploit this understanding?"
+										},
+										{
+											"id": "db857536-a633-4010-a1ae-b793777b0eaa",
+											"question": "How can we develop robust metrics to quantify the 'discreteness' of learned representations at different layers and use these metrics to guide automated extraction processes?"
+										},
+										{
+											"id": "f8d5451b-1322-42b5-8def-ff4020c2344d",
+											"question": "What are the fundamental trade-offs between representation precision and interpretability when mapping continuous neural activations to discrete structures, and how can we optimize this mapping while maintaining functional equivalence?"
+										},
+										{
+											"id": "da11e5b7-4fdd-4605-bce0-91c41dbbb55c",
+											"question": "How do different training objectives and regularization schemes affect the emergence of discrete representations, and can we design novel training approaches specifically to encourage more interpretable discrete structures?"
+										},
+										{
+											"id": "24264050-82fb-4198-8256-8f3c303c960d",
+											"question": "What mathematical properties of neural network weight matrices indicate the presence of learned discrete operations, and how can we automatically detect these signatures?"
+										},
+										{
+											"id": "7d383f7c-9fc7-4df1-a783-42494d4f979b",
+											"question": "How can we leverage techniques from algebraic topology to identify and characterize the discrete manifolds that emerge in neural network hidden states?"
+										},
+										{
+											"id": "388a8ac6-5558-462b-aeec-06f3ce1f49dd",
+											"question": "What role do adversarial examples and robustness play in verifying that extracted discrete representations truly capture the essential computational structure rather than surface-level patterns?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "cc607c24-e43c-4b42-ab24-8e6edb22f7c7",
+											"title": "Progressive Discrete Structure Discovery",
+											"paper": {
+												"id": "https://arxiv.org/abs/2402.05110",
+												"arxiv_id": "2402.05110",
+												"url": "https://arxiv.org/abs/2402.05110",
+												"title": "Opening the AI black box: program synthesis via mechanistic interpretability",
+												"published_date": "2024-02-07T00:00:00.000Z",
+												"abstract": "We present MIPS, a novel method for program synthesis based on automated mechanistic interpretability of neural networks trained to perform the desired task, auto-distilling the learned algorithm into Python code. We test MIPS on a benchmark of 62 algorithmic tasks that can be learned by an RNN and find it highly complementary to GPT-4: MIPS solves 32 of them, including 13 that are not solved by GPT-4 (which also solves 30). MIPS uses an integer autoencoder to convert the RNN into a finite state machine, then applies Boolean or integer symbolic regression to capture the learned algorithm. As opposed to large language models, this program synthesis technique makes no use of (and is therefore not limited by) human training data such as algorithms and code from GitHub. We discuss opportunities and challenges for scaling up this approach to make machine-learned models more interpretable and trustworthy.",
+												"citation_count": 9,
+												"influential_citation_count": 0,
+												"ref": "11228"
+											},
+											"explanation": "The paper demonstrates that neural networks naturally learn to use discrete representations internally, even when implemented with continuous mathematics. This suggests a systematic approach that progressively transforms continuous neural representations into discrete structures while preserving their computational meaning.\n\nThe breakdown follows the paper's key insight that this discovery requires three main transformations: first detecting potential discrete patterns in the network's continuous representations, then mapping these patterns to formal discrete structures, and finally validating that these structures capture the network's computational behavior. This progression ensures we maintain the network's core functionality while moving from continuous to discrete representations.\n\nThe sub-goals work together as a pipeline where each stage enables the next. Pattern detection reveals structures that can be mapped to discrete representations, which then allow us to validate and formalize their computational relationships. This matches how the paper's algorithm progressively transforms neural representations into increasingly structured forms while maintaining their essential properties.",
+											"sub_nodes": [
+												{
+													"id": "5d54f125-8d48-4ef4-a387-ec2f41392c35",
+													"title": "Pattern Detection",
+													"description": "Analyze the network's continuous representations to identify potential discrete structures, such as clusters or lattices. This includes examining hidden state activations, analyzing their distributions, and detecting recurring patterns that suggest underlying discrete representations.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "f52c76f4-4ef7-4288-8b7c-bcca3c595952",
+													"title": "Discrete Structure Mapping",
+													"description": "Transform identified patterns into formal discrete representations such as bits or integers. This includes determining the appropriate type of discrete structure, establishing the mapping between continuous and discrete values, and ensuring the mapping captures all necessary state information.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "3cbf9f67-103b-4799-ba33-c519c87733a0",
+													"title": "Computational Relationship Verification",
+													"description": "Verify that the mapped discrete representations preserve the network's computational behavior and relationships. This includes validating that the discrete structures maintain all necessary transitions and transformations, and that they capture the full computational capacity of the original continuous representations.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "1472844a-d24f-4cbd-8a15-b99624b6ef99",
 									"title": "Function Extraction",
 									"description": "Convert the neural network's operations into explicit lookup tables or transition functions based on the discovered discrete representations. This involves mapping how the network transforms its internal states and generates outputs in terms of the identified discrete structures.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "31822e69-0990-41f5-b2e2-031352913887",
+											"question": "How can we systematically identify and handle cases where neural networks implement equivalent logical operations through different continuous mathematical implementations, to ensure we extract the true underlying function rather than superficial patterns?"
+										},
+										{
+											"id": "8e2e3bd7-8cfb-4d64-b9aa-b80cff2b9622",
+											"question": "What are effective methods for determining the minimal granularity of discrete state transitions needed to fully capture a neural network's behavior without introducing artifacts from over-discretization?"
+										},
+										{
+											"id": "65665870-b103-4144-978c-67bd77f02630",
+											"question": "How can we reliably distinguish between genuinely learned discrete transition functions versus continuous approximations that only appear discrete at certain scales or in certain regions of the activation space?"
+										},
+										{
+											"id": "577c2e72-f1fd-491a-a136-9bb192feb827",
+											"question": "What techniques can be developed to extract hierarchical transition functions when neural networks learn to compose multiple discrete operations, rather than just mapping simple input-output relationships?"
+										},
+										{
+											"id": "7fdb13a3-900e-4433-981d-bc5fca6518a9",
+											"question": "How can we validate that extracted transition functions maintain the same edge cases and corner-case behaviors as the original neural network, particularly for rare but important state combinations?"
+										},
+										{
+											"id": "8970340a-a443-4a84-a0d5-a6bef8f0e8f4",
+											"question": "What methods can detect and properly handle cases where neural networks learn to implement probabilistic transition functions rather than deterministic ones, while preserving the stochastic properties in the extracted functions?"
+										},
+										{
+											"id": "9120b7cd-071d-475b-91c0-8b50ca1af845",
+											"question": "How can we efficiently identify and extract transition functions when the neural network uses distributed representations where single discrete states are encoded across multiple neurons or activation patterns?"
+										},
+										{
+											"id": "3d06f38e-2c53-4104-9106-8e00612a0cb6",
+											"question": "What approaches can verify that extracted transition functions maintain temporal dependencies and sequential processing patterns present in recurrent neural networks over multiple timesteps?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "f2465b21-6917-4d1d-8f91-2b91c587299a",
+											"title": "State-to-Function Progressive Extraction",
+											"paper": {
+												"id": "https://arxiv.org/abs/2402.05110",
+												"arxiv_id": "2402.05110",
+												"url": "https://arxiv.org/abs/2402.05110",
+												"title": "Opening the AI black box: program synthesis via mechanistic interpretability",
+												"published_date": "2024-02-07T00:00:00.000Z",
+												"abstract": "We present MIPS, a novel method for program synthesis based on automated mechanistic interpretability of neural networks trained to perform the desired task, auto-distilling the learned algorithm into Python code. We test MIPS on a benchmark of 62 algorithmic tasks that can be learned by an RNN and find it highly complementary to GPT-4: MIPS solves 32 of them, including 13 that are not solved by GPT-4 (which also solves 30). MIPS uses an integer autoencoder to convert the RNN into a finite state machine, then applies Boolean or integer symbolic regression to capture the learned algorithm. As opposed to large language models, this program synthesis technique makes no use of (and is therefore not limited by) human training data such as algorithms and code from GitHub. We discuss opportunities and challenges for scaling up this approach to make machine-learned models more interpretable and trustworthy.",
+												"citation_count": 9,
+												"influential_citation_count": 0,
+												"ref": "11228"
+											},
+											"explanation": "The paper's MIPS method demonstrates that function extraction from neural networks follows a natural progression from understanding state representations to deriving symbolic functions. The key insight is that we must first understand how the network represents information before we can meaningfully extract its operations.\n\nThis breakdown follows that progression, starting with mapping the network's state space to interpretable representations, then capturing how these states transition, and finally deriving symbolic functions that encode these operations. Each step builds on the previous one, with the final goal being to produce explicit, verifiable functions that preserve the network's computational behavior.",
+											"sub_nodes": [
+												{
+													"id": "512988f5-3416-4fce-9c32-74626193815f",
+													"title": "State Space Mapping",
+													"description": "Identify and extract the fundamental discrete representations (bits, integers, etc.) that the neural network uses internally. This includes analyzing activation patterns, mapping continuous states to discrete structures, and validating that these mappings preserve the network's information encoding.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "f239ec08-9ad7-407f-8be7-2258a0418941",
+													"title": "Transition Capture",
+													"description": "Generate comprehensive lookup tables or state machines that precisely describe how the network transforms its internal states and generates outputs. This includes mapping input-state-output relationships and verifying these transitions match the original network's behavior.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "696890a7-d81c-447b-9b80-0e3cabcd025b",
+													"title": "Function Synthesis",
+													"description": "Convert the captured transitions into minimal symbolic formulas or explicit functions that preserve the network's computational behavior. This includes applying appropriate regression techniques (Boolean/integer) and validating functional equivalence with the original network.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "2f7a11c7-1bc5-426e-85ac-c9764a1c9519",
 									"title": "Symbolic Algorithm Synthesis",
 									"description": "Derive minimal symbolic formulas that capture the exact behavior of the extracted functions. This includes applying symbolic regression techniques to discover the simplest mathematical or logical expressions that reproduce the network's computation.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "90f292b2-ef2e-4ed3-a6ea-9c6217921b5b",
+											"question": "How can we leverage invariant representations and symmetries in neural networks to simplify the search space for symbolic regression while maintaining functional equivalence?"
+										},
+										{
+											"id": "e3fe603d-b6f2-40c8-bc4b-356b9cf9c365",
+											"question": "What are effective methods for identifying and handling composite operations that should be expressed as a single symbolic formula rather than decomposed into simpler primitives?"
+										},
+										{
+											"id": "85a486a2-371f-4713-8510-deb2113f7bd9",
+											"question": "How can we incorporate domain-specific knowledge and constraints into symbolic regression to bias the search toward formulas that are more likely to generalize beyond the observed input-output pairs?"
+										},
+										{
+											"id": "b4d3316f-1844-46f3-94f4-0fe4f5ee200f",
+											"question": "What metrics beyond just accuracy and formula complexity should we use to evaluate candidate symbolic formulas to ensure they capture the true algorithmic essence rather than just fitting the data?"
+										},
+										{
+											"id": "ddf3be5c-aac5-42b6-94c8-af338452ccf2",
+											"question": "How can we detect and handle cases where the neural network has learned to approximate a discrete algorithm using continuous mathematics in a way that makes direct symbolic regression unstable?"
+										},
+										{
+											"id": "0c2d5d75-bcd9-4592-bc40-b408f7c2268f",
+											"question": "What techniques can we develop to efficiently determine the appropriate level of mathematical abstraction (boolean, arithmetic, etc.) for expressing different components of the extracted algorithm?"
+										},
+										{
+											"id": "ced2769b-03c0-481f-9765-b05270ce46ee",
+											"question": "How can we leverage information about the training process and architecture of the original neural network to guide and constrain symbolic formula discovery?"
+										},
+										{
+											"id": "a426bfa1-4f68-4b2b-adb7-d3ac83939256",
+											"question": "What methods can we develop to verify that discovered symbolic formulas maintain important invariants and edge case behaviors present in the original neural network?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "98d600bf-a349-4cc9-9d80-7becbe281460",
+											"title": "Progressive Formula Synthesis Strategy",
+											"paper": {
+												"id": "https://arxiv.org/abs/2402.05110",
+												"arxiv_id": "2402.05110",
+												"url": "https://arxiv.org/abs/2402.05110",
+												"title": "Opening the AI black box: program synthesis via mechanistic interpretability",
+												"published_date": "2024-02-07T00:00:00.000Z",
+												"abstract": "We present MIPS, a novel method for program synthesis based on automated mechanistic interpretability of neural networks trained to perform the desired task, auto-distilling the learned algorithm into Python code. We test MIPS on a benchmark of 62 algorithmic tasks that can be learned by an RNN and find it highly complementary to GPT-4: MIPS solves 32 of them, including 13 that are not solved by GPT-4 (which also solves 30). MIPS uses an integer autoencoder to convert the RNN into a finite state machine, then applies Boolean or integer symbolic regression to capture the learned algorithm. As opposed to large language models, this program synthesis technique makes no use of (and is therefore not limited by) human training data such as algorithms and code from GitHub. We discuss opportunities and challenges for scaling up this approach to make machine-learned models more interpretable and trustworthy.",
+												"citation_count": 9,
+												"influential_citation_count": 0,
+												"ref": "11228"
+											},
+											"explanation": "The core strategy is to break down symbolic formula synthesis into three progressive phases that build upon each other. First, we analyze the computational patterns to determine what types of symbolic representations and operations would be appropriate for capturing the behavior. This creates a well-defined search space for the second phase, which focuses on discovering any valid symbolic formulas that reproduce the observed behavior. Finally, we optimize these initial formulas to find the minimal equivalent expressions.\n\nThis approach is informed by the paper's successful MIPS implementation, which demonstrated that effective symbolic synthesis requires first understanding the representation type (Boolean vs Integer) before applying appropriate discovery techniques. However, we abstract this to be more general than the paper's specific implementation choices. The three phases are designed to be sequential and minimally overlapping, while collectively ensuring we discover the simplest possible formulas that exactly capture the computational behavior.",
+											"sub_nodes": [
+												{
+													"id": "79ce8228-2fc7-42a6-9f80-986491eeffd1",
+													"title": "Computational Pattern Analysis",
+													"description": "Analyze the computational behavior to identify the types of symbolic representations and operations that could capture it. This includes detecting discrete vs continuous patterns, identifying mathematical structures, and determining appropriate formula spaces to search.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "fa7e35d7-eb99-421f-b060-74b6a4827d2e",
+													"title": "Formula Discovery",
+													"description": "Search the identified formula spaces to find symbolic expressions that exactly reproduce the observed computational behavior. This includes applying appropriate symbolic regression techniques based on the identified patterns and verifying functional equivalence.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "f3dd3d32-18a8-40a0-ac31-9e4301ab1035",
+													"title": "Formula Minimization",
+													"description": "Transform the discovered formulas into their simplest equivalent forms. This includes applying algebraic simplification rules, exploiting mathematical properties like symmetries, and selecting the minimal formula when multiple equivalent options exist.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "c5017d58-e610-482f-bc53-c898de017404",
 									"title": "Program Generation",
 									"description": "Synthesize a complete, executable program that implements the discovered algorithm while maintaining verifiability. This includes converting symbolic formulas into proper code syntax and structuring the program to preserve the original system's sequential processing behavior.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "f2453220-380d-4998-afba-8487ac203766",
+											"question": "How can we automatically determine the most appropriate programming paradigm (functional, imperative, object-oriented) for the generated code based on the patterns found in the extracted symbolic formulas?"
+										},
+										{
+											"id": "4044b834-dabf-4245-ba13-262b3c51d3c5",
+											"question": "What techniques can be developed to preserve and translate the temporal dependencies and sequential ordering constraints from symbolic formulas into proper program control flow structures while maintaining verifiability?"
+										},
+										{
+											"id": "e86ee1e4-7fd0-420e-baa4-d133821937f0",
+											"question": "How can we systematically identify and generate appropriate data structures and type definitions that optimally represent the intermediate computational states implied by the symbolic formulas?"
+										},
+										{
+											"id": "14ac58f5-f311-4cef-8a92-e8bbd36cfd25",
+											"question": "What methods can be developed to automatically generate program invariants and assertions from the symbolic formulas that help verify the correctness of the synthesized code?"
+										},
+										{
+											"id": "4ed3f59b-c16e-4f3e-b938-59fb93edfc3e",
+											"question": "How can we determine the minimal set of helper functions and utility code needed to support the main algorithm implementation while maintaining readability and verifiability?"
+										},
+										{
+											"id": "86754eae-9a71-4683-8795-77a716183880",
+											"question": "What techniques can be developed to automatically refactor generated code to eliminate redundancy and improve efficiency while preserving provable equivalence to the original symbolic formulas?"
+										},
+										{
+											"id": "f4126aef-bb28-4ab0-b184-c34e3ff9b287",
+											"question": "How can we systematically translate mathematical operations in symbolic formulas into numerically stable implementations that handle edge cases and maintain precision requirements?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "e3587304-2003-425e-9f34-9e3fcb8c604a",
+											"title": "Progressive Program Synthesis",
+											"paper": {
+												"id": "https://arxiv.org/abs/2402.05110",
+												"arxiv_id": "2402.05110",
+												"url": "https://arxiv.org/abs/2402.05110",
+												"title": "Opening the AI black box: program synthesis via mechanistic interpretability",
+												"published_date": "2024-02-07T00:00:00.000Z",
+												"abstract": "We present MIPS, a novel method for program synthesis based on automated mechanistic interpretability of neural networks trained to perform the desired task, auto-distilling the learned algorithm into Python code. We test MIPS on a benchmark of 62 algorithmic tasks that can be learned by an RNN and find it highly complementary to GPT-4: MIPS solves 32 of them, including 13 that are not solved by GPT-4 (which also solves 30). MIPS uses an integer autoencoder to convert the RNN into a finite state machine, then applies Boolean or integer symbolic regression to capture the learned algorithm. As opposed to large language models, this program synthesis technique makes no use of (and is therefore not limited by) human training data such as algorithms and code from GitHub. We discuss opportunities and challenges for scaling up this approach to make machine-learned models more interpretable and trustworthy.",
+												"citation_count": 9,
+												"influential_citation_count": 0,
+												"ref": "11228"
+											},
+											"explanation": "The paper's MIPS method demonstrates that generating verifiable programs from symbolic formulas requires a series of progressive transformations, each building upon the previous to move from abstract mathematical representations toward concrete, executable code. The process begins with converting symbolic formulas into proper programming constructs, then structures these into a coherent program, and finally adds verification mechanisms.\n\nThis breakdown follows the natural progression from mathematical/logical expressions to verified code, with each sub-goal representing a distinct transformation phase. The sub-goals are ordered such that each builds upon the previous, starting with basic code expression generation, then program structure, and finally verification integration. This matches how the paper's method progressively refines representations into increasingly concrete and verifiable forms while maintaining computational equivalence.",
+											"sub_nodes": [
+												{
+													"id": "25c3603d-4ed7-49c6-a258-5564137bd0b0",
+													"title": "Expression Generation",
+													"description": "Transform symbolic mathematical and logical formulas into syntactically correct code expressions that preserve the original computational behavior. This includes converting both Boolean and integer representations into appropriate programming language constructs while maintaining their mathematical relationships.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "f39e9ee9-1bb8-4124-93ca-377c947bd0f4",
+													"title": "Program Structure Synthesis",
+													"description": "Integrate the generated code expressions into a complete program structure that maintains the original system's sequential processing behavior. This includes implementing proper initialization, state management, and control flow while ensuring all components work together correctly.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "dd0af919-1654-4d2e-b264-6e7c5916c3b3",
+													"title": "Verification Enhancement",
+													"description": "Augment the generated program with necessary constructs to enable formal verification while preserving its functional behavior. This includes adding appropriate type annotations, assertions, and other verification-enabling structures that allow automated proof of correctness.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								}
 							]
 						},
@@ -871,7 +2355,36 @@
 					"id": "32b9c633-2fb1-4bbc-9d13-672bfa548e95",
 					"title": "Governance and Enforcement",
 					"description": "Implement a global system of policies, standards, and enforcement mechanisms that ensures only provably safe AI systems can be deployed. This includes coordinating international cooperation and creating incentive structures that make compliance universal.",
-					"questions": null,
+					"questions": [
+						{
+							"id": "2ce39395-04f1-442a-a4ba-25a4fcae1986",
+							"question": "How can we design and validate technical mechanisms for compute providers to accurately measure and report the total compute used by an AI system across distributed training runs while preserving commercial confidentiality?"
+						},
+						{
+							"id": "42fd8846-0eca-4e54-954c-5a9a86d2109a",
+							"question": "What are the optimal thresholds and transition periods for a tiered compute cap system that maintains AI progress in beneficial domains while preventing dangerous capability jumps, based on historical training data and capability scaling laws?"
+						},
+						{
+							"id": "6a466789-4adf-484e-ba85-5c6c570242ca",
+							"question": "How can we develop reliable technical methods to verify that a deployed AI model is functionally identical to its registered and approved version, accounting for potential obfuscation attempts?"
+						},
+						{
+							"id": "c787bd71-e03f-4323-9ece-bfbe61ed0492",
+							"question": "What organizational structures and incentive mechanisms would enable effective coordination between national AI regulatory bodies while preventing regulatory capture or race-to-the-bottom dynamics?"
+						},
+						{
+							"id": "b9a7208b-b432-4a9b-be4a-af291177edc2",
+							"question": "How can we design empirically-validated evaluation protocols that reliably detect potentially dangerous capabilities in AI systems before they are fully trained or deployed at scale?"
+						},
+						{
+							"id": "317be183-9bcb-4c01-98b5-87ca0d6754a1",
+							"question": "What technical and organizational safeguards would enable secure sharing of safety-critical findings about AI systems between companies and regulators without risking capability proliferation?"
+						},
+						{
+							"id": "0acc70af-e15f-43bb-834b-15dabfbe675f",
+							"question": "How can we create robust mechanisms for detecting and attributing attempts to circumvent AI governance systems through techniques like model splitting or distributed training across jurisdictions?"
+						}
+					],
 					"breakdowns": [
 						{
 							"id": "11b4ceb6-dc9d-451f-9a90-e5910631ea18",
@@ -893,36 +2406,386 @@
 									"id": "90a3a239-984d-4259-943d-9cd64573eb8f",
 									"title": "Multi-Level Policy Infrastructure",
 									"description": "Establish coordinated governance frameworks across international, national, and industry levels that define requirements and standards for AI system safety. This includes creating formal mechanisms for policy coordination between levels and ensuring comprehensive coverage of all relevant aspects of AI system development and deployment.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "3f989b54-9b5e-4b40-a59d-f6161912fafb",
+											"question": "How can policy frameworks effectively account for and regulate AI systems with emergent capabilities that weren't anticipated when the original standards were established?"
+										},
+										{
+											"id": "30e36940-131e-41e5-aa60-cbda9f0a8d63",
+											"question": "What mechanisms can enable rapid coordination and standard-setting between different governance levels when addressing novel AI safety challenges, while maintaining democratic legitimacy and avoiding regulatory capture?"
+										},
+										{
+											"id": "c6f6a31c-7686-41da-b84f-7eab5317a56b",
+											"question": "How can international AI safety standards be designed to accommodate meaningful variation in national regulatory approaches while still maintaining minimum effective safety requirements?"
+										},
+										{
+											"id": "f3fd2ed1-f1c3-4acc-bcc3-3c92215c74ef",
+											"question": "What metrics and measurement frameworks can reliably assess the degree of policy alignment and coordination effectiveness between different governance levels in AI safety regulation?"
+										},
+										{
+											"id": "ab25b9ce-50c2-4e50-9a3d-399e5e567b0c",
+											"question": "How can governance frameworks be structured to effectively regulate AI systems developed through decentralized collaboration across multiple jurisdictions?"
+										},
+										{
+											"id": "4994d424-9037-4101-8f43-cbd6906fe4a2",
+											"question": "What institutional design patterns best enable consistent interpretation and application of AI safety standards across different cultural and legal contexts while maintaining local relevance?"
+										},
+										{
+											"id": "547e9488-8619-458f-be60-9d4469b28f00",
+											"question": "How can policy frameworks effectively distinguish between and separately regulate different components of AI systems when they are developed by different entities across multiple jurisdictions?"
+										},
+										{
+											"id": "c7554231-66f5-4922-a826-33cfed587a25",
+											"question": "What mechanisms can enable rapid propagation of updated safety standards across governance levels while ensuring proper validation and maintaining policy coherence?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "ee166bf2-b1ec-493a-8c36-f6f2a5c1b866",
+											"title": "Level-Specific and Inter-Level Coordination Strategy",
+											"paper": {
+												"id": "https://arxiv.org/abs/2404.13719",
+												"arxiv_id": "2404.13719",
+												"url": "https://arxiv.org/abs/2404.13719",
+												"title": "A Practical Multilevel Governance Framework for Autonomous and Intelligent Systems",
+												"published_date": "2024-04-21T00:00:00.000Z",
+												"abstract": "Autonomous and intelligent systems (AIS) facilitate a wide range of beneficial applications across a variety of different domains. However, technical characteristics such as unpredictability and lack of transparency, as well as potential unintended consequences, pose considerable challenges to the current governance infrastructure. Furthermore, the speed of development and deployment of applications outpaces the ability of existing governance institutions to put in place effective ethical-legal oversight. New approaches for agile, distributed and multilevel governance are needed. This work presents a practical framework for multilevel governance of AIS. The framework enables mapping actors onto six levels of decision-making including the international, national and organizational levels. Furthermore, it offers the ability to identify and evolve existing tools or create new tools for guiding the behavior of actors within the levels. Governance mechanisms enable actors to shape and enforce regulations and other tools, which when complemented with good practices contribute to effective and comprehensive governance.",
+												"citation_count": 0,
+												"influential_citation_count": 0,
+												"ref": "17651"
+											},
+											"explanation": "The paper presents governance as an interconnected system operating across multiple levels, from international to individual. The key insight is that effective multilevel policy infrastructure requires both strong governance frameworks at each level and robust mechanisms for coordination between levels.\n\nThis breakdown reflects this dual requirement by separating the goal into two fundamental components: establishing appropriate frameworks at each level and creating the mechanisms that connect these levels. This approach ensures comprehensive coverage while maintaining clear separation of concerns - the first sub-goal focuses on what needs to exist at each level, while the second focuses on how these levels work together. This creates a natural division that avoids overlap while ensuring all aspects of multilevel policy infrastructure are addressed.",
+											"sub_nodes": [
+												{
+													"id": "520aba9c-7026-45a1-ad69-9e07241b4cf5",
+													"title": "Level-Specific Governance Frameworks",
+													"description": "Establish appropriate governance frameworks at each level (international, national, and industry) that define clear requirements and standards for AI system safety. This includes developing policies, guidelines, and enforcement mechanisms tailored to each level's scope and authority.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "beca15ff-b4a5-4d90-b548-21ff2db12a21",
+													"title": "Inter-Level Coordination Mechanisms",
+													"description": "Create formal mechanisms and processes that enable effective coordination, information sharing, and policy alignment between different governance levels. This includes establishing clear channels for both top-down policy implementation and bottom-up feedback, ensuring coherent governance across the entire system.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "c9ca0139-6070-4c31-bc92-0e647f97baa4",
 									"title": "Enforcement Mechanisms",
 									"description": "Develop and implement mechanisms to verify compliance and enforce safety standards across all governance levels. This includes both technical verification systems and institutional oversight processes to ensure standards are being met, with clear consequences for non-compliance.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "293d392d-11ba-465f-a93f-76a96fa8dc53",
+											"question": "How can we design verification systems that can effectively detect and measure 'capability deception' - where AI systems intentionally mask or downplay their true capabilities during compliance testing?"
+										},
+										{
+											"id": "636a9054-15b1-4f4e-99e6-bd1789a3c771",
+											"question": "What are the optimal combinations of technical monitoring approaches (e.g., behavioral tests, formal verification, runtime monitoring) for different types and capability levels of AI systems to maximize detection of safety violations while minimizing computational overhead?"
+										},
+										{
+											"id": "af411fb7-f430-4afa-9fea-f98e2ba77619",
+											"question": "How can enforcement mechanisms be designed to remain robust against coordinated attempts by multiple actors to exploit system vulnerabilities, particularly in scenarios where actors share information about circumvention techniques?"
+										},
+										{
+											"id": "c9c5ccc8-08e3-4093-9f5b-2cf81fa426a4",
+											"question": "What metrics and measurement frameworks can accurately assess the effectiveness of enforcement mechanisms across different governance levels while accounting for varying cultural, legal, and technological contexts?"
+										},
+										{
+											"id": "475628ee-b5f5-4118-8da0-8f2621b01f8c",
+											"question": "How can enforcement mechanisms be designed to effectively handle 'emergent capabilities' - where AI systems develop new capabilities through training that weren't explicitly programmed or anticipated during initial compliance verification?"
+										},
+										{
+											"id": "2f2de2c6-ff81-4447-be00-e05f6073a250",
+											"question": "What are the most effective approaches for implementing 'enforcement handoffs' between different governance levels when violations are detected, while maintaining accountability and preventing exploitation of jurisdictional gaps?"
+										},
+										{
+											"id": "8cde4098-89e8-4f65-8d9f-cd0476d6e7dc",
+											"question": "How can technical verification systems be designed to maintain effectiveness when AI systems are continuously learning and updating in deployment, without requiring constant re-certification or creating unacceptable operational delays?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "3c77d1d4-1a5d-4b32-8edb-22f74c6a7e76",
+											"title": "Detection-Evaluation-Action Framework",
+											"paper": {
+												"id": "https://arxiv.org/abs/2404.13719",
+												"arxiv_id": "2404.13719",
+												"url": "https://arxiv.org/abs/2404.13719",
+												"title": "A Practical Multilevel Governance Framework for Autonomous and Intelligent Systems",
+												"published_date": "2024-04-21T00:00:00.000Z",
+												"abstract": "Autonomous and intelligent systems (AIS) facilitate a wide range of beneficial applications across a variety of different domains. However, technical characteristics such as unpredictability and lack of transparency, as well as potential unintended consequences, pose considerable challenges to the current governance infrastructure. Furthermore, the speed of development and deployment of applications outpaces the ability of existing governance institutions to put in place effective ethical-legal oversight. New approaches for agile, distributed and multilevel governance are needed. This work presents a practical framework for multilevel governance of AIS. The framework enables mapping actors onto six levels of decision-making including the international, national and organizational levels. Furthermore, it offers the ability to identify and evolve existing tools or create new tools for guiding the behavior of actors within the levels. Governance mechanisms enable actors to shape and enforce regulations and other tools, which when complemented with good practices contribute to effective and comprehensive governance.",
+												"citation_count": 0,
+												"influential_citation_count": 0,
+												"ref": "17651"
+											},
+											"explanation": "The paper presents enforcement as a multi-level challenge requiring both technical and institutional mechanisms working in concert. Analysis suggests that effective enforcement can be broken down into three core functional requirements: the ability to detect violations, the capacity to evaluate compliance, and the capability to take enforcement actions.\n\nThis framework separates enforcement into distinct phases that build on each other while maintaining clear boundaries of responsibility. Detection systems provide the raw data and evidence, evaluation processes determine if violations have occurred and their severity, and enforcement operations convert these determinations into appropriate actions. This creates a clear chain of enforcement that can operate consistently across all governance levels while maintaining appropriate checks and balances between detection, judgment, and action.",
+											"sub_nodes": [
+												{
+													"id": "e0146c61-5971-4880-ac2e-9869983a301f",
+													"title": "Verification Infrastructure",
+													"description": "Develop and deploy comprehensive technical and procedural systems for detecting non-compliance with safety standards. This includes both automated monitoring systems and manual inspection processes that can reliably identify potential violations across all governance levels.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "9ce425d5-0b35-46e0-a763-81ab8875072a",
+													"title": "Compliance Evaluation Framework",
+													"description": "Establish institutional processes and bodies for evaluating potential violations and determining appropriate responses. This includes creating clear evaluation criteria, establishing review boards at appropriate levels, and developing consistent processes for compliance determinations.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "83971e3a-ad17-46ab-875b-da724732f347",
+													"title": "Enforcement Operations",
+													"description": "Implement mechanisms for coordinating and executing enforcement actions across all governance levels, including both positive and negative consequences for compliance behavior. This includes establishing clear authority structures, coordination protocols between jurisdictions, and ensuring consequences are consistently applied.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "67431ae3-1970-4e4e-875b-498736e4e8df",
 									"title": "Participatory Governance",
 									"description": "Create systems and processes that enable meaningful participation from all stakeholder groups in the development and refinement of governance frameworks. This includes establishing formal channels for bottom-up input and ensuring representation from technical, business, and civil society perspectives.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "e8ff912f-b8de-47eb-81f1-94ad832324bc",
+											"question": "How can digital democracy tools be designed to enable meaningful participation from stakeholders with varying levels of technical expertise while maintaining the rigor needed for AI governance decisions?"
+										},
+										{
+											"id": "8bbf241f-2404-4b12-a4cf-e461bc1b40e4",
+											"question": "What are the optimal mechanisms for weighting and aggregating input from different stakeholder groups when their expertise, risk exposure, and interests conflict in AI governance decisions?"
+										},
+										{
+											"id": "3af615e5-b83f-4556-bf8a-faf702ef1b85",
+											"question": "How can we measure and optimize the 'epistemic value add' of different stakeholder participation methods to ensure participatory processes actually improve governance outcomes rather than just providing procedural legitimacy?"
+										},
+										{
+											"id": "9656da44-6a36-48b1-9478-4953b5985c4a",
+											"question": "What organizational structures and processes best enable productive collaboration between technical AI safety researchers and civil society representatives who may lack deep technical knowledge but offer crucial perspective on societal impacts?"
+										},
+										{
+											"id": "1f511b70-ae8b-45a1-8f0b-1f308687b98f",
+											"question": "How can participatory governance systems be designed to maintain both speed and quality of decision-making as the number and diversity of stakeholders increases?"
+										},
+										{
+											"id": "62c8cab3-46ab-4b0a-a6af-203353e28ecb",
+											"question": "What mechanisms can ensure meaningful representation from marginalized communities and Global South perspectives in AI governance while preventing capture by well-resourced interest groups?"
+										},
+										{
+											"id": "23bc4a3d-bd80-4b22-9a1a-3bc5d79c0e31",
+											"question": "How can stakeholder participation systems be designed to effectively surface early warning signals about emerging AI risks while filtering out noise and false alarms?"
+										},
+										{
+											"id": "e847d96c-cceb-433a-a3a0-47f6844427e4",
+											"question": "What are the optimal feedback loop structures between technical AI development teams and broader stakeholder groups that maximize the likelihood of incorporating stakeholder input into technical design decisions?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "bb0e2bde-4a45-4a24-ae11-629ba2b576b2",
+											"title": "Infrastructure-Process-Sustainability Framework",
+											"paper": {
+												"id": "https://arxiv.org/abs/2404.13719",
+												"arxiv_id": "2404.13719",
+												"url": "https://arxiv.org/abs/2404.13719",
+												"title": "A Practical Multilevel Governance Framework for Autonomous and Intelligent Systems",
+												"published_date": "2024-04-21T00:00:00.000Z",
+												"abstract": "Autonomous and intelligent systems (AIS) facilitate a wide range of beneficial applications across a variety of different domains. However, technical characteristics such as unpredictability and lack of transparency, as well as potential unintended consequences, pose considerable challenges to the current governance infrastructure. Furthermore, the speed of development and deployment of applications outpaces the ability of existing governance institutions to put in place effective ethical-legal oversight. New approaches for agile, distributed and multilevel governance are needed. This work presents a practical framework for multilevel governance of AIS. The framework enables mapping actors onto six levels of decision-making including the international, national and organizational levels. Furthermore, it offers the ability to identify and evolve existing tools or create new tools for guiding the behavior of actors within the levels. Governance mechanisms enable actors to shape and enforce regulations and other tools, which when complemented with good practices contribute to effective and comprehensive governance.",
+												"citation_count": 0,
+												"influential_citation_count": 0,
+												"ref": "17651"
+											},
+											"explanation": "The paper presents participatory governance as a multilevel system requiring both structural elements and dynamic mechanisms to enable meaningful stakeholder participation. Analysis suggests three fundamental requirements: 1) physical infrastructure to enable participation, 2) well-designed processes to make participation meaningful, and 3) mechanisms to make participation sustainable.\n\nThis breakdown organizes the components identified in the paper's framework into these three strategic categories. The Participation Infrastructure provides the basic channels and representation mechanisms needed for participation to occur. The Input Integration Processes ensure that participation actually influences decisions in a structured way. Finally, the Sustainability Mechanisms create the feedback loops and incentives needed to maintain meaningful participation over time. Together, these three elements create a complete and self-sustaining participatory governance system.",
+											"sub_nodes": [
+												{
+													"id": "2a9fbec9-c330-4eb6-aa17-9f5311f6993b",
+													"title": "Participation Infrastructure",
+													"description": "Establish the core infrastructure needed to enable participation, including communication channels across governance levels and formal representation mechanisms for all stakeholder groups. This includes both physical systems for information sharing and organizational structures for stakeholder representation.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "ffdb8cf9-5e71-4eea-999d-ae5b220d58d9",
+													"title": "Input Integration Processes",
+													"description": "Design and implement formal processes for gathering, evaluating, and incorporating stakeholder input into governance decisions. This includes creating transparent mechanisms for how input is collected, evaluated, and used in policy development and refinement.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "3941958d-6d27-4f0e-816d-bae1a80e8d22",
+													"title": "Sustainability Mechanisms",
+													"description": "Develop systems that ensure participation remains meaningful and effective over time, including feedback loops, incentive structures, and accountability measures. This includes both positive incentives for participation and mechanisms to verify that stakeholder input genuinely influences outcomes.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "ff97da29-0f1f-455e-8f30-3629c627d600",
 									"title": "Adaptive Oversight",
 									"description": "Implement systems for continuous monitoring, evaluation, and updating of governance frameworks to maintain effectiveness as AI technology evolves. This includes mechanisms for rapid response to emerging risks and the ability to evolve standards based on real-world evidence.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "3623ea6f-36f5-4bf0-82b6-52f2741df539",
+											"question": "How can we quantify and measure the 'adaptation lag' between emerging AI capabilities and corresponding governance updates to establish early warning indicators for when oversight systems need rapid evolution?"
+										},
+										{
+											"id": "f34a1274-2377-4aed-97cd-4df9570ecca4",
+											"question": "What are the optimal feedback loop structures and sampling frequencies for monitoring different types of AI risks, considering the tradeoff between detection speed and false positive rates in adaptive oversight systems?"
+										},
+										{
+											"id": "9de550c7-0fb6-47c4-b93f-de5a9250bfed",
+											"question": "How can we design governance update mechanisms that maintain robustness while allowing for rapid adaptation, and what are the key indicators that should trigger different types/magnitudes of governance changes?"
+										},
+										{
+											"id": "3663f77f-c4a6-46fd-9668-581ba99332be",
+											"question": "What methods can be developed to systematically identify and track early indicators of governance framework obsolescence before actual safety failures occur?"
+										},
+										{
+											"id": "50799279-a41f-4daf-a88b-88b79420c3bd",
+											"question": "How can we create formal models to predict the cascading effects of local governance adaptations across different levels of the oversight system to prevent unintended consequences of rapid changes?"
+										},
+										{
+											"id": "8944f472-437b-465e-90db-273a0c317ba6",
+											"question": "What are effective approaches for maintaining consistent interpretation and enforcement of safety standards during transition periods when governance frameworks are being updated?"
+										},
+										{
+											"id": "94a665fc-0972-4ba9-b1a8-bae7a7773ab7",
+											"question": "How can we develop automated systems to continuously evaluate the completeness and effectiveness of current oversight mechanisms against emerging AI capabilities while maintaining human judgment in the loop?"
+										},
+										{
+											"id": "95900f5c-b7a7-40d1-bf18-de299cba93ae",
+											"question": "What metrics and evaluation frameworks can be developed to assess whether adaptive oversight systems are successfully balancing the competing needs of stability, adaptability, and safety?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "2484fad7-fa50-4125-8f27-30f8e22df9ff",
+											"title": "Dynamic Oversight Framework",
+											"paper": {
+												"id": "https://arxiv.org/abs/2404.13719",
+												"arxiv_id": "2404.13719",
+												"url": "https://arxiv.org/abs/2404.13719",
+												"title": "A Practical Multilevel Governance Framework for Autonomous and Intelligent Systems",
+												"published_date": "2024-04-21T00:00:00.000Z",
+												"abstract": "Autonomous and intelligent systems (AIS) facilitate a wide range of beneficial applications across a variety of different domains. However, technical characteristics such as unpredictability and lack of transparency, as well as potential unintended consequences, pose considerable challenges to the current governance infrastructure. Furthermore, the speed of development and deployment of applications outpaces the ability of existing governance institutions to put in place effective ethical-legal oversight. New approaches for agile, distributed and multilevel governance are needed. This work presents a practical framework for multilevel governance of AIS. The framework enables mapping actors onto six levels of decision-making including the international, national and organizational levels. Furthermore, it offers the ability to identify and evolve existing tools or create new tools for guiding the behavior of actors within the levels. Governance mechanisms enable actors to shape and enforce regulations and other tools, which when complemented with good practices contribute to effective and comprehensive governance.",
+												"citation_count": 0,
+												"influential_citation_count": 0,
+												"ref": "17651"
+											},
+											"explanation": "The paper presents adaptive governance as requiring both 'exploitation' (ensuring current effectiveness) and 'exploration' (gathering information and evolving). This naturally suggests a framework that separates the continuous gathering and analysis of information from the mechanisms that act on that information, whether through immediate response or systematic evolution of the governance framework itself.\n\nThe breakdown reflects this by establishing three complementary systems: Intelligence Systems gather and analyze information about governance effectiveness and emerging risks, Response Mechanisms enable quick action when needed, and Governance Evolution ensures systematic improvement over time. This creates a complete feedback loop where information gathering leads to both immediate action when necessary and systematic improvement over time, while maintaining clear separation of concerns between these functions.",
+											"sub_nodes": [
+												{
+													"id": "b4aaf3fe-d803-4f99-9ee8-ec70f28f6902",
+													"title": "Intelligence Systems",
+													"description": "Establish comprehensive systems for continuous monitoring and evaluation of governance effectiveness and emerging risks across all levels. This includes developing metrics, collecting data, and maintaining ongoing assessment of both the governance framework's performance and potential new challenges or threats.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "f2d52f87-084d-4f4c-9491-266cb4e56d17",
+													"title": "Response Mechanisms",
+													"description": "Create and maintain systems that enable rapid identification and response to emerging risks or governance failures. This includes establishing clear protocols for emergency action, decision-making frameworks for quick response, and communication channels across all governance levels.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "a7d7f6ac-4a4b-48ad-8b2a-73689bac3fde",
+													"title": "Governance Evolution",
+													"description": "Implement processes for systematic review and updating of governance frameworks based on accumulated evidence and changing circumstances. This includes coordinating updates across different governance levels, managing stakeholder input, and ensuring coherent evolution of the overall system.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								},
 								{
 									"id": "dd2d19a8-e8d8-4bea-8828-7a57d6e3b512",
 									"title": "Universal Incentive Alignment",
 									"description": "Design and implement incentive structures that make compliance with safety standards the most attractive option for all stakeholders. This includes both positive incentives for compliance and mechanisms to make non-compliance economically and operationally unfavorable.",
-									"questions": null,
-									"breakdowns": null
+									"questions": [
+										{
+											"id": "77c90aa9-07e5-4168-8043-43d20d7f42f9",
+											"question": "How can game theory be applied to design incentive structures that remain stable even when some actors have significantly more resources or technological capabilities than others in the AI development landscape?"
+										},
+										{
+											"id": "5a3fdecf-43df-4b03-8f9e-e544e10cc09b",
+											"question": "What are the psychological and organizational factors that cause safety compliance incentives to break down during periods of intense competition or perceived existential threat to an organization, and how can incentive structures be designed to remain robust under such conditions?"
+										},
+										{
+											"id": "77d66099-766f-4a8b-be0c-cc03313f46dd",
+											"question": "How can incentive mechanisms be designed to effectively handle the unique challenges of AI development, where the potential downsides of non-compliance may not be immediately visible or measurable until it's too late?"
+										},
+										{
+											"id": "08700468-6172-48e4-b446-3a1e9ed67bd5",
+											"question": "What novel approaches could leverage prediction markets or other crowd-based mechanisms to create early warning systems that incentivize proactive safety compliance rather than reactive enforcement?"
+										},
+										{
+											"id": "f1de5ca3-f9fd-4913-9d27-5b36de1aad7b",
+											"question": "How can incentive structures be designed to properly account for and reward positive externalities from safety research sharing while protecting legitimate competitive advantages?"
+										},
+										{
+											"id": "221638bd-f193-4ab4-88a6-85e4a474f2bf",
+											"question": "What mechanisms could create credible commitment devices that allow AI development organizations to voluntarily bind themselves to safety standards in ways that are difficult to reverse, even under future pressure?"
+										},
+										{
+											"id": "e710015d-15c3-42f7-a338-aa3bcabb0d83",
+											"question": "How can incentive structures be designed to remain effective when dealing with potentially superhuman AI systems that might find novel ways to game or circumvent traditional reward mechanisms?"
+										}
+									],
+									"breakdowns": [
+										{
+											"id": "f58c29e6-0af3-45b6-9781-d05b15e7550b",
+											"title": "Three-Pillar Incentive Alignment Strategy",
+											"paper": {
+												"id": "https://arxiv.org/abs/2404.13719",
+												"arxiv_id": "2404.13719",
+												"url": "https://arxiv.org/abs/2404.13719",
+												"title": "A Practical Multilevel Governance Framework for Autonomous and Intelligent Systems",
+												"published_date": "2024-04-21T00:00:00.000Z",
+												"abstract": "Autonomous and intelligent systems (AIS) facilitate a wide range of beneficial applications across a variety of different domains. However, technical characteristics such as unpredictability and lack of transparency, as well as potential unintended consequences, pose considerable challenges to the current governance infrastructure. Furthermore, the speed of development and deployment of applications outpaces the ability of existing governance institutions to put in place effective ethical-legal oversight. New approaches for agile, distributed and multilevel governance are needed. This work presents a practical framework for multilevel governance of AIS. The framework enables mapping actors onto six levels of decision-making including the international, national and organizational levels. Furthermore, it offers the ability to identify and evolve existing tools or create new tools for guiding the behavior of actors within the levels. Governance mechanisms enable actors to shape and enforce regulations and other tools, which when complemented with good practices contribute to effective and comprehensive governance.",
+												"citation_count": 0,
+												"influential_citation_count": 0,
+												"ref": "17651"
+											},
+											"explanation": "The paper's multilevel governance framework reveals that effective incentive alignment requires coordinated mechanisms across different scales of organization - from individual to international. This suggests that rather than focusing on specific types of incentives (economic, social, etc.), we should focus on creating comprehensive systems that make safety the natural choice at every level.\n\nThe breakdown identifies three fundamental pillars needed for universal incentive alignment: Economic Alignment ensures that safety is the financially optimal choice through both rewards and penalties, Market Structure Development creates self-reinforcing market dynamics that favor safety, and Cultural/Professional Evolution establishes lasting norms and values that internalize safety priorities. These pillars work together - economic alignment provides immediate motivation, market structures create sustained pressure, and cultural evolution ensures long-term stability of safety-conscious behavior.",
+											"sub_nodes": [
+												{
+													"id": "7aa10f91-a56a-46d1-b98a-c63f0b9b6577",
+													"title": "Economic Alignment",
+													"description": "Create comprehensive economic frameworks that make safety compliance financially optimal and non-compliance prohibitively expensive. This includes both positive incentives like preferential funding and contracts for safe systems, and negative incentives like liability frameworks and mandatory insurance requirements.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "0d053dd7-8470-4b0f-8fe9-2abc96de8d0a",
+													"title": "Market Structure Development",
+													"description": "Design and implement market mechanisms that create self-reinforcing advantages for safety-conscious actors. This includes establishing certification systems, creating transparency frameworks that enable informed customer choice, and developing industry standards that make safety a competitive necessity.",
+													"questions": null,
+													"breakdowns": null
+												},
+												{
+													"id": "508642d8-3bba-4e5a-9e19-79bf0d4429e4",
+													"title": "Cultural/Professional Evolution",
+													"description": "Foster the development of professional cultures and institutional norms that intrinsically value and prioritize safety. This includes establishing educational frameworks, professional standards, and shared ethical principles that make safety consciousness an integral part of professional identity in AI development.",
+													"questions": null,
+													"breakdowns": null
+												}
+											]
+										}
+									]
 								}
 							]
 						},

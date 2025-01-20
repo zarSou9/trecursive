@@ -55,7 +55,7 @@
 	}: Props = $props();
 
 	let miniDivs: { [id: string]: HTMLDivElement } = $state({});
-	let questionsOpen = $state(true);
+	let questionsOpen = $state(false);
 	let refsOpen = $state(true);
 	let miniDivHeight = $state(0);
 	let searchInput = $state('');
@@ -183,29 +183,35 @@
 			class="flex max-w-[calc(100vw-40px)] flex-col md:max-w-[700px]"
 		>
 			<CanvasScrollContainer
-				className="rounded-[30px] min-h-[initial] border-b-[2px] border-l-[2px] border-gray-600 bg-[#212121] px-8 py-7 {node
+				className="relative rounded-[30px] min-h-[initial] border-b-[2px] border-l-[2px] border-gray-600 bg-[#212121] px-8 py-7 {node
 					.breakdown?.explanation || node.breakdown?.paper
 					? 'mb-8 overflow-visible'
 					: 'mb-1'}"
 				onclick={onDescriptionClick}
 			>
-				{#if node.research_questions}
+				{#if node.questions}
 					<div
-						class="group absolute right-[calc(100%+55px)] top-0 size-fit w-[550px] flex-shrink-0"
+						onclick={(e) => e.stopPropagation()}
+						role="presentation"
+						class="group absolute right-[calc(100%+55px)] top-0 size-fit max-h-[100%] w-[550px] flex-shrink-0"
 					>
 						{@render collapser(() => (questionsOpen = !questionsOpen), questionsOpen)}
 						{#if questionsOpen}
-							<div class="rounded-[30px] bg-[#191919] px-8 py-6">
-								<p class="header">Research Questions</p>
-								<div class="mt-5 space-y-8">
-									{#each node.research_questions as question}
-										<div>
-											<p>{question.question}</p>
-											<Note className="mt-2">{question.context}</Note>
+							<CanvasScrollContainer
+								className="rounded-[30px] bg-[#191919] px-8 py-6 max-h-[470px]"
+							>
+								<h3 class="header">Research Questions</h3>
+								<div class="mt-5 flex flex-col gap-8">
+									{#each node.questions as question}
+										<div class="rounded-lg bg-[#212121] p-4">
+											<p class="text-[15px] text-[#e0e0e0]">{question.question}</p>
+											{#if question.context}
+												<Note className="mt-3">{question.context}</Note>
+											{/if}
 										</div>
 									{/each}
 								</div>
-							</div>
+							</CanvasScrollContainer>
 						{/if}
 					</div>
 				{/if}

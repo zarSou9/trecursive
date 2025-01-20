@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { writable, type Writable } from 'svelte/store';
 
 	interface Props extends HTMLAttributes<HTMLDivElement> {
 		className?: string;

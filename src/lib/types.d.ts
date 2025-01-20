@@ -30,7 +30,7 @@ type Node = {
 	mini_description?: string;
 	breakdown?: Breakdown;
 	otherBreakdowns?: Breakdown[];
-	research_questions?: ResearchQuestion[];
+	questions?: ResearchQuestion[];
 };
 
 type Breakdown = {
@@ -58,7 +58,7 @@ type Paper = {
 type ResearchQuestion = {
 	id: string;
 	question: string;
-	context: string;
+	context?: string;
 };
 
 type PosNode = {
