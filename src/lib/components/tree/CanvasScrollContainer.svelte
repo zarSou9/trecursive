@@ -24,8 +24,7 @@
 	ontouchmove={(e) => {
 		if (e.touches.length === 1) {
 			const el = e.currentTarget;
-			if (el.scrollTop < -2 || el.scrollTop + el.clientHeight >= el.scrollHeight + 2)
-				e.preventDefault();
+			if (el.scrollTop < 0 || el.scrollTop + el.clientHeight > el.scrollHeight) e.preventDefault();
 			if (isMidScroll) {
 				e.currentTarget.dispatchEvent(new TouchEvent('touchend'));
 				e.stopPropagation();
