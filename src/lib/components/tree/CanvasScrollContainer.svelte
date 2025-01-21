@@ -22,7 +22,7 @@
 	onmousemove={() => (mouseIn = true)}
 	onmouseleave={() => (mouseIn = false)}
 	ontouchmove={(e) => {
-		if (isMidScroll) {
+		if (isMidScroll && e.touches.length === 1) {
 			e.currentTarget.dispatchEvent(new TouchEvent('touchend'));
 			e.stopPropagation();
 			return;
@@ -30,10 +30,7 @@
 	}}
 	ontouchstart={(e) => {
 		isMobile = true;
-		if (isMidScroll) {
-			e.stopPropagation();
-			return;
-		}
+		if (e.touches.length === 1) e.stopPropagation();
 	}}
 	onscroll={(e) => {
 		if (isMobile) {
