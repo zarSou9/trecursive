@@ -772,6 +772,7 @@
 
 			if (moveX > 5 || moveY > 5) {
 				e.stopPropagation();
+				e.preventDefault();
 
 				const currentTime = Date.now();
 				const deltaTime = currentTime - lastTouchTime;
@@ -910,6 +911,16 @@
 
 		canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
 	}
+
+	function setupTouchMove(node: HTMLElement) {
+		node.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+		return {
+			destroy() {
+				node.removeEventListener('touchmove', handleTouchMove);
+			}
+		};
+	}
 </script>
 
 {#if settingsModalOpen}
@@ -959,11 +970,11 @@
 	onmouseup={endGrab}
 	onmouseleave={endGrab}
 	ontouchstart={handleTouchStart}
-	ontouchmove={handleTouchMove}
 	ontouchend={handleTouchEnd}
 	ontouchcancel={handleTouchEnd}
 	bind:this={viewPort}
 	role="presentation"
+	use:setupTouchMove
 >
 	<div class="absolute right-[14px] top-[14px] z-[1] flex items-center gap-[10px]">
 		{#each navItems || [] as navItem}
