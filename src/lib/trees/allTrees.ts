@@ -63,7 +63,7 @@ export const allTrees: TreeDefinition[] = [
 	},
 	{
 		pathName: 'ai-safety-goals',
-		title: 'AI X-Risk Mitigation',
+		title: 'AI Safety Goals',
 		note: 'This map used LLMs to recursively break down AI safety into continuously smaller sub-goals. At each sub-goal, research papers are found to ground the model as it generates the next breakdown.',
 		tree: AITegmarkTree,
 		breakdownName: 'paper',
