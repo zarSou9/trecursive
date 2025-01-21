@@ -4,7 +4,7 @@
 	import { cubicOut } from 'svelte/easing';
 	import { createLocalStore } from '$lib/createLocalStore';
 	import ToolTipItem from '$lib/components/general/ToolTipItem.svelte';
-	import type { DropDownItem, SettingComponent } from '$lib/types';
+	import type { DropDownItem } from '$lib/types';
 	import Dropdown from '$lib/components/general/Dropdown.svelte';
 	import { writable, type Writable } from 'svelte/store';
 	import PopUp from '$lib/components/general/PopUp.svelte';
@@ -96,7 +96,6 @@
 		}
 	]);
 	let settingsModalOpen = $state(false);
-	let settings: SettingComponent[] = $state([]);
 
 	let viewPortOffset = {
 		x: 0,

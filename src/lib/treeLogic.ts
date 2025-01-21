@@ -93,14 +93,23 @@ function positionTree(t: Node, collapsedNodes: string[], settings: VerticalTreeS
 	}
 }
 
-function chooseBreakdowns(fullNode: any, selectedBreakdowns: HashMap = {}, depth = 0) {
+function chooseBreakdowns(
+	fullNode: any,
+	selectedBreakdowns: HashMap = {},
+	breakdownMustHaveSubNodes = false,
+	depth = 0
+) {
 	if (!depth) fullNode = JSON.parse(JSON.stringify(fullNode));
 	if (fullNode.breakdowns?.[0]) {
 		const selectedId = selectedBreakdowns[fullNode.id];
-		if (selectedId) fullNode.breakdown = fullNode.breakdowns.find((b: any) => b.id === selectedId);
-		else fullNode.breakdown = fullNode.breakdowns[0];
+		if (selectedId) {
+			const potentialBreakdown = fullNode.breakdowns.find((b: any) => b.id === selectedId);
+			if (potentialBreakdown.sub_nodes?.length || !breakdownMustHaveSubNodes)
+				fullNode.breakdown = potentialBreakdown;
+			else fullNode.breakdown = fullNode.breakdowns[0];
+		} else fullNode.breakdown = fullNode.breakdowns[0];
 		for (let subNode of fullNode.breakdown.sub_nodes) {
-			chooseBreakdowns(subNode, selectedBreakdowns, depth + 1);
+			chooseBreakdowns(subNode, selectedBreakdowns, breakdownMustHaveSubNodes, depth + 1);
 		}
 		fullNode.otherBreakdowns = fullNode.breakdowns.filter((b: any) => b !== fullNode.breakdown);
 		delete fullNode.breakdowns;

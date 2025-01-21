@@ -8,7 +8,7 @@
 		positionTree
 	} from '$lib/treeLogic';
 	import { writable, type Writable } from 'svelte/store';
-	import { getContext, tick } from 'svelte';
+	import { getContext, onMount, tick } from 'svelte';
 	import type {
 		Node as NodeType,
 		PosNode,
@@ -77,7 +77,7 @@
 
 	const nodeAction = writable(null as null | string);
 
-	loadTree();
+	onMount(loadTree);
 
 	$effect(() => {
 		subHighlighted = lastNavedNode.sub || '';
@@ -112,7 +112,7 @@
 	}
 	function setTitlePosNodes() {
 		const positionedResult = positionHorizontalTree(
-			chooseBreakdowns(fullTree),
+			chooseBreakdowns(fullTree, $selectedBreakdowns, true),
 			settings.titlesMode
 		);
 
@@ -320,7 +320,7 @@
 			bind:moveByOffset
 			bind:navToNode
 			oninfo={openModal}
-			coordsKey={(tree?.id || '') + $titlesMode}
+			coordsKey={pathName + $titlesMode}
 			onModalsClosed={() => {
 				if ($isMobile) return;
 				useArrowsTipTimeout = sendTipOnce(
@@ -381,7 +381,7 @@
 									</ToolTipItem>
 								</div>
 							</div>
-							{#each titlePosNode.children || [] as subTitlePosNode}
+							{#each titlePosNode.children || [] as subTitlePosNode (subTitlePosNode.node.id)}
 								<Curve
 									width={totalTitleWidth}
 									height={totalTitleHeight}
@@ -450,7 +450,7 @@
 									{totalWidth}
 								/>
 							</div>
-							{#each getPosSubNodes(posNode.node) as posSubNode}
+							{#each getPosSubNodes(posNode.node) as posSubNode (posSubNode.node.id)}
 								<Curve
 									width={totalWidth}
 									height={totalHeight}
