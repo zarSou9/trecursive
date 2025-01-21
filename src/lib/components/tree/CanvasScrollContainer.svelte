@@ -35,6 +35,8 @@
 	onscroll={(e) => {
 		if (isMobile) {
 			const el = e.currentTarget;
+			if (el.scrollTop < -2 || el.scrollTop + el.clientHeight >= el.scrollHeight + 2)
+				e.preventDefault();
 			if (el.scrollTop < 1 || el.scrollTop + el.clientHeight >= el.scrollHeight - 1)
 				isMidScroll = false;
 			else isMidScroll = true;
