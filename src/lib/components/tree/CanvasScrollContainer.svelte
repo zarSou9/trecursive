@@ -22,14 +22,10 @@
 	onmousemove={() => (mouseIn = true)}
 	onmouseleave={() => (mouseIn = false)}
 	ontouchmove={(e) => {
-		if (e.touches.length === 1) {
-			const el = e.currentTarget;
-			if (el.scrollTop < 0 || el.scrollTop + el.clientHeight > el.scrollHeight) e.preventDefault();
-			if (isMidScroll) {
-				e.currentTarget.dispatchEvent(new TouchEvent('touchend'));
-				e.stopPropagation();
-				return;
-			}
+		if (isMidScroll && e.touches.length === 1) {
+			e.currentTarget.dispatchEvent(new TouchEvent('touchend'));
+			e.stopPropagation();
+			return;
 		}
 	}}
 	ontouchstart={(e) => {
@@ -68,7 +64,7 @@
 			e.stopPropagation();
 		}
 	}}
-	class="scrollbar-custom overflow-auto [&::-webkit-scrollbar-track]:bg-[#0000] {className}"
+	class="scrollbar-custom overflow-auto overscroll-none [&::-webkit-scrollbar-track]:bg-[#0000] {className}"
 	style="scrollbar-color: #6e6e6e #0000; {styleName}"
 	{...rest}
 >
