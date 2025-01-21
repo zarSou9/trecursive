@@ -19,7 +19,7 @@
 		value = $bindable(),
 		expanded = $bindable(false),
 		children,
-		expandedWidth = 'clamp(200px, 90%, 400px)',
+		expandedWidth = 'clamp(130px, calc(100vw - 105px), 400px)',
 		className = '',
 		placeholder = 'Search other breakdowns...'
 	}: Props = $props();
