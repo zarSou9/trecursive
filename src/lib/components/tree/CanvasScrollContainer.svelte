@@ -22,7 +22,7 @@
 	onmousemove={() => (mouseIn = true)}
 	onmouseleave={() => (mouseIn = false)}
 	ontouchmove={(e) => {
-		if (isScrolling || isMidScroll) {
+		if (isMidScroll) {
 			e.currentTarget.dispatchEvent(new TouchEvent('touchend'));
 			e.stopPropagation();
 			return;
@@ -30,20 +30,21 @@
 	}}
 	ontouchstart={(e) => {
 		isMobile = true;
-		if (isMidScroll || isScrolling) {
+		if (isMidScroll) {
 			e.stopPropagation();
 			return;
 		}
 	}}
 	onscroll={(e) => {
-		clearTimeout(stopIsScrollingTimeout);
-		isScrolling = true;
-		stopIsScrollingTimeout = setTimeout(() => (isScrolling = false), 150);
 		if (isMobile) {
 			const el = e.currentTarget;
 			if (el.scrollTop < 1 || el.scrollTop + el.clientHeight >= el.scrollHeight - 1)
 				isMidScroll = false;
 			else isMidScroll = true;
+		} else {
+			clearTimeout(stopIsScrollingTimeout);
+			isScrolling = true;
+			stopIsScrollingTimeout = setTimeout(() => (isScrolling = false), 150);
 		}
 	}}
 	onwheel={(e) => {
