@@ -8,10 +8,9 @@
 	}
 
 	let mouseIn = false;
-	let isScrolling = false;
 	let isMidScroll = false;
-	let stopIsScrollingTimeout: number | undefined;
 	let isMobile = false;
+	let prevDelta = 0;
 
 	let { className = '', styleName = '', children, ...rest }: Props = $props();
 </script>
@@ -38,18 +37,10 @@
 			if (el.scrollTop < 1 || el.scrollTop + el.clientHeight >= el.scrollHeight - 1)
 				isMidScroll = false;
 			else isMidScroll = true;
-		} else {
-			clearTimeout(stopIsScrollingTimeout);
-			isScrolling = true;
-			stopIsScrollingTimeout = setTimeout(() => (isScrolling = false), 150);
 		}
 	}}
 	onwheel={(e) => {
 		isMobile = false;
-		if (isScrolling) {
-			e.stopPropagation();
-			return;
-		}
 		if (e.ctrlKey || !mouseIn) return;
 		const el = e.currentTarget;
 		const isScrollingUp = e.deltaY < 0;
@@ -59,10 +50,13 @@
 			(isScrollingUp && el.scrollTop < 1) ||
 			(isScrollingDown && el.scrollTop + el.clientHeight >= el.scrollHeight - 1)
 		) {
-			mouseIn = false;
+			if (Math.abs(e.deltaY) <= prevDelta) {
+				e.stopPropagation();
+			} else mouseIn = false;
 		} else {
 			e.stopPropagation();
 		}
+		prevDelta = Math.abs(e.deltaY);
 	}}
 	class="scrollbar-custom overflow-auto overscroll-none [&::-webkit-scrollbar-track]:bg-[#0000] {className}"
 	style="scrollbar-color: #6e6e6e #0000; {styleName}"

@@ -5,7 +5,7 @@
 	import ReferenceList from '$lib/components/tree/ReferenceList.svelte';
 	import type { Node, MiniMiddle, Paper } from '$lib/types';
 	import { textToHTML } from '$lib/utils';
-	import { onMount } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import SearchDropdown from '$lib/components/tree/SearchDropdown.svelte';
 	import FolderArrow from '$lib/icons/FolderArrow.svelte';
@@ -53,6 +53,8 @@
 		onMiniClick,
 		loadTree
 	}: Props = $props();
+
+	const isMobile: Writable<boolean> = getContext('isMobileStore');
 
 	let miniDivs: { [id: string]: HTMLDivElement } = $state({});
 	let questionsOpen = $state(false);
@@ -118,9 +120,12 @@
 	function addPrettyLinks(html: string) {
 		return html.replaceAll('<a', '<a class="pretty-link"');
 	}
-	function formatDate(dateString: string) {
+	function formatDate(dateString: string, only_year = false) {
 		const date = new Date(dateString);
-		return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+		return date.toLocaleDateString(
+			'en-US',
+			only_year ? { year: 'numeric' } : { year: 'numeric', month: 'short' }
+		);
 	}
 </script>
 
@@ -156,10 +161,10 @@
 			Abstract
 		</button>
 		<span>•</span>
-		<span class="line-clamp-1 flex-shrink-0">{formatDate(paper.published_date)}</span>
-		{#if paper.citation_count}
+		<span class="line-clamp-1 flex-shrink-0">{formatDate(paper.published_date, $isMobile)}</span>
+		{#if paper.citation_count && !$isMobile}
 			<span>•</span>
-			<span class="line-clamp-1">{paper.citation_count} citations</span>
+			<span class="line-clamp-1 flex-shrink-0">{paper.citation_count} citations</span>
 		{/if}
 		{#if showLink}
 			<span>•</span>
@@ -182,54 +187,48 @@
 	<div class="flex w-full justify-center">
 		<div
 			style="max-height: {goalHeight - 300}px;"
-			class="flex max-w-[calc(100vw-40px)] flex-col md:max-w-[700px]"
+			class="relative flex max-w-[calc(100vw-40px)] flex-col md:max-w-[700px]"
 		>
-			<div class="relative">
-				{#if node.questions?.length}
-					<div
-						onclick={(e) => e.stopPropagation()}
-						role="presentation"
-						class="group absolute right-[calc(100%+55px)] top-0 size-fit max-h-[100%] w-[550px] flex-shrink-0"
-					>
-						{@render collapser(() => (questionsOpen = !questionsOpen), questionsOpen)}
-						{#if questionsOpen}
-							<CanvasScrollContainer
-								className="rounded-[30px] bg-[#191919] px-8 py-6 max-h-[470px]"
-							>
-								<h3 class="header">Research Questions</h3>
-								<div class="mt-5 flex flex-col gap-8">
-									{#each node.questions as question}
-										<div class="rounded-lg bg-[#212121] p-4">
-											<p class="text-[14px] text-[#e0e0e0] sm:text-[15px]">{question.question}</p>
-											{#if question.context}
-												<Note className="mt-3">{question.context}</Note>
-											{/if}
-										</div>
-									{/each}
-								</div>
-							</CanvasScrollContainer>
-						{/if}
-					</div>
-				{/if}
-
-				<CanvasScrollContainer
-					className="relative rounded-[30px] min-h-[initial] border-b-[2px] border-l-[2px] border-gray-600 bg-[#212121] px-8 py-7 {node
-						.breakdown?.explanation || node.breakdown?.paper
-						? 'mb-8 overflow-visible'
-						: 'mb-1'}"
-					onclick={onDescriptionClick}
+			{#if node.questions?.length}
+				<div
+					onclick={(e) => e.stopPropagation()}
+					role="presentation"
+					class="group absolute right-[calc(100%+55px)] top-0 size-fit max-h-[100%] w-[550px] max-w-[calc(100vw-40px)] flex-shrink-0"
 				>
-					<p class="header">{node.title}</p>
-					<p class="mt-4 text-[14px] sm:text-[16px]">
-						{#if note}
-							<em class="block pb-3 text-[13px] text-[#8b8b8b] [&>a]:text-[#829dbb]"
-								>{@html note}</em
-							>
-						{/if}
-						{@html addPrettyLinks(node.description)}
-					</p>
-				</CanvasScrollContainer>
-			</div>
+					{@render collapser(() => (questionsOpen = !questionsOpen), questionsOpen)}
+					{#if questionsOpen}
+						<CanvasScrollContainer className="rounded-[30px] bg-[#191919] px-8 py-6 max-h-[470px]">
+							<h3 class="header">Open Research Questions</h3>
+							<div class="mt-5 flex flex-col gap-8">
+								{#each node.questions as question}
+									<div class="rounded-lg bg-[#212121] p-4">
+										<p class="text-[14px] text-[#e0e0e0] sm:text-[15px]">{question.question}</p>
+										{#if question.context}
+											<Note className="mt-3">{question.context}</Note>
+										{/if}
+									</div>
+								{/each}
+							</div>
+						</CanvasScrollContainer>
+					{/if}
+				</div>
+			{/if}
+			<CanvasScrollContainer
+				className="relative rounded-[30px] min-h-[initial] border-b-[2px] border-l-[2px] border-gray-600 bg-[#212121] px-8 py-7 {node
+					.breakdown?.explanation || node.breakdown?.paper
+					? 'mb-8 overflow-visible'
+					: 'mb-1'}"
+				onclick={onDescriptionClick}
+			>
+				<p class="header">{node.title}</p>
+				<p class="mt-4 text-[14px] sm:text-[16px]">
+					{#if note}
+						<em class="block pb-3 text-[13px] text-[#8b8b8b] [&>a]:text-[#829dbb]">{@html note}</em>
+					{/if}
+					{@html addPrettyLinks(node.description)}
+				</p>
+			</CanvasScrollContainer>
+
 			{#if node.otherBreakdowns?.length}
 				<SearchDropdown
 					placeholder="Search other {breakdownName}s..."
