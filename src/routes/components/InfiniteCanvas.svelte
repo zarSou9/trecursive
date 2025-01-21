@@ -772,7 +772,6 @@
 
 			if (moveX > 5 || moveY > 5) {
 				e.stopPropagation();
-				e.preventDefault();
 
 				const currentTime = Date.now();
 				const deltaTime = currentTime - lastTouchTime;

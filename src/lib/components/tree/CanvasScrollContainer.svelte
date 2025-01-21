@@ -30,7 +30,7 @@
 	}}
 	ontouchstart={(e) => {
 		isMobile = true;
-		if (e.touches.length === 1) e.stopPropagation();
+		if (isMidScroll && e.touches.length === 1) e.stopPropagation();
 	}}
 	onscroll={(e) => {
 		if (isMobile) {
