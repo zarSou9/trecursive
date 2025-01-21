@@ -141,7 +141,7 @@
 {/snippet}
 
 {#snippet paperMetaData(paper: Paper, showLink = false)}
-	<div class="mt-1 flex items-center gap-[10px] text-[14px] text-gray-400">
+	<div class="mt-[5px] flex items-center gap-[10px] text-[14px] text-gray-400">
 		<button
 			onclick={() => setAbstractShown(!abstractShown)}
 			class="flex items-center fill-[#adadad]"
@@ -156,12 +156,14 @@
 			Abstract
 		</button>
 		<span>•</span>
-		<span>{formatDate(paper.published_date)}</span>
-		<span>•</span>
-		<span>{paper.citation_count} citations</span>
+		<span class="line-clamp-1 flex-shrink-0">{formatDate(paper.published_date)}</span>
+		{#if paper.citation_count}
+			<span>•</span>
+			<span class="line-clamp-1">{paper.citation_count} citations</span>
+		{/if}
 		{#if showLink}
 			<span>•</span>
-			<a href={paper.url} target="_blank" class="link-alt">{paper.url}</a>
+			<a href={paper.url} target="_blank" class="link line-clamp-1">{paper.title}</a>
 		{/if}
 	</div>
 	{#if abstractShown}
@@ -182,14 +184,8 @@
 			style="max-height: {goalHeight - 300}px;"
 			class="flex max-w-[calc(100vw-40px)] flex-col md:max-w-[700px]"
 		>
-			<CanvasScrollContainer
-				className="relative rounded-[30px] min-h-[initial] border-b-[2px] border-l-[2px] border-gray-600 bg-[#212121] px-8 py-7 {node
-					.breakdown?.explanation || node.breakdown?.paper
-					? 'mb-8 overflow-visible'
-					: 'mb-1'}"
-				onclick={onDescriptionClick}
-			>
-				{#if node.questions}
+			<div class="relative">
+				{#if node.questions?.length}
 					<div
 						onclick={(e) => e.stopPropagation()}
 						role="presentation"
@@ -204,7 +200,7 @@
 								<div class="mt-5 flex flex-col gap-8">
 									{#each node.questions as question}
 										<div class="rounded-lg bg-[#212121] p-4">
-											<p class="text-[15px] text-[#e0e0e0]">{question.question}</p>
+											<p class="text-[14px] text-[#e0e0e0] sm:text-[15px]">{question.question}</p>
 											{#if question.context}
 												<Note className="mt-3">{question.context}</Note>
 											{/if}
@@ -216,14 +212,24 @@
 					</div>
 				{/if}
 
-				<p class="header">{node.title}</p>
-				<p class="mt-4 text-[14px] sm:text-[16px]">
-					{#if note}
-						<em class="block pb-3 text-[13px] text-[#8b8b8b] [&>a]:text-[#829dbb]">{@html note}</em>
-					{/if}
-					{@html addPrettyLinks(node.description)}
-				</p>
-			</CanvasScrollContainer>
+				<CanvasScrollContainer
+					className="relative rounded-[30px] min-h-[initial] border-b-[2px] border-l-[2px] border-gray-600 bg-[#212121] px-8 py-7 {node
+						.breakdown?.explanation || node.breakdown?.paper
+						? 'mb-8 overflow-visible'
+						: 'mb-1'}"
+					onclick={onDescriptionClick}
+				>
+					<p class="header">{node.title}</p>
+					<p class="mt-4 text-[14px] sm:text-[16px]">
+						{#if note}
+							<em class="block pb-3 text-[13px] text-[#8b8b8b] [&>a]:text-[#829dbb]"
+								>{@html note}</em
+							>
+						{/if}
+						{@html addPrettyLinks(node.description)}
+					</p>
+				</CanvasScrollContainer>
+			</div>
 			{#if node.otherBreakdowns?.length}
 				<SearchDropdown
 					placeholder="Search other {breakdownName}s..."
@@ -301,7 +307,9 @@
 							<p class="header">{node.breakdown.title || 'Plan'}</p>
 						{/if}
 						{#if node.breakdown.explanation}
-							<p class="mt-3">{@html textToHTML(node.breakdown.explanation)}</p>
+							<p class="mt-3 text-[14px] sm:text-[16px]">
+								{@html textToHTML(node.breakdown.explanation)}
+							</p>
 						{/if}
 					</div>
 				</CanvasScrollContainer>

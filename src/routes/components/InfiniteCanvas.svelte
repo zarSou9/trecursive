@@ -771,7 +771,6 @@
 			const moveY = Math.abs(e.touches[0].clientY - touchStartY);
 
 			if (moveX > 5 || moveY > 5) {
-				e.preventDefault();
 				e.stopPropagation();
 
 				const currentTime = Date.now();

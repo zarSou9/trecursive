@@ -8,6 +8,10 @@
 	}
 
 	let mouseIn = false;
+	let isScrolling = false;
+	let isMidScroll = false;
+	let stopIsScrollingTimeout: number | undefined;
+	let isMobile = false;
 
 	let { className = '', styleName = '', children, ...rest }: Props = $props();
 </script>
@@ -17,14 +21,44 @@
 	role="presentation"
 	onmousemove={() => (mouseIn = true)}
 	onmouseleave={() => (mouseIn = false)}
+	ontouchmove={(e) => {
+		if (isScrolling || isMidScroll) {
+			e.currentTarget.dispatchEvent(new TouchEvent('touchend'));
+			e.stopPropagation();
+			return;
+		}
+	}}
+	ontouchstart={(e) => {
+		isMobile = true;
+		if (isMidScroll || isScrolling) {
+			e.stopPropagation();
+			return;
+		}
+	}}
+	onscroll={(e) => {
+		clearTimeout(stopIsScrollingTimeout);
+		isScrolling = true;
+		stopIsScrollingTimeout = setTimeout(() => (isScrolling = false), 150);
+		if (isMobile) {
+			const el = e.currentTarget;
+			if (el.scrollTop < 1 || el.scrollTop + el.clientHeight >= el.scrollHeight - 1)
+				isMidScroll = false;
+			else isMidScroll = true;
+		}
+	}}
 	onwheel={(e) => {
+		isMobile = false;
+		if (isScrolling) {
+			e.stopPropagation();
+			return;
+		}
 		if (e.ctrlKey || !mouseIn) return;
 		const el = e.currentTarget;
 		const isScrollingUp = e.deltaY < 0;
 		const isScrollingDown = e.deltaY > 0;
 
 		if (
-			(isScrollingUp && el.scrollTop === 0) ||
+			(isScrollingUp && el.scrollTop < 1) ||
 			(isScrollingDown && el.scrollTop + el.clientHeight >= el.scrollHeight - 1)
 		) {
 			mouseIn = false;
