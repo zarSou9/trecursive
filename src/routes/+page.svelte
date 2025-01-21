@@ -4,6 +4,10 @@
 	import { removeHTMLTags } from '$lib/utils';
 </script>
 
+<svelte:head>
+	<title>AI Research Maps</title>
+</svelte:head>
+
 <div class="min-h-screen bg-gradient-to-b from-[#151515] to-[#212121] px-5 py-16">
 	<div class="mx-auto max-w-[900px]">
 		<h1

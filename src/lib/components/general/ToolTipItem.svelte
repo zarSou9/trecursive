@@ -80,7 +80,7 @@
 		>
 			<div
 				class={twMerge(
-					'relative overflow-hidden rounded-md border border-[#2a3444] bg-[#121921] px-[12px] py-2 text-[#adadad] shadow-lg after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-[#121921]',
+					'relative overflow-hidden rounded-md border border-[#2a3444] bg-[#121921] px-[12px] py-2 text-[#c6c6c6] shadow-lg after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-[#121921]',
 					toolTipContainerClassName
 				)}
 			>

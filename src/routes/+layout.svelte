@@ -19,6 +19,8 @@
 	const usingCanvasTouch = writable(false);
 	setContext('usingCanvasTouchStore', usingCanvasTouch);
 
+	let { children } = $props();
+
 	let prevTimeout: number | undefined;
 
 	onMount(() => {
@@ -32,15 +34,9 @@
 		prevTimeout = setTimeout(() => popup.set(false), timeout);
 		return true;
 	}
-
-	let { data, children } = $props();
 </script>
 
 <IsMobile bind:isMobile={$isMobile} />
-
-<svelte:head>
-	<title>AI Research Maps</title>
-</svelte:head>
 
 {#if $tipPopUp && popupWait(tipPopUp)}
 	<PopUp
