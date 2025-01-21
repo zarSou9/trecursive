@@ -351,7 +351,7 @@
 										tooltipClassName="pt-2 max-w-[clamp(310px,83%,500px)]"
 										toolTipContainerClassName="line-clamp-[12]"
 										showOnHover={false}
-										delay={300}
+										delay={250}
 										style="font-size: {Math.min(
 											18,
 											Math.max(
