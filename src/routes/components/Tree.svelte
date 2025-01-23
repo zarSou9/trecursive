@@ -63,7 +63,7 @@
 	let lastNavedNode: { posNode?: PosNode; sub?: string } = $state({});
 	let subHighlighted = $state('');
 	let moveByOffset: ((offsetX: number, offsetY: number) => void) | undefined = $state(undefined);
-	let goFullIfOut: () => void = $state(() => {});
+	let goFullIfOut: (forceGoFull?: boolean) => void = $state(() => {});
 	let useArrowsTipTimeout: undefined | number = $state(undefined);
 	let titleModeTipTimeout: undefined | number = $state(undefined);
 	const titlesMode = createLocalStore('titlesMode', false);
@@ -83,7 +83,7 @@
 		subHighlighted = lastNavedNode.sub || '';
 	});
 
-	function setCollapsed(collapsed: string[], centeredNodeID?: string) {
+	function setCollapsed(collapsed: string[], centeredNodeID?: string, forceGoFull = false) {
 		if (!tree) return;
 		let prevCenteredPosNode;
 		if (centeredNodeID) {
@@ -107,7 +107,7 @@
 
 		setTimeout(() => {
 			nodeAction.set('update-mini-middles');
-			goFullIfOut();
+			goFullIfOut(forceGoFull);
 		}, 1);
 	}
 	function setTitlePosNodes() {
@@ -313,7 +313,13 @@
 							{
 								title: 'Collapse All',
 								key: 'c',
-								func: () => tree && setCollapsed(getAllCollapsed(fullTree))
+								func: () => tree && setCollapsed(getAllCollapsed(fullTree), undefined, true)
+							},
+							{
+								title: 'Expand All',
+								shiftKey: true,
+								key: 'c',
+								func: () => tree && setCollapsed([], undefined, true)
 							}
 						])
 			]}

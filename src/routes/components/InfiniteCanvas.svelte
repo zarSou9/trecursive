@@ -19,7 +19,7 @@
 
 	interface Props {
 		oninfo: () => void;
-		goFullIfOut?: () => void;
+		goFullIfOut?: (forceGoFull?: boolean) => void;
 		children?: import('svelte').Snippet;
 		coordsKey: string | undefined;
 		navToNode?: (middle: number, top: number, dur?: number) => void;
@@ -49,8 +49,8 @@
 	const doubleTapZoomScale = 2; // how much to zoom in on double tap
 	const friction = 0.95; // How much touch inertia slows down (1 is no friction)
 
-	goFullIfOut = () => {
-		if (z < minZoom) goFull();
+	goFullIfOut = (forceGoFull = false) => {
+		if (z < minZoom || forceGoFull) goFull();
 	};
 
 	const disableShortcuts = { v: false };
@@ -87,8 +87,8 @@
 	let dropdownItems: DropDownItem[] = $derived([
 		...(additionalCommands || []),
 		{ title: 'Full View', key: 'f', func: goFull },
-		{ title: 'Go Home', key: 'h', func: goHome },
-		{ title: 'Set Home', key: 'h', metaKey: true, func: setHome },
+		// { title: 'Go Home', key: 'h', func: goHome },
+		// { title: 'Set Home', key: 'h', metaKey: true, func: setHome },
 		{ title: 'How To Use', func: oninfo },
 		{
 			title: 'Settings',
@@ -259,7 +259,11 @@
 		} else if (e.altKey) altPressed = true;
 		else {
 			for (let cmd of dropdownItems) {
-				if (cmd.key === k && (e.ctrlKey || e.metaKey ? cmd.metaKey : !cmd.metaKey)) {
+				if (
+					cmd.key === k.toLowerCase() &&
+					!!cmd.metaKey === (e.ctrlKey || e.metaKey) &&
+					!!cmd.shiftKey === e.shiftKey
+				) {
 					cmd.func();
 					return;
 				}

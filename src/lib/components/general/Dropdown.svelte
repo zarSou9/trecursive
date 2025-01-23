@@ -2,13 +2,16 @@
 	import ThreeDotsAlt from '$lib/icons/ThreeDotsAlt.svelte';
 	import type { DropDownItem } from '$lib/types';
 	import { clickOutside, getMetaKey } from '$lib/utils';
-	import { onMount } from 'svelte';
+	import { getContext, onMount } from 'svelte';
+	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
 
 	interface Props {
 		dropdownItems: DropDownItem[];
 	}
 	let { dropdownItems }: Props = $props();
+
+	const isMobile: Writable<boolean> = getContext('isMobileStore');
 
 	let dropdownOpen = $state(false);
 	let metaKey = $state('⌘');
@@ -33,7 +36,7 @@
 		<div
 			use:clickOutside={() => setTimeout(() => (dropdownOpen = false))}
 			transition:slide={{ duration: 200 }}
-			class="absolute right-0 top-[calc(100%+4px)] z-[1] min-w-[150px] rounded-md border border-gray-700 bg-gray-900 py-1 shadow-lg"
+			class="absolute right-0 top-[calc(100%+4px)] z-[1] min-w-[130px] rounded-md border border-gray-700 bg-gray-900 py-1 shadow-lg md:min-w-[150px]"
 		>
 			{#each [...dropdownItems.filter((i) => i.key), ...dropdownItems.filter((i) => !i.key)] as dropdownItem, i}
 				{#if !dropdownItem.key && dropdownItems[i - 1]?.key}
@@ -47,11 +50,12 @@
 					class="flex w-full items-center px-3 py-1.5 text-[13px] text-gray-300 hover:bg-gray-800 hover:text-white"
 				>
 					<span>{dropdownItem.title}</span>
-					{#if dropdownItem.key}
-						<span class="ml-auto text-gray-500"
-							><kbd class="text-[11px]">{dropdownItem.metaKey ? metaKey : ''}{dropdownItem.key}</kbd
-							></span
-						>
+					{#if dropdownItem.key && !$isMobile}
+						<span class="ml-auto text-[11px] text-gray-500">
+							{dropdownItem.metaKey ? metaKey : ''}{dropdownItem.shiftKey
+								? '⇧'
+								: ''}{dropdownItem.key.toUpperCase()}
+						</span>
 					{/if}
 				</button>
 			{/each}

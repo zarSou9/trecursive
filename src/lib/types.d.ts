@@ -19,7 +19,13 @@ type DropDownSetting = SettingBase & {
 	value: string;
 };
 
-type DropDownItem = { title: string; key?: string; metaKey?: true; func: () => void };
+type DropDownItem = {
+	title: string;
+	key?: string;
+	metaKey?: boolean;
+	shiftKey?: boolean;
+	func: () => void;
+};
 
 // tree
 
