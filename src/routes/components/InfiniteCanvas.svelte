@@ -27,6 +27,7 @@
 		navItems?: NavItem[];
 		moveByOffset?: (offsetX: number, offsetY: number) => void;
 		onModalsClosed?: () => void;
+		includeHomeFunctionality?: boolean;
 	}
 
 	let {
@@ -38,6 +39,7 @@
 		navToNode = $bindable(),
 		moveByOffset = $bindable(),
 		navItems,
+		includeHomeFunctionality = false,
 		onModalsClosed = () => {}
 	}: Props = $props();
 
@@ -85,10 +87,15 @@
 	let altPressed = false;
 	let grabbed = $state(false);
 	let dropdownItems: DropDownItem[] = $derived([
-		...(additionalCommands || []),
+		...(additionalCommands?.filter((v) => !v.putAfter) || []),
 		{ title: 'Full View', key: 'f', func: goFull },
-		// { title: 'Go Home', key: 'h', func: goHome },
-		// { title: 'Set Home', key: 'h', metaKey: true, func: setHome },
+		...(includeHomeFunctionality
+			? [
+					{ title: 'Go Home', key: 'h', func: goHome },
+					{ title: 'Set Home', key: 'h', metaKey: true, func: setHome }
+				]
+			: []),
+		...(additionalCommands?.filter((v) => v.putAfter) || []),
 		{ title: 'How To Use', func: oninfo },
 		{
 			title: 'Settings',

@@ -313,11 +313,13 @@
 							{
 								title: 'Collapse All',
 								key: 'c',
+								putAfter: true,
 								func: () => tree && setCollapsed(getAllCollapsed(fullTree), undefined, true)
 							},
 							{
 								title: 'Expand All',
 								shiftKey: true,
+								putAfter: true,
 								key: 'c',
 								func: () => tree && setCollapsed([], undefined, true)
 							}

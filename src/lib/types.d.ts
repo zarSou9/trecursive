@@ -24,6 +24,7 @@ type DropDownItem = {
 	key?: string;
 	metaKey?: boolean;
 	shiftKey?: boolean;
+	putAfter?: boolean;
 	func: () => void;
 };
 
