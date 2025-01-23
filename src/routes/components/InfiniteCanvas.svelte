@@ -86,6 +86,7 @@
 	let grabY: number;
 	let altPressed = false;
 	let grabbed = $state(false);
+	let rightAfterFirstTime = false;
 	let dropdownItems: DropDownItem[] = $derived([
 		...(additionalCommands?.filter((v) => !v.putAfter) || []),
 		{ title: 'Full View', key: 'f', func: goFull },
@@ -188,18 +189,7 @@
 		window.addEventListener('keyup', handleKeyUp);
 		window.addEventListener('beforeunload', beforeUnload);
 
-		minZoom =
-			(canvas?.clientWidth / canvas?.clientHeight > viewPort?.clientWidth / viewPort?.clientHeight
-				? viewPort?.clientWidth / canvas?.clientWidth
-				: viewPort?.clientHeight / canvas?.clientHeight) / 1.1;
-		horizontalOffset = (viewPort?.clientWidth - canvas?.clientWidth * minZoom) / 2 / minZoom;
-		verticalOffset = (viewPort?.clientHeight - canvas?.clientHeight * minZoom) / 2 / minZoom;
-		if (
-			canvas?.clientWidth / canvas?.clientHeight <
-			viewPort?.clientWidth / viewPort?.clientHeight
-		) {
-			vertical = true;
-		}
+		updateOnResize();
 		if ($userCoords[0] === 91291312402) {
 			z = minZoom;
 			x = horizontalOffset * z;
@@ -207,6 +197,10 @@
 			homeX = x;
 			homeY = y;
 			homeZ = z;
+			rightAfterFirstTime = true;
+			setTimeout(() => {
+				rightAfterFirstTime = false;
+			}, 500);
 		} else {
 			[x, y, z, homeX, homeY, homeZ] = $userCoords;
 		}
@@ -249,6 +243,16 @@
 			vertical = true;
 		} else {
 			vertical = false;
+		}
+		if (rightAfterFirstTime) {
+			// go full
+			z = minZoom;
+			x = horizontalOffset * z;
+			y = verticalOffset * z;
+			homeX = x;
+			homeY = y;
+			homeZ = z;
+			canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
 		}
 	}
 
