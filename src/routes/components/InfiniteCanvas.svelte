@@ -96,11 +96,15 @@
 				]
 			: []),
 		...(additionalCommands?.filter((v) => v.putAfter) || []),
-		{ title: 'How To Use', func: oninfo },
-		{
-			title: 'Settings',
-			func: () => (settingsModalOpen = true)
-		}
+		...($isMobile
+			? []
+			: [
+					{ title: 'How To Use', func: oninfo },
+					{
+						title: 'Settings',
+						func: () => (settingsModalOpen = true)
+					}
+				])
 	]);
 	let settingsModalOpen = $state(false);
 
