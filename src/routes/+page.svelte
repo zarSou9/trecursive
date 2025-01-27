@@ -1,5 +1,5 @@
 <script>
-	import { allTrees } from '$lib/trees/allTrees';
+	import { allTrees } from '$lib/allTrees';
 	import ArrowLine from '$lib/icons/ArrowLine.svelte';
 	import { removeHTMLTags } from '$lib/utils';
 </script>
@@ -32,7 +32,7 @@
 							</em>
 						{/if}
 						<div class="mt-3 line-clamp-3 text-white/75">
-							{treeDetails.tree.description}
+							{treeDetails.cover_root_description}
 						</div>
 					</div>
 

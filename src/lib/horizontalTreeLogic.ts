@@ -1,5 +1,5 @@
 import type { HorizontalTreeSettings, Node, TitlePosNode } from './types';
-import { getCombinations, mixColors } from './utils';
+import { mixColors } from './utils';
 
 function reorderTree(tree: Node) {
 	if (tree.breakdown) {
@@ -9,48 +9,34 @@ function reorderTree(tree: Node) {
 	return tree;
 }
 
+function limitTreeDepth(node: Node, limit: undefined | number, depth = 0) {
+	if (!limit) return node;
+	if (depth >= limit) {
+		delete node.breakdown;
+	} else if (node.breakdown) {
+		for (let subNode of node.breakdown.sub_nodes) limitTreeDepth(subNode, limit, depth + 1);
+	}
+	return node;
+}
+
 function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
-	const horizontalSpacing = settings.horizontalSpacing || 100;
-	const siblingNodeSpacing = settings.siblingNodeSpacing || 40;
-	const nodeGroupSpacing = settings.nodeGroupSpacing || 60;
-	const defaultTitleCharSize = settings.defaultTitleCharSize || {
-		textSize: 15,
-		charW: 7.287
-	};
-	const avgTextCharSizes = settings.avgTextCharSizes || [
-		{
-			textSize: 25,
-			charW: 12.145
-		},
-		{
-			textSize: 23,
-			charW: 11.173
-		},
-		{
-			textSize: 20,
-			charW: 9.716
-		},
-		{
-			textSize: 17,
-			charW: 8.258
-		}
-	];
-	const horizontalSpacingAdditions = settings.horizontalSpacingAdditions || [350, 70, 70];
-	const BASE_COLORS = [
-		'rgb(102, 153, 204)', // Muted blue
-		'rgb(179, 153, 204)', // Muted purple
-		'rgb(204, 153, 153)', // Muted red
-		'rgb(153, 204, 153)', // Muted green
-		'rgb(204, 179, 153)', // Muted gold
-		'rgb(153, 204, 204)' // Muted teal
-	];
-	const textSizeDifferenceFactor = 1.4;
+	const {
+		horizontalSpacing,
+		siblingNodeSpacing,
+		nodeGroupSpacing,
+		defaultTitleCharSize,
+		avgTextCharSizes,
+		horizontalSpacingAdditions,
+		baseColors,
+		depthLimit
+	} = settings;
+	const textSizeSpacingFactor = 1.4;
 
 	let currentY = 0;
 	let totalHeight = 0;
 	let totalWidth = 0;
 	let positionedNodes: TitlePosNode[] = [];
-	tree = reorderTree(JSON.parse(JSON.stringify(tree)));
+	tree = reorderTree(limitTreeDepth(JSON.parse(JSON.stringify(tree)), depthLimit));
 
 	const treePosNode = positionEndNodes(tree);
 	setNonEndTops(treePosNode);
@@ -66,27 +52,8 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 		totalWidth
 	};
 
-	function getMaxLeft(posNode: TitlePosNode, maxLeft = { v: 0 }) {
-		if (posNode.children) for (let subPos of posNode.children) getMaxLeft(subPos, maxLeft);
-		else maxLeft.v = Math.max(maxLeft.v, posNode.left || 0);
-		return maxLeft.v;
-	}
-
-	function flipTree(posNode: TitlePosNode, maxLeft: number) {
-		posNode.left = maxLeft - (posNode.left || 0);
-		for (const subPosNode of posNode.children || []) flipTree(subPosNode, maxLeft);
-	}
-
-	function moveTreeByOffset(posNode: TitlePosNode, offsetTop = 0, offsetLeft = 0) {
-		posNode.top = (posNode.top || 0) + offsetTop;
-		posNode.left = (posNode.left || 0) + offsetLeft;
-
-		for (const subPosNode of posNode.children || [])
-			moveTreeByOffset(subPosNode, offsetTop, offsetLeft);
-	}
-
 	function getNodeColor(i: number, parentColor?: string): string {
-		const base = BASE_COLORS[i % BASE_COLORS.length];
+		const base = baseColors[i % baseColors.length];
 
 		if (!parentColor) return base;
 
@@ -139,7 +106,7 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 						siblingNodeSpacing +
 						((avgTextCharSizes[depth] || defaultTitleCharSize).textSize -
 							defaultTitleCharSize.textSize) *
-							textSizeDifferenceFactor;
+							textSizeSpacingFactor;
 			} else {
 				firstFound.v = true;
 			}
@@ -147,46 +114,6 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 		}
 		positionedNodes.push(posNode);
 		return posNode;
-	}
-
-	function getHalfs() {
-		const layerOneEndNodelens = [];
-		for (let firstLayerSubNode of tree.breakdown?.sub_nodes || []) {
-			layerOneEndNodelens.push({
-				node: firstLayerSubNode,
-				numEndNodes: getNumEndNodes(firstLayerSubNode)
-			});
-		}
-		const largeHalf = Math.ceil(layerOneEndNodelens.length / 2);
-		const combs = getCombinations(layerOneEndNodelens, largeHalf);
-
-		let smallest_diff = -1;
-		let halves: Node[][] = [];
-		for (const firstHalf of combs) {
-			const secondHalf = layerOneEndNodelens.filter((v) => !firstHalf.find((f) => f === v));
-
-			const diff = Math.abs(
-				firstHalf.map((v) => v.numEndNodes).reduce((p, c) => c + p) -
-					secondHalf.map((v) => v.numEndNodes).reduce((p, c) => c + p)
-			);
-			let new_diff;
-			if (smallest_diff === -1) new_diff = diff;
-			else new_diff = Math.min(smallest_diff, diff);
-			if (new_diff !== diff) halves = [firstHalf.map((v) => v.node), secondHalf.map((v) => v.node)];
-			console.log(diff);
-			smallest_diff = new_diff;
-		}
-		return halves;
-	}
-
-	function getNumEndNodes(node: Node) {
-		if (!node.breakdown) throw new Error('getNumEndNodes only takes nodes with children');
-		let sum = 0;
-		for (let subNode of node.breakdown.sub_nodes) {
-			if (subNode.breakdown) sum += getNumEndNodes(subNode);
-			else sum += 1;
-		}
-		return sum;
 	}
 
 	function setNonEndTops(posNode: TitlePosNode | undefined) {
@@ -239,7 +166,7 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 						siblingNodeSpacing +
 						(defaultTitleCharSize.textSize -
 							(avgTextCharSizes[subPosNode.depth] || defaultTitleCharSize).textSize) *
-							textSizeDifferenceFactor;
+							textSizeSpacingFactor;
 				}
 			}
 		}

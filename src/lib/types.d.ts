@@ -33,11 +33,12 @@ type DropDownItem = {
 type Node = {
 	id: string;
 	title: string;
-	description: string;
+	description?: string;
 	mini_description?: string;
 	breakdown?: Breakdown;
 	otherBreakdowns?: Breakdown[];
 	questions?: ResearchQuestion[];
+	papers?: Paper[];
 };
 
 type Breakdown = {
@@ -50,16 +51,12 @@ type Breakdown = {
 };
 
 type Paper = {
-	id: string;
-	summary?: string;
-	arxiv_id: string;
 	url: string;
 	title: string;
-	published_date: string;
-	abstract: string;
-	citation_count: number;
-	influential_citation_count?: number;
-	ref: string;
+	published_date?: string;
+	abstract?: string;
+	summary?: string;
+	citation_count?: number;
 };
 
 type ResearchQuestion = {
@@ -96,8 +93,11 @@ type CharSize = {
 type TreeDefinition = {
 	pathName: string;
 	title: string;
-	tree: any;
+	tree?: any;
+	treeUrl?: string;
 	note?: string;
+	cover_root_description: string;
+	disable_expand_all?: boolean;
 	breakdownName?: string;
 	customSettings?: CustomTreeSettings;
 	canvasPadding?: number;
@@ -121,6 +121,8 @@ type CustomHorizontalTreeSettings = {
 	defaultTitleCharSize?: CharSize;
 	horizontalSpacingAdditions?: number[];
 	widthAddition?: number;
+	baseColors?: string[];
+	depthLimit?: number;
 };
 
 type HorizontalTreeSettings = {
@@ -131,6 +133,8 @@ type HorizontalTreeSettings = {
 	defaultTitleCharSize: CharSize;
 	horizontalSpacingAdditions: number[];
 	widthAddition: number;
+	baseColors: string[];
+	depthLimit?: number;
 };
 
 type CustomVerticalTreeSettings = {

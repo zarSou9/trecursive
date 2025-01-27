@@ -1,15 +1,13 @@
 <script lang="ts">
 	import Tree from '../components/Tree.svelte';
 	import ArrowLine from '$lib/icons/ArrowLine.svelte';
-	import { page } from '$app/state';
-	import { allTrees } from '$lib/trees/allTrees';
+	import type { PageData } from './$types';
 
-	const treeDetails = allTrees.find((t) => t.pathName === page.params.tree);
-	if (!treeDetails) throw new Error('Tree not found');
+	export let data: PageData;
 </script>
 
 <svelte:head>
-	<title>{treeDetails.title}</title>
+	<title>{data.title}</title>
 </svelte:head>
 
 <a
@@ -21,4 +19,4 @@
 	<p class="ml-2 text-[14px]">All Maps</p>
 </a>
 
-<Tree {...treeDetails}></Tree>
+<Tree {...data} />

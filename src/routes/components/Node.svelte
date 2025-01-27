@@ -2,7 +2,7 @@
 	import BreakLine from '$lib/components/general/BreakLine.svelte';
 	import CanvasScrollContainer from '$lib/components/tree/CanvasScrollContainer.svelte';
 	import Note from '$lib/components/general/Note.svelte';
-	import ReferenceList from '$lib/components/tree/ReferenceList.svelte';
+	import PapersList from '$lib/components/tree/PapersList.svelte';
 	import type { Node, MiniMiddle, Paper } from '$lib/types';
 	import { textToHTML } from '$lib/utils';
 	import { getContext, onMount } from 'svelte';
@@ -59,6 +59,7 @@
 	let miniDivs: { [id: string]: HTMLDivElement } = $state({});
 	let questionsOpen = $state(false);
 	let refsOpen = $state(true);
+	let papersOpen = $state(true);
 	let miniDivHeight = $state(0);
 	let searchInput = $state('');
 	let searchExpanded = $state(false);
@@ -160,8 +161,10 @@
 			</div>
 			Abstract
 		</button>
-		<span>•</span>
-		<span class="line-clamp-1 flex-shrink-0">{formatDate(paper.published_date, $isMobile)}</span>
+		{#if paper.published_date}
+			<span>•</span>
+			<span class="line-clamp-1 flex-shrink-0">{formatDate(paper.published_date, $isMobile)}</span>
+		{/if}
 		{#if paper.citation_count && !$isMobile}
 			<span>•</span>
 			<span class="line-clamp-1 flex-shrink-0">{paper.citation_count} citations</span>
@@ -189,7 +192,20 @@
 			style="max-height: {goalHeight - 300}px;"
 			class="relative flex max-w-[calc(100vw-40px)] flex-col md:max-w-[700px]"
 		>
-			{#if node.questions?.length}
+			{#if node.papers}
+				<div
+					class="group absolute right-[calc(100%+55px)] top-0 size-fit max-h-[100%] w-[550px] max-w-[calc(100vw-40px)] flex-shrink-0"
+				>
+					{@render collapser(() => (papersOpen = !papersOpen), papersOpen)}
+					{#if papersOpen}
+						<CanvasScrollContainer className="rounded-[30px] size-full max-h-[470px] bg-[#191919]">
+							<p class="header mb-5 ml-8 mt-6">Related Papers</p>
+							<BreakLine />
+							<PapersList papers={node.papers} includeSource />
+						</CanvasScrollContainer>
+					{/if}
+				</div>
+			{:else if node.questions?.length}
 				<div
 					onclick={(e) => e.stopPropagation()}
 					role="presentation"
@@ -213,6 +229,7 @@
 					{/if}
 				</div>
 			{/if}
+
 			<CanvasScrollContainer
 				className="relative rounded-[30px] min-h-[initial] border-b-[2px] border-l-[2px] border-gray-600 bg-[#212121] px-8 py-7 {node
 					.breakdown?.explanation || node.breakdown?.paper
@@ -225,7 +242,9 @@
 					{#if note}
 						<em class="block pb-3 text-[13px] text-[#8b8b8b] [&>a]:text-[#829dbb]">{@html note}</em>
 					{/if}
-					{@html addPrettyLinks(node.description)}
+					{@html addPrettyLinks(
+						(node.description || node.mini_description || '').replaceAll('\n', '<br>')
+					)}
 				</p>
 			</CanvasScrollContainer>
 
@@ -247,11 +266,17 @@
 									}}
 								>
 									<div class="font-medium">{breakdown.title || breakdown.paper?.title}</div>
-									{#if breakdown.paper}
+									{#if breakdown.paper && (breakdown.paper.published_date || breakdown.paper.citation_count)}
 										<div class="mt-1 flex items-center gap-2 text-[12px] text-gray-500">
-											<span>{formatDate(breakdown.paper.published_date)}</span>
-											<span>•</span>
-											<span>{breakdown.paper.citation_count} citations</span>
+											{#if breakdown.paper.published_date}
+												<span>{formatDate(breakdown.paper.published_date)}</span>
+											{/if}
+											{#if breakdown.paper.published_date && breakdown.paper.citation_count}
+												<span>•</span>
+											{/if}
+											{#if breakdown.paper.citation_count}
+												<span>{breakdown.paper.citation_count} citations</span>
+											{/if}
 										</div>
 									{/if}
 									<p class="mt-1.5 line-clamp-6 text-[12px] text-gray-400">
@@ -280,7 +305,7 @@
 									<CanvasScrollContainer className="rounded-[30px] size-full h-full bg-[#191919]">
 										<p class="header mb-5 ml-8 mt-6">References</p>
 										<BreakLine />
-										<ReferenceList references={node.breakdown.references} />
+										<PapersList papers={node.breakdown.references} />
 									</CanvasScrollContainer>
 								{/if}
 							</div>

@@ -26,7 +26,7 @@
 	import { positionHorizontalTree } from '$lib/horizontalTreeLogic';
 	import { mergeWithDefaults, mixColors, sendTipOnce } from '$lib/utils';
 	import ToolTipItem from '$lib/components/general/ToolTipItem.svelte';
-	import { defaultSettings } from '$lib/trees/allTrees';
+	import { defaultSettings } from '$lib/allTrees';
 
 	const {
 		title,
@@ -35,6 +35,7 @@
 		note = '',
 		customSettings = {},
 		breakdownName = 'breakdown',
+		disable_expand_all,
 		canvasPadding = 1500
 	}: TreeDefinition = $props();
 
@@ -316,13 +317,17 @@
 								putAfter: true,
 								func: () => tree && setCollapsed(getAllCollapsed(fullTree), undefined, true)
 							},
-							{
-								title: 'Expand All',
-								shiftKey: true,
-								putAfter: true,
-								key: 'c',
-								func: () => tree && setCollapsed([], undefined, true)
-							}
+							...(disable_expand_all
+								? []
+								: [
+										{
+											title: 'Expand All',
+											shiftKey: true,
+											putAfter: true,
+											key: 'c',
+											func: () => tree && setCollapsed([], undefined, true)
+										}
+									])
 						])
 			]}
 			bind:moveByOffset

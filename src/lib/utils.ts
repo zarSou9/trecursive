@@ -63,8 +63,13 @@ function clickOutside(node: HTMLElement, callback: () => void) {
 
 function mergeWithDefaults<T extends object>(defaultObj: T, customObj: any): T {
 	const result = { ...defaultObj };
-
-	for (const [key, defaultValue] of Object.entries(defaultObj)) {
+	const defaultEntries = Object.entries(defaultObj);
+	for (const [key, _] of Object.entries(customObj)) {
+		if (!defaultEntries.find(([k, _]) => k === key)) {
+			defaultEntries.push([key, undefined]);
+		}
+	}
+	for (const [key, defaultValue] of defaultEntries) {
 		const customValue = customObj[key as keyof T];
 
 		if (customValue === undefined) continue;
