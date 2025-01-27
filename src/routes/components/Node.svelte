@@ -10,11 +10,14 @@
 	import SearchDropdown from '$lib/components/tree/SearchDropdown.svelte';
 	import FolderArrow from '$lib/icons/FolderArrow.svelte';
 	import { slide } from 'svelte/transition';
+	import { isNodeEmpty } from '$lib/treeLogic';
 
 	interface Props {
 		node: Node;
+		setDescriptionDivHeight: (h: number) => void;
 		note?: false | string;
 		collapsedNodes: Writable<string[]>;
+		leftSidePanelInitOpen?: boolean;
 		containerDiv: HTMLDivElement | undefined;
 		totalWidth: number;
 		totalHeight: number;
@@ -38,7 +41,9 @@
 
 	let {
 		node,
+		setDescriptionDivHeight,
 		collapsedNodes,
+		leftSidePanelInitOpen = false,
 		containerDiv,
 		breakdownName,
 		totalWidth,
@@ -56,14 +61,14 @@
 
 	const isMobile: Writable<boolean> = getContext('isMobileStore');
 
-	let miniDivs: { [id: string]: HTMLDivElement } = $state({});
-	let questionsOpen = $state(false);
-	let refsOpen = $state(true);
-	let papersOpen = $state(true);
+	let miniDivs: { [id: string]: HTMLButtonElement } = $state({});
+	let leftPanelOpen = $state(leftSidePanelInitOpen);
+	let rightBreakdownPanelOpen = $state(true);
 	let miniDivHeight = $state(0);
 	let searchInput = $state('');
 	let searchExpanded = $state(false);
 	let abstractShown = $state(false);
+	let descriptionDiv: HTMLDivElement | undefined = $state();
 
 	function setAbstractShown(v: boolean) {
 		if (abstractShown !== v) setTimeout(updateMiniSubMiddles, 150);
@@ -87,7 +92,12 @@
 	onMount(() => {
 		return nodeAction.subscribe((action) => {
 			if (action) {
-				if (action === 'update-mini-middles') updateMiniSubMiddles();
+				if (action === 'update-after-refresh') {
+					updateMiniSubMiddles();
+					setDescriptionDivHeight(descriptionDiv?.clientHeight || 0);
+				} else if (action.startsWith('open-left-panel-') && action.endsWith(node.id)) {
+					leftPanelOpen = true;
+				}
 				nodeAction.set(null);
 			}
 		});
@@ -134,7 +144,7 @@
 	<button
 		{onclick}
 		aria-label="Collapse questions"
-		class="absolute top-[-13px] z-10 rounded-full p-3 transition-all hover:bg-[#bbbbbb1c] group-hover:opacity-100 {open
+		class="absolute top-[-13px] z-10 rounded-full p-3 outline-none transition-all hover:bg-[#bbbbbb1c] group-hover:opacity-100 {open
 			? 'opacity-0'
 			: 'rotate-180 bg-[#bbbbbb13]'} {right ? 'right-[-13px]' : 'left-[-13px]'}"
 	>
@@ -192,45 +202,41 @@
 			style="max-height: {goalHeight - 300}px;"
 			class="relative flex max-w-[calc(100vw-40px)] flex-col md:max-w-[700px]"
 		>
-			{#if node.papers}
-				<div
-					class="group absolute right-[calc(100%+55px)] top-0 size-fit max-h-[100%] w-[550px] max-w-[calc(100vw-40px)] flex-shrink-0"
-				>
-					{@render collapser(() => (papersOpen = !papersOpen), papersOpen)}
-					{#if papersOpen}
-						<CanvasScrollContainer className="rounded-[30px] size-full max-h-[470px] bg-[#191919]">
-							<p class="header mb-5 ml-8 mt-6">Related Papers</p>
-							<BreakLine />
-							<PapersList papers={node.papers} includeSource />
-						</CanvasScrollContainer>
-					{/if}
-				</div>
-			{:else if node.questions?.length}
+			{#if node.questions?.length || node.papers?.length}
 				<div
 					onclick={(e) => e.stopPropagation()}
 					role="presentation"
 					class="group absolute right-[calc(100%+55px)] top-0 size-fit max-h-[100%] w-[550px] max-w-[calc(100vw-40px)] flex-shrink-0"
 				>
-					{@render collapser(() => (questionsOpen = !questionsOpen), questionsOpen)}
-					{#if questionsOpen}
-						<CanvasScrollContainer className="rounded-[30px] bg-[#191919] px-8 py-6 max-h-[470px]">
-							<h3 class="header">Open Research Questions</h3>
-							<div class="mt-5 flex flex-col gap-8">
-								{#each node.questions as question}
-									<div class="rounded-lg bg-[#212121] p-4">
-										<p class="text-[14px] text-[#e0e0e0] sm:text-[15px]">{question.question}</p>
-										{#if question.context}
-											<Note className="mt-3">{question.context}</Note>
-										{/if}
-									</div>
-								{/each}
-							</div>
+					{@render collapser(() => (leftPanelOpen = !leftPanelOpen), leftPanelOpen)}
+					{#if leftPanelOpen}
+						<CanvasScrollContainer
+							className="rounded-[30px] max-h-[470px] bg-[#191919] {node.papers ? '' : 'px-8 py-6'}"
+						>
+							{#if node.papers}
+								<p class="header mb-5 ml-8 mt-6">Related Papers</p>
+								<BreakLine />
+								<PapersList papers={node.papers} includeSource />
+							{:else if node.questions}
+								<h3 class="header">Open Research Questions</h3>
+								<div class="mt-5 flex flex-col gap-8">
+									{#each node.questions as question}
+										<div class="rounded-lg bg-[#212121] p-4">
+											<p class="text-[14px] text-[#e0e0e0] sm:text-[15px]">{question.question}</p>
+											{#if question.context}
+												<Note className="mt-3">{question.context}</Note>
+											{/if}
+										</div>
+									{/each}
+								</div>
+							{/if}
 						</CanvasScrollContainer>
 					{/if}
 				</div>
 			{/if}
 
 			<CanvasScrollContainer
+				bind:element={descriptionDiv}
 				className="relative rounded-[30px] min-h-[initial] border-b-[2px] border-l-[2px] border-gray-600 bg-[#212121] px-8 py-7 {node
 					.breakdown?.explanation || node.breakdown?.paper
 					? 'mb-8 overflow-visible'
@@ -283,7 +289,7 @@
 										{breakdown.explanation || breakdown.paper?.abstract}
 									</p>
 								</button>
-								<div class="h-[.3px] bg-[#606060]"></div>
+								<div class="h-[.5px] bg-[#606060]"></div>
 							{/each}
 						{:else}
 							<div class="px-2 py-3 text-[13px] text-gray-400">No results found</div>
@@ -300,8 +306,12 @@
 							<div
 								class="group absolute left-[calc(100%+55px)] top-0 size-fit h-[650px] max-h-[100%] w-[550px] flex-shrink-0"
 							>
-								{@render collapser(() => (refsOpen = !refsOpen), refsOpen, false)}
-								{#if refsOpen}
+								{@render collapser(
+									() => (rightBreakdownPanelOpen = !rightBreakdownPanelOpen),
+									rightBreakdownPanelOpen,
+									false
+								)}
+								{#if rightBreakdownPanelOpen}
 									<CanvasScrollContainer className="rounded-[30px] size-full h-full bg-[#191919]">
 										<p class="header mb-5 ml-8 mt-6">References</p>
 										<BreakLine />
@@ -348,13 +358,13 @@
 				class="mt-14 grid h-fit grid-flow-col gap-9"
 			>
 				{#each node.breakdown.sub_nodes as subNode}
-					<div
+					<button
 						bind:this={miniDivs[subNode.id]}
-						role="presentation"
+						disabled={isNodeEmpty(subNode)}
 						onclick={() => onMiniClick(subNode)}
-						class="cursor-pointer overflow-hidden rounded-[25px] border-transparent bg-[#212121] px-6 text-left transition-colors
+						class="flex flex-col items-start overflow-hidden rounded-[25px] border-transparent bg-[#212121] px-6 text-left outline-none transition-colors
 						{$collapsedNodes.includes(subNode.id)
-							? 'border-b-[2px] py-[20px] hover:border-b-neutral-400'
+							? `border-b-[2px] py-[20px] ${isNodeEmpty(subNode) ? '' : 'hover:border-b-neutral-400'}`
 							: 'border-y-[2px] pb-[20px] pt-[18px] hover:border-t-neutral-400'}
 							{subHighlighted === subNode.id ? 'border-b-neutral-400' : ''}"
 					>
@@ -363,7 +373,7 @@
 							{(subNode.mini_description?.[0].toUpperCase() || '') +
 								(subNode.mini_description?.slice(1) || '') || subNode.description}
 						</p>
-					</div>
+					</button>
 				{/each}
 			</div>
 		</div>

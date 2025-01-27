@@ -4,20 +4,28 @@
 	interface Props extends HTMLAttributes<HTMLDivElement> {
 		className?: string;
 		styleName?: string;
+		element?: HTMLDivElement;
 		children?: import('svelte').Snippet;
 	}
+
+	let {
+		className = '',
+		styleName = '',
+		children,
+		element = $bindable(),
+		...rest
+	}: Props = $props();
 
 	let mouseIn = false;
 	let isMidScroll = false;
 	let isMobile = false;
 	let prevDelta = 0;
-
-	let { className = '', styleName = '', children, ...rest }: Props = $props();
 </script>
 
 <!-- svelte-ignore a11y_mouse_events_have_key_events -->
 <div
 	role="presentation"
+	bind:this={element}
 	onmousemove={() => (mouseIn = true)}
 	onmouseleave={() => (mouseIn = false)}
 	ontouchmove={(e) => {

@@ -3,8 +3,10 @@
 		chooseBreakdowns,
 		getAllCollapsed,
 		getAllParentIDs,
+		getNodeFromID,
 		getParentNode,
 		getSubNodes,
+		isNodeEmpty,
 		positionTree
 	} from '$lib/treeLogic';
 	import { writable, type Writable } from 'svelte/store';
@@ -36,6 +38,7 @@
 		customSettings = {},
 		breakdownName = 'breakdown',
 		disable_expand_all,
+		leftSidePanelInitOpen,
 		canvasPadding = 1500
 	}: TreeDefinition = $props();
 
@@ -53,6 +56,7 @@
 	let titlePositionedNodes: TitlePosNode[] = $state([]);
 	let totalTitleWidth = $state(0);
 	let totalTitleHeight = $state(0);
+	let disableArrowNav = false;
 	// let textw = $state(0);
 	// let test = $state('');
 	// $inspect(textw / test.length);
@@ -61,7 +65,12 @@
 	let containerDiv: HTMLDivElement | undefined = $state();
 	let navToNode: ((middle: number, top: number, dur?: number) => void) | undefined =
 		$state(undefined);
-	let lastNavedNode: { posNode?: PosNode; sub?: string } = $state({});
+	let lastNavedNode: {
+		posNode?: PosNode;
+		sub?: string;
+		leftPanel?: boolean;
+		breakdownSection?: boolean;
+	} = $state({});
 	let subHighlighted = $state('');
 	let moveByOffset: ((offsetX: number, offsetY: number) => void) | undefined = $state(undefined);
 	let goFullIfOut: (forceGoFull?: boolean) => void = $state(() => {});
@@ -81,7 +90,11 @@
 	onMount(loadTree);
 
 	$effect(() => {
-		subHighlighted = lastNavedNode.sub || '';
+		const subNode = lastNavedNode.posNode?.node.breakdown?.sub_nodes.find(
+			(sub) => lastNavedNode.sub === sub.id
+		);
+		if (subNode && !isNodeEmpty(subNode)) subHighlighted = lastNavedNode.sub || '';
+		else subHighlighted = '';
 	});
 
 	function setCollapsed(collapsed: string[], centeredNodeID?: string, forceGoFull = false) {
@@ -107,7 +120,7 @@
 		}
 
 		setTimeout(() => {
-			nodeAction.set('update-mini-middles');
+			nodeAction.set('update-after-refresh');
 			goFullIfOut(forceGoFull);
 		}, 1);
 	}
@@ -144,13 +157,22 @@
 			.filter(Boolean) as PosNode[];
 	}
 
-	async function handleNavNode(
-		id: string | undefined,
-		sub?: string,
-		sub_dur = 300,
-		node_dur = 400
-	) {
-		if ($titlesMode) return;
+	async function handleNavNode({
+		id,
+		sub,
+		duration = 400,
+		collapseSub = false,
+		leftPanel = false,
+		breakdownSection = false
+	}: {
+		id: string | undefined;
+		sub?: string;
+		duration?: number;
+		collapseSub?: boolean;
+		leftPanel?: boolean;
+		breakdownSection?: boolean;
+	}) {
+		if ($titlesMode || disableArrowNav) return;
 		let posNode = positionedNodes.find((pn) => pn.node.id === id);
 		if (!posNode) {
 			const allParents = getAllParentIDs(id, tree);
@@ -160,7 +182,9 @@
 		}
 		lastNavedNode = {
 			posNode,
-			sub
+			sub,
+			leftPanel,
+			breakdownSection
 		};
 		if (lastNavedNode?.posNode) {
 			if (sub) {
@@ -169,16 +193,47 @@
 					navToNode?.(
 						canvasPadding + subPosNode.x,
 						canvasPadding + subPosNode.y - (lastNavedNode.posNode.miniDivHeight || 0) - 100,
-						sub_dur
+						duration
 					);
 				}
+			} else if (leftPanel) {
+				const leftPanelWidth = Math.min(550, window.innerWidth - 40);
+				const descriptionWidth = Math.min(700, window.innerWidth - 40);
+				const descriptionLeft =
+					canvasPadding +
+					(lastNavedNode.posNode.left || 0) +
+					settings.defaultMode.nodeWidth / 2 -
+					descriptionWidth / 2;
+				nodeAction.set(`open-left-panel-${posNode?.node.id}`);
+				navToNode?.(
+					descriptionLeft - 55 - leftPanelWidth / 2,
+					canvasPadding + (lastNavedNode.posNode.top || 0) - 80,
+					duration
+				);
+			} else if (breakdownSection) {
+				navToNode?.(
+					canvasPadding + (lastNavedNode.posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
+					canvasPadding +
+						(lastNavedNode.posNode.top || 0) -
+						80 +
+						(lastNavedNode.posNode.descriptionDivHeight || 0) +
+						32,
+					duration
+				);
 			} else {
 				navToNode?.(
 					canvasPadding + (lastNavedNode.posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
 					canvasPadding + (lastNavedNode.posNode.top || 0) - 80,
-					node_dur
+					duration
 				);
 			}
+		}
+		if (collapseSub && sub && !$collapsedNodes.includes(sub)) {
+			disableArrowNav = true;
+			setTimeout(() => {
+				disableArrowNav = false;
+				if (!$collapsedNodes.includes(sub)) setCollapsed([...$collapsedNodes, sub], id);
+			}, duration);
 		}
 	}
 
@@ -188,22 +243,23 @@
 			clearTimeout(useArrowsTipTimeout);
 			e.preventDefault();
 			if (!lastNavedNode.posNode) {
-				handleNavNode(tree?.id);
+				handleNavNode({ id: tree?.id });
 				return;
 			}
-			const allParentIDs = getAllParentIDs(lastNavedNode.posNode.node.id, tree);
+			const node = lastNavedNode.posNode.node;
+			const allParentIDs = getAllParentIDs(node.id, tree);
 			let isHidden = false;
 			for (const parentID of allParentIDs) {
 				if ($collapsedNodes.includes(parentID)) {
 					isHidden = true;
 				} else if (isHidden) {
-					handleNavNode(parentID);
+					handleNavNode({ id: parentID });
 					return;
 				}
 			}
 
 			try {
-				const lastParent = getParentNode(lastNavedNode.posNode.node.id, tree);
+				const lastParent = getParentNode(node.id, tree);
 				let lastNodeIdx = lastParent?.breakdown?.sub_nodes.findIndex(
 					(sub) => sub.id === lastNavedNode.posNode?.node.id
 				);
@@ -214,66 +270,94 @@
 				lastSubNodeIdx = lastSubNodeIdx === undefined ? -1 : lastSubNodeIdx;
 
 				if (e.key === 'ArrowLeft') {
-					if (!lastNavedNode.posNode.node.breakdown) throw 'same';
+					if (!node.breakdown) throw 'same';
 
 					if (lastNavedNode.sub) {
 						if (lastSubNodeIdx === -1) throw 'same';
 
-						handleNavNode(
-							lastNavedNode.posNode.node.id,
-							lastNavedNode.posNode.node.breakdown.sub_nodes[Math.max(0, lastSubNodeIdx - 1)].id
-						);
+						handleNavNode({
+							id: node.id,
+							sub: node.breakdown.sub_nodes[Math.max(0, lastSubNodeIdx - 1)].id
+						});
 					} else {
-						handleNavNode(
-							lastNavedNode.posNode.node.id,
-							lastNavedNode.posNode.node.breakdown.sub_nodes[0].id
-						);
+						if (node.questions?.length || node.papers?.length) {
+							handleNavNode({
+								id: node.id,
+								leftPanel: true
+							});
+						} else {
+							handleNavNode({
+								id: node.id,
+								sub: node.breakdown.sub_nodes[0].id
+							});
+						}
 					}
 				} else if (e.key === 'ArrowRight') {
-					if (!lastNavedNode.posNode.node.breakdown) throw 'same';
-					const l = lastNavedNode.posNode.node.breakdown.sub_nodes.length;
+					if (!node.breakdown) throw 'same';
+					const l = node.breakdown.sub_nodes.length;
 					if (lastNavedNode.sub) {
 						if (lastSubNodeIdx === -1) throw 'same';
-
-						handleNavNode(
-							lastNavedNode.posNode.node.id,
-							lastNavedNode.posNode.node.breakdown.sub_nodes[Math.min(l - 1, lastSubNodeIdx + 1)].id
-						);
+						handleNavNode({
+							id: node.id,
+							sub: node.breakdown.sub_nodes[Math.min(l - 1, lastSubNodeIdx + 1)].id
+						});
+					} else if (lastNavedNode.leftPanel) {
+						handleNavNode({ id: node.id });
+					} else if (
+						!lastNavedNode.breakdownSection &&
+						(node.breakdown?.explanation || node.breakdown?.paper)
+					) {
+						handleNavNode({ id: node.id, breakdownSection: true });
 					} else {
-						handleNavNode(
-							lastNavedNode.posNode.node.id,
-							lastNavedNode.posNode.node.breakdown.sub_nodes[0].id
-						);
+						handleNavNode({
+							id: node.id,
+							sub: node.breakdown.sub_nodes[0].id
+						});
 					}
 				} else if (e.key === 'ArrowUp') {
 					if (lastNavedNode.sub) {
-						handleNavNode(lastNavedNode.posNode.node.id, undefined, 300, 300);
+						if (node.breakdown?.explanation || node.breakdown?.paper) {
+							handleNavNode({ id: node.id, breakdownSection: true });
+						} else {
+							handleNavNode({ id: node.id });
+						}
 					} else {
 						if (!lastParent) throw 'same';
-						handleNavNode(lastParent.id, lastNavedNode.posNode.node.id, 400);
+						if (lastNavedNode.breakdownSection) {
+							handleNavNode({ id: node.id, breakdownSection: false });
+						} else {
+							handleNavNode({
+								id: lastParent.id,
+								sub: node.id,
+								collapseSub: true
+							});
+						}
 					}
 				} else if (e.key === 'ArrowDown') {
 					if (lastNavedNode.sub) {
-						handleNavNode(lastNavedNode.sub);
+						const subNode = node.breakdown?.sub_nodes.find((sub) => sub.id === lastNavedNode.sub);
+						if (subNode && !isNodeEmpty(subNode)) handleNavNode({ id: lastNavedNode.sub });
+					} else if (
+						!lastNavedNode.breakdownSection &&
+						(node.breakdown?.explanation || node.breakdown?.paper)
+					) {
+						handleNavNode({ id: node.id, breakdownSection: true });
 					} else {
-						handleNavNode(
-							lastNavedNode.posNode.node.id,
-							lastNavedNode.posNode.node.breakdown?.sub_nodes[0].id
-						);
+						handleNavNode({ id: node.id, sub: node.breakdown?.sub_nodes[0].id });
 					}
 				}
 			} catch (e) {
-				if (e === 'same') handleNavNode(lastNavedNode.posNode.node.id, lastNavedNode.sub);
+				if (e === 'same') handleNavNode({ id: node.id, sub: lastNavedNode.sub });
 				else throw e;
 			}
 		} else if (e.key === 'Enter' && subHighlighted) {
-			handleNavNode(subHighlighted);
+			handleNavNode({ id: subHighlighted });
 		}
 	}
 
 	function toggleTitlesMode() {
 		titlesMode.update((v) => {
-			if (v) setTimeout(() => nodeAction.set('update-mini-middles'), 1);
+			if (v) setTimeout(() => nodeAction.set('update-after-refresh'), 1);
 			else clearTimeout(titleModeTipTimeout);
 			return !v;
 		});
@@ -282,7 +366,7 @@
 	async function onTitleClick(posNode: TitlePosNode) {
 		toggleTitlesMode();
 		await tick();
-		handleNavNode(posNode.node.id, undefined, 0);
+		handleNavNode({ id: posNode.node.id, duration: 0 });
 		sendTipOnce('Press t to go back', tipPopUp, 500);
 	}
 </script>
@@ -421,7 +505,7 @@
 						style="height: {totalHeight}px; width: {totalWidth}px"
 						class="relative"
 					>
-						{#each positionedNodes as posNode (posNode.node.id)}
+						{#each positionedNodes as posNode, i (posNode.node.id)}
 							<div
 								role="presentation"
 								style="width: {settings.defaultMode.nodeWidth}px; height: {settings.defaultMode
@@ -431,20 +515,21 @@
 								{#if posNode.parent}
 									<button
 										class="absolute bottom-[calc(100%+9px)] left-[50%] translate-x-[-50%] border-t-[1px] border-[#939393] pt-[.5px] text-[13px] text-[#939393] outline-none transition-colors hover:border-[#ececec] hover:text-inherit"
-										onclick={() => handleNavNode(posNode.parent?.id)}
+										onclick={() => handleNavNode({ id: posNode.parent?.id })}
 									>
 										{posNode.parent?.title}
 									</button>
 								{/if}
 								<Node
 									node={posNode.node}
+									setDescriptionDivHeight={(h) => (posNode.descriptionDivHeight = h)}
 									note={posNode.node === tree && note}
 									setMiniMiddles={(m) => (posNode.miniSubMiddles = m)}
 									setMiniDivHeight={(h) => (posNode.miniDivHeight = h)}
-									onDescriptionClick={() => handleNavNode(posNode.node.id)}
+									onDescriptionClick={() => handleNavNode({ id: posNode.node.id })}
 									onMiniClick={(miniNode) => {
 										if ($collapsedNodes.includes(miniNode.id)) {
-											handleNavNode(miniNode.id);
+											if (!isNodeEmpty(miniNode)) handleNavNode({ id: miniNode.id });
 										} else {
 											setCollapsed(
 												[...$collapsedNodes, miniNode.id],
@@ -453,6 +538,7 @@
 										}
 									}}
 									goalHeight={settings.defaultMode.nodeHeight}
+									{leftSidePanelInitOpen}
 									{collapsedNodes}
 									{nodeAction}
 									{subHighlighted}

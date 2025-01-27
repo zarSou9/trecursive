@@ -159,6 +159,15 @@ function getParentNode(nodeID: string, root: Node | undefined): Node | undefined
 	return undefined;
 }
 
+function isNodeEmpty(node: Node) {
+	return (
+		(!node.description || !node.mini_description) &&
+		!node.breakdown &&
+		!node.questions?.length &&
+		!node.papers?.length
+	);
+}
+
 function getAllParentIDs(nodeID: string | undefined, root: Node | undefined): string[] {
 	if (!nodeID || !root) return [];
 	const parents = [nodeID];
@@ -170,12 +179,24 @@ function getAllParentIDs(nodeID: string | undefined, root: Node | undefined): st
 	return parents;
 }
 
+function getNodeFromID(nodeID: string | undefined, root: Node | undefined): Node | undefined {
+	if (!root || !nodeID) return;
+	if (root.id === nodeID) return root;
+	for (const subNode of root.breakdown?.sub_nodes || []) {
+		const found = getNodeFromID(nodeID, subNode);
+		if (found) return found;
+	}
+	return;
+}
+
 export {
 	positionTree,
 	chooseBreakdowns,
+	getNodeFromID,
 	getAllCollapsed,
 	getSubNodes,
 	calculateAvgBranchingFactor,
 	getParentNode,
-	getAllParentIDs
+	getAllParentIDs,
+	isNodeEmpty
 };

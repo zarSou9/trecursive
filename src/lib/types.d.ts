@@ -71,7 +71,7 @@ type PosNode = {
 	left?: number;
 	top?: number;
 	miniSubMiddles?: MiniMiddle[];
-	descriptionDiv?: HTMLDivElement;
+	descriptionDivHeight?: number;
 	miniDivHeight?: number;
 };
 
@@ -98,6 +98,7 @@ type TreeDefinition = {
 	note?: string;
 	cover_root_description: string;
 	disable_expand_all?: boolean;
+	leftSidePanelInitOpen?: boolean;
 	breakdownName?: string;
 	customSettings?: CustomTreeSettings;
 	canvasPadding?: number;
