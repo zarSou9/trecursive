@@ -83,6 +83,12 @@
 	const selectedBreakdowns = $state(
 		createLocalStore(`selectedBreakdowns-${pathName}`, {} as HashMap)
 	);
+	// Patch fix for tree id change error - reset storage id after changing map
+	const refreshCollapsedNodes = createLocalStore(`refreshCollapsedNodes-${pathName}-1`, true);
+	if ($refreshCollapsedNodes) {
+		refreshCollapsedNodes.set(false);
+		collapsedNodes.set(getAllCollapsed(fullTree));
+	}
 
 	const nodeAction = writable(null as null | string);
 
@@ -190,13 +196,13 @@
 			leftPanel,
 			breakdownSection
 		};
-		if (lastNavedNode?.posNode) {
+		if (posNode) {
 			if (sub) {
-				const subPosNode = lastNavedNode.posNode.miniSubMiddles?.find((mini) => mini.id === sub);
+				const subPosNode = posNode.miniSubMiddles?.find((mini) => mini.id === sub);
 				if (subPosNode) {
 					navToNode?.(
 						canvasPadding + subPosNode.x,
-						canvasPadding + subPosNode.y - (lastNavedNode.posNode.miniDivHeight || 0) - 100,
+						canvasPadding + subPosNode.y - (posNode.miniDivHeight || 0) - 100,
 						duration
 					);
 				}
@@ -205,29 +211,25 @@
 				const descriptionWidth = Math.min(700, window.innerWidth - 40);
 				const descriptionLeft =
 					canvasPadding +
-					(lastNavedNode.posNode.left || 0) +
+					(posNode.left || 0) +
 					settings.defaultMode.nodeWidth / 2 -
 					descriptionWidth / 2;
 				nodeAction.set(`open-left-panel-${posNode?.node.id}`);
 				navToNode?.(
 					descriptionLeft - 55 - leftPanelWidth / 2,
-					canvasPadding + (lastNavedNode.posNode.top || 0) - 80,
+					canvasPadding + (posNode.top || 0) - 80,
 					duration
 				);
 			} else if (breakdownSection) {
 				navToNode?.(
-					canvasPadding + (lastNavedNode.posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
-					canvasPadding +
-						(lastNavedNode.posNode.top || 0) -
-						80 +
-						(lastNavedNode.posNode.descriptionDivHeight || 0) +
-						32,
+					canvasPadding + (posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
+					canvasPadding + (posNode.top || 0) - 80 + (posNode.descriptionDivHeight || 0) + 32,
 					duration
 				);
 			} else {
 				navToNode?.(
-					canvasPadding + (lastNavedNode.posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
-					canvasPadding + (lastNavedNode.posNode.top || 0) - 80,
+					canvasPadding + (posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
+					canvasPadding + (posNode.top || 0) - 80,
 					duration
 				);
 			}
@@ -328,7 +330,7 @@
 					} else {
 						if (!lastParent) throw 'same';
 						if (lastNavedNode.breakdownSection) {
-							handleNavNode({ id: node.id, breakdownSection: false });
+							handleNavNode({ id: node.id });
 						} else {
 							handleNavNode({
 								id: lastParent.id,

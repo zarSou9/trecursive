@@ -2,7 +2,6 @@ import type { Node, PosNode, HashMap, VerticalTreeSettings, Breakdown } from './
 
 function getSubNodes(node: Node, collapsedNodes: string[]) {
 	if (!node.breakdown) return [];
-
 	return node.breakdown.sub_nodes.filter((subNode) => !collapsedNodes.includes(subNode.id));
 }
 function positionTree(t: Node, collapsedNodes: string[], settings: VerticalTreeSettings) {
@@ -147,9 +146,8 @@ function calculateAvgBranchingFactor(node: Node): number {
 	return totalNodes ? totalBranches / totalNodes : 0;
 }
 function getParentNode(nodeID: string, root: Node | undefined): Node | undefined {
-	let parent: Node | undefined = undefined;
-	mapNodeTrail(nodeID, root, (n) => (parent = n), false);
-	return parent;
+	if (nodeID === root?.id) return root;
+	return getNodeFromID(nodeID.slice(0, -2), root);
 }
 
 function isNodeEmpty(node: Node) {
@@ -173,15 +171,6 @@ function getAllParentIDs(nodeID: string | undefined): string[] {
 }
 
 function getNodeFromID(nodeID: string | undefined, root: Node | undefined) {
-	return mapNodeTrail(nodeID, root);
-}
-
-function mapNodeTrail(
-	nodeID: string | undefined,
-	root: Node | undefined,
-	func?: (node: Node) => void,
-	includeLast = true
-) {
 	if (!root || !nodeID) return;
 	const idxs = nodeID
 		.split('')
@@ -190,14 +179,10 @@ function mapNodeTrail(
 		.slice(1);
 	let currentNode: Node = root;
 	for (const idx of idxs) {
-		func?.(currentNode);
 		if (!currentNode.breakdown) return;
 		currentNode = currentNode.breakdown.sub_nodes[idx];
 	}
-	if (includeLast) {
-		func?.(currentNode);
-		return currentNode;
-	}
+	return currentNode;
 }
 
 export {
