@@ -16,8 +16,7 @@
 		PosNode,
 		HashMap,
 		TitlePosNode,
-		TreeDefinition,
-		TreeSettings
+		TreeDefinition
 	} from '$lib/types';
 	import { createLocalStore } from '$lib/createLocalStore';
 
@@ -175,7 +174,7 @@
 		if ($titlesMode || disableArrowNav) return;
 		let posNode = positionedNodes.find((pn) => pn.node.id === id);
 		if (!posNode) {
-			const allParents = getAllParentIDs(id, tree);
+			const allParents = getAllParentIDs(id);
 			setCollapsed($collapsedNodes.filter((collapsed) => !allParents.includes(collapsed)));
 			await tick();
 			posNode = positionedNodes.find((pn) => pn.node.id === id);
@@ -247,7 +246,7 @@
 				return;
 			}
 			const node = lastNavedNode.posNode.node;
-			const allParentIDs = getAllParentIDs(node.id, tree);
+			const allParentIDs = getAllParentIDs(node.id);
 			let isHidden = false;
 			for (const parentID of allParentIDs) {
 				if ($collapsedNodes.includes(parentID)) {

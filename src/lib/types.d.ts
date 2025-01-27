@@ -166,6 +166,7 @@ export {
 	Paper,
 	PosNode,
 	TitlePosNode,
+	Breakdown,
 	CharSize,
 	CustomTreeSettings,
 	TreeSettings,

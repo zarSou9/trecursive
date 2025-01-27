@@ -1,4 +1,4 @@
-import type { Node, PosNode, HashMap, VerticalTreeSettings } from './types';
+import type { Node, PosNode, HashMap, VerticalTreeSettings, Breakdown } from './types';
 
 function getSubNodes(node: Node, collapsedNodes: string[]) {
 	if (!node.breakdown) return [];
@@ -147,16 +147,9 @@ function calculateAvgBranchingFactor(node: Node): number {
 	return totalNodes ? totalBranches / totalNodes : 0;
 }
 function getParentNode(nodeID: string, root: Node | undefined): Node | undefined {
-	if (!root || !nodeID) return undefined;
-	if (!root.breakdown?.sub_nodes) return undefined;
-
-	for (const subNode of root.breakdown.sub_nodes) {
-		if (subNode.id === nodeID) return root;
-		const parent = getParentNode(nodeID, subNode);
-		if (parent) return parent;
-	}
-
-	return undefined;
+	let parent: Node | undefined = undefined;
+	mapNodeTrail(nodeID, root, (n) => (parent = n), false);
+	return parent;
 }
 
 function isNodeEmpty(node: Node) {
@@ -168,25 +161,43 @@ function isNodeEmpty(node: Node) {
 	);
 }
 
-function getAllParentIDs(nodeID: string | undefined, root: Node | undefined): string[] {
-	if (!nodeID || !root) return [];
-	const parents = [nodeID];
-	let currentNode = getParentNode(nodeID, root);
-	while (currentNode) {
-		parents.push(currentNode.id);
-		currentNode = getParentNode(currentNode.id, root);
+function getAllParentIDs(nodeID: string | undefined): string[] {
+	if (!nodeID) return [];
+	const parents: string[] = [];
+	let currentID = nodeID;
+	while (currentID.length) {
+		parents.push(currentID);
+		currentID = currentID.slice(0, -2);
 	}
 	return parents;
 }
 
-function getNodeFromID(nodeID: string | undefined, root: Node | undefined): Node | undefined {
+function getNodeFromID(nodeID: string | undefined, root: Node | undefined) {
+	return mapNodeTrail(nodeID, root);
+}
+
+function mapNodeTrail(
+	nodeID: string | undefined,
+	root: Node | undefined,
+	func?: (node: Node) => void,
+	includeLast = true
+) {
 	if (!root || !nodeID) return;
-	if (root.id === nodeID) return root;
-	for (const subNode of root.breakdown?.sub_nodes || []) {
-		const found = getNodeFromID(nodeID, subNode);
-		if (found) return found;
+	const idxs = nodeID
+		.split('')
+		.map(Number)
+		.filter((_, i) => i % 2 == 0)
+		.slice(1);
+	let currentNode: Node = root;
+	for (const idx of idxs) {
+		func?.(currentNode);
+		if (!currentNode.breakdown) return;
+		currentNode = currentNode.breakdown.sub_nodes[idx];
 	}
-	return;
+	if (includeLast) {
+		func?.(currentNode);
+		return currentNode;
+	}
 }
 
 export {
