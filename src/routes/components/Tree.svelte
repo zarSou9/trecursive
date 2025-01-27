@@ -84,6 +84,7 @@
 	const selectedBreakdowns = $state(
 		createLocalStore(`selectedBreakdowns-${pathName}`, {} as HashMap)
 	);
+	collapsedNodes.set(getAllCollapsed(fullTree));
 
 	const nodeAction = writable(null as null | string);
 
