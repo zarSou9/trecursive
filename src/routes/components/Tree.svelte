@@ -120,7 +120,7 @@
 			prevCenteredPosNode = positionedNodes.find((pos) => pos.node.id === centeredNodeID);
 			if (!prevCenteredPosNode) return;
 		}
-		localStorage.setItem(COLLAPSED_KEY, JSON.stringify(Array.from(collapsedNodes)));
+		if (browser) localStorage.setItem(COLLAPSED_KEY, JSON.stringify(Array.from(collapsedNodes)));
 		const positionedResult = positionTree(tree, collapsedNodes, settings.defaultMode);
 
 		positionedNodes = positionedResult.positionedNodes;

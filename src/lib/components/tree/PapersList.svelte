@@ -81,13 +81,9 @@
 						{#if paper.citation_count !== undefined}
 							<div class="flex items-center space-x-2">
 								{#if paper.citation_count !== undefined}
-									<ToolTipItem
-										tooltip="Citation Count<br />Total number of other papers that cited this paper"
-									>
-										<div class="flex items-center text-[12px] font-medium">
-											{paper.citation_count} Citations
-										</div>
-									</ToolTipItem>
+									<div class="flex items-center text-[12px] font-medium">
+										{paper.citation_count} Citations
+									</div>
 								{/if}
 							</div>
 						{/if}

@@ -13,6 +13,7 @@ function positionTree(t: Node, collapsedNodes: SvelteSet<string>, settings: Vert
 
 	const { nodeWidth, nodeHeight, verticalSpacing, siblingNodeSpacing, nodeGroupSpacing } = settings;
 
+	collapsedNodes.delete(t.id);
 	positionEndNodes(t);
 	while (findPositioned(t)?.left === undefined) {
 		positionBulkOfTree(t);
