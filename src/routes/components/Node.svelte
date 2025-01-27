@@ -11,12 +11,13 @@
 	import FolderArrow from '$lib/icons/FolderArrow.svelte';
 	import { slide } from 'svelte/transition';
 	import { isNodeEmpty } from '$lib/treeLogic';
+	import type { SvelteSet } from 'svelte/reactivity';
 
 	interface Props {
 		node: Node;
 		setDescriptionDivHeight: (h: number) => void;
 		note?: false | string;
-		collapsedNodes: Writable<string[]>;
+		collapsedNodes: SvelteSet<string>;
 		leftSidePanelInitOpen?: boolean;
 		containerDiv: HTMLDivElement | undefined;
 		totalWidth: number;
@@ -363,7 +364,7 @@
 						disabled={isNodeEmpty(subNode)}
 						onclick={() => onMiniClick(subNode)}
 						class="flex flex-col items-start overflow-hidden rounded-[25px] border-transparent bg-[#212121] px-6 text-left outline-none transition-colors
-						{$collapsedNodes.includes(subNode.id)
+						{collapsedNodes.has(subNode.id)
 							? `border-b-[2px] py-[20px] ${isNodeEmpty(subNode) ? '' : 'hover:border-b-neutral-400'}`
 							: 'border-y-[2px] pb-[20px] pt-[18px] hover:border-t-neutral-400'}
 							{subHighlighted === subNode.id ? 'border-b-neutral-400' : ''}"

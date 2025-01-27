@@ -1,10 +1,11 @@
+import { SvelteSet } from 'svelte/reactivity';
 import type { Node, PosNode, HashMap, VerticalTreeSettings, Breakdown } from './types';
 
-function getSubNodes(node: Node, collapsedNodes: string[]) {
+function getSubNodes(node: Node, collapsedNodes: SvelteSet<string>) {
 	if (!node.breakdown) return [];
-	return node.breakdown.sub_nodes.filter((subNode) => !collapsedNodes.includes(subNode.id));
+	return node.breakdown.sub_nodes.filter((subNode) => !collapsedNodes.has(subNode.id));
 }
-function positionTree(t: Node, collapsedNodes: string[], settings: VerticalTreeSettings) {
+function positionTree(t: Node, collapsedNodes: SvelteSet<string>, settings: VerticalTreeSettings) {
 	let currentX = 0;
 	let totalHeight = 0;
 	let totalWidth = 0;
@@ -30,13 +31,13 @@ function positionTree(t: Node, collapsedNodes: string[], settings: VerticalTreeS
 	function isEndNode(node: Node) {
 		if (!node.breakdown) return true;
 		for (let subNode of node.breakdown.sub_nodes) {
-			if (!collapsedNodes.includes(subNode.id)) return false;
+			if (!collapsedNodes.has(subNode.id)) return false;
 		}
 		return true;
 	}
 
 	function positionEndNodes(node: Node, depth = 0, parent?: Node, firstFound = { v: false }) {
-		if (collapsedNodes.includes(node.id)) return;
+		if (collapsedNodes.has(node.id)) return;
 
 		const posNode: PosNode = {
 			top: depth * (nodeHeight + verticalSpacing),
@@ -116,9 +117,9 @@ function chooseBreakdowns(
 	return fullNode as Node;
 }
 
-function getAllCollapsed(fullNode: any, ids: false | string[] = false) {
-	if (ids) ids.push(fullNode.id);
-	else ids = [];
+function getAllCollapsed(fullNode: any, ids?: SvelteSet<string>) {
+	if (ids) ids.add(fullNode.id);
+	else ids = new SvelteSet();
 	for (let breakdown of fullNode.breakdowns || []) {
 		for (let subNode of breakdown.sub_nodes || []) {
 			getAllCollapsed(subNode, ids);

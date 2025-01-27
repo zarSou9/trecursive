@@ -2,9 +2,11 @@ import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
 
 export function createLocalStore<T>(key: string, defaultValue: T) {
-	const initialValue = browser
-		? JSON.parse(localStorage.getItem(key) ?? JSON.stringify(defaultValue))
-		: defaultValue;
+	let initialValue: any;
+	let localStr = browser ? localStorage.getItem(key) : null;
+	if (localStr !== null && localStr !== 'undefined') {
+		initialValue = JSON.parse(localStr);
+	} else initialValue = defaultValue;
 
 	const store = writable<T>(initialValue);
 

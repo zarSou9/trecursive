@@ -28,6 +28,8 @@
 	import { mergeWithDefaults, mixColors, sendTipOnce } from '$lib/utils';
 	import ToolTipItem from '$lib/components/general/ToolTipItem.svelte';
 	import { defaultSettings } from '$lib/allTrees';
+	import { SvelteSet } from 'svelte/reactivity';
+	import { browser } from '$app/environment';
 
 	const {
 		title,
@@ -77,17 +79,26 @@
 	let titleModeTipTimeout: undefined | number = $state(undefined);
 	const titlesMode = createLocalStore('titlesMode', false);
 
-	const collapsedNodes = $state(
-		createLocalStore(`collapsedNodesStore-${pathName}`, getAllCollapsed(fullTree))
-	);
 	const selectedBreakdowns = $state(
 		createLocalStore(`selectedBreakdowns-${pathName}`, {} as HashMap)
 	);
-	// Patch fix for tree id change error - reset storage id after changing map
-	const refreshCollapsedNodes = createLocalStore(`refreshCollapsedNodes-${pathName}-1`, true);
-	if ($refreshCollapsedNodes) {
-		refreshCollapsedNodes.set(false);
-		collapsedNodes.set(getAllCollapsed(fullTree));
+	const COLLAPSED_KEY = `collapsedNodes-${pathName}`;
+	const allCollapsed = getAllCollapsed(fullTree);
+	let collapsedNodes = $state(allCollapsed);
+	let localStr = browser ? localStorage.getItem(COLLAPSED_KEY) : null;
+	if (localStr && localStr !== 'undefined') {
+		collapsedNodes = new SvelteSet(JSON.parse(localStr));
+		let reset = false;
+		for (const collapsedNodeID of allCollapsed) {
+			if (!allCollapsed.has(collapsedNodeID)) {
+				reset = true;
+				break;
+			}
+		}
+		if (reset) {
+			collapsedNodes = allCollapsed;
+			console.log('Reset collapsed nodes');
+		}
 	}
 
 	const nodeAction = writable(null as null | string);
@@ -102,15 +113,15 @@
 		else subHighlighted = '';
 	});
 
-	function setCollapsed(collapsed: string[], centeredNodeID?: string, forceGoFull = false) {
+	function updateDefaultPosNodes(centeredNodeID?: string, forceGoFull = false) {
 		if (!tree) return;
 		let prevCenteredPosNode;
 		if (centeredNodeID) {
 			prevCenteredPosNode = positionedNodes.find((pos) => pos.node.id === centeredNodeID);
 			if (!prevCenteredPosNode) return;
 		}
-		collapsedNodes.set(collapsed);
-		const positionedResult = positionTree(tree, collapsed, settings.defaultMode);
+		localStorage.setItem(COLLAPSED_KEY, JSON.stringify(Array.from(collapsedNodes)));
+		const positionedResult = positionTree(tree, collapsedNodes, settings.defaultMode);
 
 		positionedNodes = positionedResult.positionedNodes;
 		totalHeight = positionedResult.totalHeight;
@@ -129,7 +140,8 @@
 			goFullIfOut(forceGoFull);
 		}, 1);
 	}
-	function setTitlePosNodes() {
+
+	function updateTitlePosNodes() {
 		const positionedResult = positionHorizontalTree(
 			chooseBreakdowns(fullTree, $selectedBreakdowns, true),
 			settings.titlesMode
@@ -151,17 +163,17 @@
 	) {
 		if (selectBreakdown) $selectedBreakdowns[selectBreakdown.nodeID] = selectBreakdown.breakdownID;
 		tree = chooseBreakdowns(fullTree, $selectedBreakdowns);
-		setCollapsed($collapsedNodes, selectBreakdown?.nodeID);
+		updateDefaultPosNodes(selectBreakdown?.nodeID);
 		if (selectBreakdown)
 			lastNavedNode = {
 				posNode: positionedNodes.find((posNode) => posNode.node.id === selectBreakdown.nodeID),
 				breakdownSection: true
 			};
-		setTitlePosNodes();
+		updateTitlePosNodes();
 	}
 
 	function getPosSubNodes(goal: NodeType): PosNode[] {
-		const subNodes = getSubNodes(goal, $collapsedNodes);
+		const subNodes = getSubNodes(goal, collapsedNodes);
 		return subNodes
 			.map((sub) => positionedNodes.find((p) => p.node.id === sub.id))
 			.filter(Boolean) as PosNode[];
@@ -173,20 +185,23 @@
 		duration = 400,
 		collapseSub = false,
 		leftPanel = false,
-		breakdownSection = false
+		breakdownSection = false,
+		centerID = undefined
 	}: {
 		id: string | undefined;
 		sub?: string;
 		duration?: number;
 		collapseSub?: boolean;
 		leftPanel?: boolean;
+		centerID?: string;
 		breakdownSection?: boolean;
 	}) {
 		if ($titlesMode || disableArrowNav) return;
 		let posNode = positionedNodes.find((pn) => pn.node.id === id);
 		if (!posNode) {
 			const allParents = getAllParentIDs(id);
-			setCollapsed($collapsedNodes.filter((collapsed) => !allParents.includes(collapsed)));
+			for (const parentID of allParents) collapsedNodes.delete(parentID);
+			updateDefaultPosNodes(centerID);
 			await tick();
 			posNode = positionedNodes.find((pn) => pn.node.id === id);
 		}
@@ -234,11 +249,12 @@
 				);
 			}
 		}
-		if (collapseSub && sub && !$collapsedNodes.includes(sub)) {
+		if (collapseSub && sub) {
 			disableArrowNav = true;
 			setTimeout(() => {
 				disableArrowNav = false;
-				if (!$collapsedNodes.includes(sub)) setCollapsed([...$collapsedNodes, sub], id);
+				collapsedNodes.add(sub);
+				updateDefaultPosNodes(id);
 			}, duration);
 		}
 	}
@@ -256,7 +272,7 @@
 			const allParentIDs = getAllParentIDs(node.id);
 			let isHidden = false;
 			for (const parentID of allParentIDs) {
-				if ($collapsedNodes.includes(parentID)) {
+				if (collapsedNodes.has(parentID)) {
 					isHidden = true;
 				} else if (isHidden) {
 					handleNavNode({ id: parentID });
@@ -342,7 +358,8 @@
 				} else if (e.key === 'ArrowDown') {
 					if (lastNavedNode.sub) {
 						const subNode = node.breakdown?.sub_nodes.find((sub) => sub.id === lastNavedNode.sub);
-						if (subNode && !isNodeEmpty(subNode)) handleNavNode({ id: lastNavedNode.sub });
+						if (subNode && !isNodeEmpty(subNode))
+							handleNavNode({ id: lastNavedNode.sub, centerID: lastNavedNode.posNode.node.id });
 					} else if (
 						!lastNavedNode.breakdownSection &&
 						(node.breakdown?.explanation || node.breakdown?.paper)
@@ -405,7 +422,12 @@
 								title: 'Collapse All',
 								key: 'c',
 								putAfter: true,
-								func: () => tree && setCollapsed(getAllCollapsed(fullTree), undefined, true)
+								func: () => {
+									if (tree) {
+										collapsedNodes = getAllCollapsed(fullTree);
+										updateDefaultPosNodes(undefined, true);
+									}
+								}
 							},
 							...(disable_expand_all
 								? []
@@ -415,7 +437,12 @@
 											shiftKey: true,
 											putAfter: true,
 											key: 'c',
-											func: () => tree && setCollapsed([], undefined, true)
+											func: () => {
+												if (tree) {
+													collapsedNodes.clear();
+													updateDefaultPosNodes(undefined, true);
+												}
+											}
 										}
 									])
 						])
@@ -534,13 +561,11 @@
 									setMiniDivHeight={(h) => (posNode.miniDivHeight = h)}
 									onDescriptionClick={() => handleNavNode({ id: posNode.node.id })}
 									onMiniClick={(miniNode) => {
-										if ($collapsedNodes.includes(miniNode.id)) {
+										if (collapsedNodes.has(miniNode.id)) {
 											if (!isNodeEmpty(miniNode)) handleNavNode({ id: miniNode.id });
 										} else {
-											setCollapsed(
-												[...$collapsedNodes, miniNode.id],
-												getParentNode(miniNode.id, tree)?.id
-											);
+											collapsedNodes.add(miniNode.id);
+											updateDefaultPosNodes(getParentNode(miniNode.id, tree)?.id);
 										}
 									}}
 									goalHeight={settings.defaultMode.nodeHeight}

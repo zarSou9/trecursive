@@ -37,7 +37,7 @@ type Node = {
 	mini_description?: string;
 	breakdown?: Breakdown;
 	otherBreakdowns?: Breakdown[];
-	links: { id: string; reason?: string };
+	links?: { id: string; reason?: string }[];
 	questions?: ResearchQuestion[];
 	papers?: Paper[];
 };
