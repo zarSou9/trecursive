@@ -146,6 +146,11 @@
 		if (selectBreakdown) $selectedBreakdowns[selectBreakdown.nodeID] = selectBreakdown.breakdownID;
 		tree = chooseBreakdowns(fullTree, $selectedBreakdowns);
 		setCollapsed($collapsedNodes, selectBreakdown?.nodeID);
+		if (selectBreakdown)
+			lastNavedNode = {
+				posNode: positionedNodes.find((posNode) => posNode.node.id === selectBreakdown.nodeID),
+				breakdownSection: true
+			};
 		setTitlePosNodes();
 	}
 
@@ -341,7 +346,7 @@
 						(node.breakdown?.explanation || node.breakdown?.paper)
 					) {
 						handleNavNode({ id: node.id, breakdownSection: true });
-					} else {
+					} else if (node.breakdown?.sub_nodes.length) {
 						handleNavNode({ id: node.id, sub: node.breakdown?.sub_nodes[0].id });
 					}
 				}
