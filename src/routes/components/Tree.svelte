@@ -39,8 +39,7 @@
 		customSettings = {},
 		breakdownName = 'breakdown',
 		disable_expand_all,
-		leftSidePanelInitOpen,
-		canvasPadding = 1500
+		leftSidePanelInitOpen
 	}: TreeDefinition = $props();
 
 	const tipPopUp: Writable<string | false> = getContext('tipPopUpStore');
@@ -58,13 +57,22 @@
 	let totalTitleWidth = $state(0);
 	let totalTitleHeight = $state(0);
 	let titlePosLinksShown: TitlePosNode | undefined = $state();
+	let titleHighlighted: string | undefined = $state();
 	let hidePosLinksTimeout: undefined | number = $state(undefined);
 	let disableArrowNav = false;
 
 	let openModal = $state(() => {});
 	let containerDiv: HTMLDivElement | undefined = $state();
-	let navToNode: ((middle: number, top: number, dur?: number) => void) | undefined =
-		$state(undefined);
+	let navToPos:
+		| ((
+				left: number,
+				top: number,
+				dur?: number,
+				useXMid?: boolean,
+				useYMid?: boolean,
+				zoom?: number
+		  ) => void)
+		| undefined = $state(undefined);
 	let lastNavedNode: {
 		posNode?: PosNode;
 		sub?: string;
@@ -203,9 +211,9 @@
 			if (sub) {
 				const subPosNode = posNode.miniSubMiddles?.find((mini) => mini.id === sub);
 				if (subPosNode) {
-					navToNode?.(
-						canvasPadding + subPosNode.x,
-						canvasPadding + subPosNode.y - (posNode.miniDivHeight || 0) - 100,
+					navToPos?.(
+						settings.defaultMode.padding + subPosNode.x,
+						settings.defaultMode.padding + subPosNode.y - (posNode.miniDivHeight || 0) - 100,
 						duration
 					);
 				}
@@ -213,26 +221,30 @@
 				const leftPanelWidth = Math.min(550, window.innerWidth - 40);
 				const descriptionWidth = Math.min(700, window.innerWidth - 40);
 				const descriptionLeft =
-					canvasPadding +
+					settings.defaultMode.padding +
 					(posNode.left || 0) +
 					settings.defaultMode.nodeWidth / 2 -
 					descriptionWidth / 2;
 				nodeAction.set(`open-left-panel-${posNode?.node.id}`);
-				navToNode?.(
+				navToPos?.(
 					descriptionLeft - 55 - leftPanelWidth / 2,
-					canvasPadding + (posNode.top || 0) - 80,
+					settings.defaultMode.padding + (posNode.top || 0) - 80,
 					duration
 				);
 			} else if (breakdownSection) {
-				navToNode?.(
-					canvasPadding + (posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
-					canvasPadding + (posNode.top || 0) - 80 + (posNode.descriptionDivHeight || 0) + 32,
+				navToPos?.(
+					settings.defaultMode.padding + (posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
+					settings.defaultMode.padding +
+						(posNode.top || 0) -
+						80 +
+						(posNode.descriptionDivHeight || 0) +
+						32,
 					duration
 				);
 			} else {
-				navToNode?.(
-					canvasPadding + (posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
-					canvasPadding + (posNode.top || 0) - 80,
+				navToPos?.(
+					settings.defaultMode.padding + (posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
+					settings.defaultMode.padding + (posNode.top || 0) - 80,
 					duration
 				);
 			}
@@ -381,7 +393,7 @@
 	}
 
 	function getTitlesToolTipFontSize(depth: number) {
-		return Math.min(18, Math.max(13, getTitlePosNodeFontSize(depth) * 0.7));
+		return Math.min(22, Math.max(13, getTitlePosNodeFontSize(depth) * 0.7));
 	}
 
 	function getRelatedToolTip(fontSize: number, node?: NodeType, reason?: string) {
@@ -445,7 +457,7 @@
 						])
 			]}
 			bind:moveByOffset
-			bind:navToNode
+			bind:navToPos
 			oninfo={openModal}
 			coordsKey={pathName + $titlesMode}
 			onModalsClosed={() => {
@@ -459,7 +471,7 @@
 			}}
 		>
 			{#if $titlesMode}
-				<div class="p-[400px]">
+				<div style="padding: {settings.titlesMode.padding}px">
 					<div style="height: {totalTitleHeight}px; width: {totalTitleWidth}px;" class="relative">
 						{#if titlePosLinksShown && titlePosLinksShown.posLinks}
 							{@const toolTipFontSize = getTitlesToolTipFontSize(titlePosLinksShown.depth)}
@@ -505,6 +517,33 @@
 														: 'max-w-[400px]'}
 												>
 													<button
+														onclick={() => {
+															if (!posLink.posNode) return;
+															navToPos?.(
+																(posLink.posNode.left || 0) +
+																	settings.titlesMode.padding +
+																	posLink.posNode.width / 2,
+																(posLink.posNode.top || 0) +
+																	settings.titlesMode.padding -
+																	getTitlePosNodeFontSize(posLink.posNode.depth) / 2,
+																400,
+																true,
+																true,
+																Math.min(
+																	Math.max(
+																		19,
+																		settings.titlesMode.avgTextCharSizes[1].textSize -
+																			getTitlePosNodeFontSize(posLink.posNode.depth)
+																	) / 50,
+																	1
+																)
+															);
+															titlePosLinksShown = undefined;
+															titleHighlighted = posLink.posNode.node.id;
+															setTimeout(() => {
+																titleHighlighted = undefined;
+															}, 1100);
+														}}
 														style="
 															font-size: {Math.max(toolTipFontSize - 0.5, 12.5)}px; 
 															--base-color: {`hsl(${170 + ((i * 37) % 360)}, 30%, 70%)`};
@@ -522,6 +561,7 @@
 							</div>
 						{/if}
 						{#each titlePositionedNodes as titlePosNode (titlePosNode.node.id)}
+							{@const toolTipFontSize = getTitlesToolTipFontSize(titlePosNode.depth)}
 							<div
 								role="presentation"
 								style="top: {titlePosNode.top}px; left: {titlePosNode.left}px; width: {settings
@@ -533,7 +573,7 @@
 								<div class="absolute bottom-[calc(100%-.5px)] left-0 w-full">
 									<ToolTipItem
 										tooltip={titlePosNode.node.mini_description || titlePosNode.node.description}
-										tooltipClassName="pt-2 max-w-[clamp(310px,83%,500px)]"
+										tooltipClassName="pt-2"
 										toolTipContainerClassName="line-clamp-[12] text-[#cbcbcb]"
 										showOnHover={false}
 										onShow={() => {
@@ -546,7 +586,8 @@
 											hidePosLinksTimeout = setTimeout(() => (titlePosLinksShown = undefined), 20);
 										}}
 										delay={170}
-										style="font-size: {getTitlesToolTipFontSize(titlePosNode.depth)}px"
+										style="font-size: {toolTipFontSize}px;
+										max-width: clamp({toolTipFontSize < 18 ? 300 : 500}px, 83%, {toolTipFontSize < 26 ? 500 : 900}px);"
 									>
 										<button
 											onclick={() => onTitleClick(titlePosNode)}
@@ -556,7 +597,10 @@
 										border-color: {titlePosNode.color};
 										color: {mixColors(titlePosNode.color, 0.3)};
 										--hover-color: {titlePosNode.color || '#badaff'}"
-											class="whitespace-nowrap border-b-[1px] text-start no-underline transition-colors duration-150 hover:![color:var(--hover-color)]"
+											class="whitespace-nowrap border-b-[1px] text-start no-underline transition-colors duration-150 {titleHighlighted ===
+											titlePosNode.node.id
+												? '![color:var(--hover-color)]'
+												: 'hover:![color:var(--hover-color)]'}"
 										>
 											{titlePosNode.node.title}
 										</button>
@@ -584,13 +628,13 @@
 					</div>
 				</div>
 			{:else}
-				<div style="padding: {canvasPadding}px">
+				<div style="padding: {settings.defaultMode.padding}px">
 					<div
 						bind:this={containerDiv}
 						style="height: {totalHeight}px; width: {totalWidth}px"
 						class="relative"
 					>
-						{#each positionedNodes as posNode, i (posNode.node.id)}
+						{#each positionedNodes as posNode (posNode.node.id)}
 							<div
 								role="presentation"
 								style="width: {settings.defaultMode.nodeWidth}px; height: {settings.defaultMode

@@ -112,7 +112,6 @@ type TreeDefinition = {
 	leftSidePanelInitOpen?: boolean;
 	breakdownName?: string;
 	customSettings?: CustomTreeSettings;
-	canvasPadding?: number;
 };
 
 type CustomTreeSettings = {
@@ -136,6 +135,7 @@ type CustomHorizontalTreeSettings = {
 	baseColors?: string[];
 	depthLimit?: number;
 	nodeGroupSpacingAdditions?: number[];
+	padding?: number;
 };
 
 type HorizontalTreeSettings = {
@@ -147,6 +147,7 @@ type HorizontalTreeSettings = {
 	horizontalSpacingAdditions: number[];
 	widthAddition: number;
 	baseColors: string[];
+	padding: number;
 	depthLimit?: number;
 	nodeGroupSpacingAdditions?: number[];
 };
@@ -157,6 +158,7 @@ type CustomVerticalTreeSettings = {
 	verticalSpacing?: number;
 	siblingNodeSpacing?: number;
 	nodeGroupSpacing?: number;
+	padding?: number;
 };
 
 type VerticalTreeSettings = {
@@ -165,6 +167,7 @@ type VerticalTreeSettings = {
 	verticalSpacing: number;
 	siblingNodeSpacing: number;
 	nodeGroupSpacing: number;
+	padding: number;
 };
 
 type MiniMiddle = { x: number; y: number; id: string };

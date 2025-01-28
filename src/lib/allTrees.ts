@@ -7,7 +7,8 @@ export const defaultSettings: TreeSettings = {
 		nodeHeight: 1400,
 		verticalSpacing: 130,
 		siblingNodeSpacing: 500,
-		nodeGroupSpacing: 600
+		nodeGroupSpacing: 600,
+		padding: 1000
 	},
 	titlesMode: {
 		widthAddition: 80,
@@ -48,7 +49,8 @@ export const defaultSettings: TreeSettings = {
 			'rgb(153, 204, 153)', // Muted green
 			'rgb(204, 179, 153)', // Muted gold
 			'rgb(153, 204, 204)' // Muted teal
-		]
+		],
+		padding: 400
 	}
 };
 

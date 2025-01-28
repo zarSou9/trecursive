@@ -102,7 +102,7 @@
 	</PopUp>
 {/if}
 
-<div class="h-[100dvh] w-screen {$usingCanvasTouch ? 'mobile-canvas' : ''}">
+<div class="h-[100dvh] w-screen overflow-auto {$usingCanvasTouch ? 'mobile-canvas' : ''}">
 	{@render children?.()}
 </div>
 

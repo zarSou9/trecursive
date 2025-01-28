@@ -22,7 +22,14 @@
 		goFullIfOut?: (forceGoFull?: boolean) => void;
 		children?: import('svelte').Snippet;
 		coordsKey: string | undefined;
-		navToNode?: (middle: number, top: number, dur?: number) => void;
+		navToPos?: (
+			left: number,
+			top: number,
+			dur?: number,
+			useXMid?: boolean,
+			useYMid?: boolean,
+			zoom?: number
+		) => void;
 		additionalCommands?: DropDownItem[];
 		navItems?: NavItem[];
 		moveByOffset?: (offsetX: number, offsetY: number) => void;
@@ -36,7 +43,7 @@
 		children,
 		additionalCommands,
 		coordsKey,
-		navToNode = $bindable(),
+		navToPos = $bindable(),
 		moveByOffset = $bindable(),
 		navItems,
 		includeHomeFunctionality = false,
@@ -165,11 +172,10 @@
 		const newY = y - offsetY * z;
 		moveToPos(newX, newY, z, 0);
 	};
-
-	navToNode = (middle, top, dur = 300) => {
-		const newZ = 1;
-		const newX = -1 * middle + viewPort.clientWidth / 2;
-		const newY = -1 * top;
+	navToPos = (left, top, dur = 300, useXMid = true, useYMid = false, zoom = 1) => {
+		const newZ = zoom;
+		const newX = -1 * left * zoom + (useXMid ? viewPort.clientWidth / 2 : 0);
+		const newY = -1 * top * zoom + (useYMid ? viewPort.clientHeight / 2 : 0);
 		moveToPos(newX, newY, newZ, dur);
 	};
 
