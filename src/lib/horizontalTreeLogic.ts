@@ -39,6 +39,7 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 		defaultTitleCharSize,
 		avgTextCharSizes,
 		horizontalSpacingAdditions,
+		nodeGroupSpacingAdditions,
 		baseColors,
 		depthLimit
 	} = settings;
@@ -143,13 +144,8 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 		} else {
 			const first = !parentSubNodes || parentSubNodes[0].id === node.id;
 			if (firstFound.v) {
-				if (first) currentY += nodeGroupSpacing;
-				else
-					currentY +=
-						siblingNodeSpacing +
-						((avgTextCharSizes[depth] || defaultTitleCharSize).textSize -
-							defaultTitleCharSize.textSize) *
-							textSizeSpacingFactor;
+				if (first) currentY += getNodeGroupSpacing(depth);
+				else currentY += siblingNodeSpacing + getLineHeight(depth);
 			} else {
 				firstFound.v = true;
 			}
@@ -164,6 +160,18 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 		const minSubTop = posNode.children[0].top || 0;
 		const maxSubTop = posNode.children[posNode.children.length - 1].top || 0;
 		posNode.top = minSubTop + (maxSubTop - minSubTop) / 2;
+	}
+
+	function getLineHeight(depth: number) {
+		return (
+			((avgTextCharSizes[depth] || defaultTitleCharSize).textSize - defaultTitleCharSize.textSize) *
+			textSizeSpacingFactor *
+			(avgTextCharSizes[depth]?.line_height || 1)
+		);
+	}
+
+	function getNodeGroupSpacing(depth: number) {
+		return nodeGroupSpacingAdditions?.[depth] || nodeGroupSpacing;
 	}
 
 	function condenseSiblings(posNode: TitlePosNode | undefined) {
@@ -191,7 +199,11 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 				if (subPosNode.children) {
 					subPosNode.top = (posNode.top || 0) + ((subPosNode.top || 0) - (posNode.top || 0)) * 0.3;
 					if (prevChildTopWithChildren !== -1) {
-						subPosNode.top = Math.max(prevChildTopWithChildren + nodeGroupSpacing, subPosNode.top);
+						subPosNode.top = Math.max(
+							prevChildTopWithChildren + getNodeGroupSpacing(subPosNode.depth),
+							prevChildTopWithChildren + siblingNodeSpacing + getLineHeight(subPosNode.depth),
+							subPosNode.top
+						);
 					}
 					prevChildTopWithChildren = subPosNode.top;
 					if (firstChildWithChildrenTopDiff === undefined && i)
@@ -204,11 +216,7 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 			for (let subPosNode of posNode?.children) {
 				if (!subPosNode.children && subPosNode.top) {
 					subPosNode.top +=
-						firstChildWithChildrenTopDiff -
-						siblingNodeSpacing +
-						(defaultTitleCharSize.textSize -
-							(avgTextCharSizes[subPosNode.depth] || defaultTitleCharSize).textSize) *
-							textSizeSpacingFactor;
+						firstChildWithChildrenTopDiff - siblingNodeSpacing - getLineHeight(subPosNode.depth);
 				}
 			}
 		}

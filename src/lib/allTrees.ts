@@ -67,7 +67,7 @@ export const allTrees: TreeDefinition[] = [
 				widthAddition: 800,
 				horizontalSpacing: 900,
 				depthLimit: 3,
-				nodeGroupSpacing: 100
+				nodeGroupSpacingAdditions: [100, 100, 100, 100]
 			}
 		}
 	},
@@ -101,7 +101,36 @@ export const allTrees: TreeDefinition[] = [
 				nodeWidth: 3200
 			},
 			titlesMode: {
-				horizontalSpacing: 800
+				horizontalSpacing: 800,
+				horizontalSpacingAdditions: [700, 300, 360],
+				nodeGroupSpacingAdditions: [70, 70, 70, 90, 90],
+				avgTextCharSizes: [
+					{
+						textSize: 95,
+						charW: 50
+					},
+					{
+						textSize: 70,
+						charW: 36
+					},
+					{
+						textSize: 35,
+						charW: 17,
+						line_height: 1.4
+					},
+					{
+						textSize: 25,
+						charW: 12
+					},
+					{
+						textSize: 21,
+						charW: 10
+					},
+					{
+						textSize: 16,
+						charW: 8
+					}
+				]
 			}
 		}
 	}

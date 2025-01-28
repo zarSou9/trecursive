@@ -98,6 +98,7 @@ type TitlePosLink = {
 type CharSize = {
 	textSize: number;
 	charW: number;
+	line_height?: number;
 };
 
 type TreeDefinition = {
@@ -134,6 +135,7 @@ type CustomHorizontalTreeSettings = {
 	widthAddition?: number;
 	baseColors?: string[];
 	depthLimit?: number;
+	nodeGroupSpacingAdditions?: number[];
 };
 
 type HorizontalTreeSettings = {
@@ -146,6 +148,7 @@ type HorizontalTreeSettings = {
 	widthAddition: number;
 	baseColors: string[];
 	depthLimit?: number;
+	nodeGroupSpacingAdditions?: number[];
 };
 
 type CustomVerticalTreeSettings = {

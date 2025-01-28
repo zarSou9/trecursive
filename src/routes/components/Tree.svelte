@@ -61,9 +61,6 @@
 	let titlePosLinksShown: { left: number; top: number; posLinks: TitlePosLink[] } | undefined =
 		$state();
 	let disableArrowNav = false;
-	// let textw = $state(0);
-	// let test = $state('');
-	// $inspect(textw / test.length);
 
 	let openModal = $state(() => {});
 	let containerDiv: HTMLDivElement | undefined = $state();
@@ -155,10 +152,6 @@
 		totalTitleWidth = positionedResult.totalWidth + settings.titlesMode.widthAddition;
 
 		setTimeout(() => goFullIfOut(), 1);
-
-		// for (let posNode of titlePositionedNodes) {
-		// 	test += posNode.node.title + ' ';
-		// }
 	}
 
 	function loadTree(
@@ -340,10 +333,11 @@
 							handleNavNode({ id: node.id });
 						}
 					} else {
-						if (!lastParent) throw 'same';
-						if (lastNavedNode.breakdownSection) {
+						if (lastNavedNode.posNode.node.id === tree?.id || !lastParent) {
+							handleNavNode({ id: tree?.id });
+						} else if (lastNavedNode.breakdownSection) {
 							handleNavNode({ id: node.id });
-						} else {
+						} else if (lastParent) {
 							handleNavNode({
 								id: lastParent.id,
 								sub: node.id,
@@ -391,13 +385,6 @@
 </script>
 
 <svelte:window onkeydown={handleKeyDown} onmousemove={() => (subHighlighted = '')} />
-
-<!-- <div
-	bind:clientWidth={textw}
-	class="z-[1000] fixed top-[200px] left-[200px] whitespace-nowrap text-[18px] text-[#fff0]"
->
-	{test}
-</div> -->
 
 <InfoModal bind:open={openModal} />
 
@@ -490,7 +477,7 @@
 										tooltipClassName="pt-2 max-w-[clamp(310px,83%,500px)]"
 										toolTipContainerClassName="line-clamp-[12]"
 										showOnHover={false}
-										delay={250}
+										delay={170}
 										style="font-size: {Math.min(
 											18,
 											Math.max(
