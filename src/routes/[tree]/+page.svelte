@@ -19,4 +19,20 @@
 	<p class="ml-2 text-[14px]">All Maps</p>
 </a>
 
-<Tree {...data} />
+{#await data.treePromise}
+	<div class="min-h-screen px-5 py-20">
+		<div class="mx-auto max-w-[900px] text-center">
+			<div class="mb-6 text-3xl font-semibold text-white/90">Loading {data.title}...</div>
+			<div class="text-xl text-white/75">Please wait while we fetch the data</div>
+		</div>
+	</div>
+{:then tree}
+	<Tree {...data} {tree} />
+{:catch error}
+	<div class="min-h-screen px-5 py-20">
+		<div class="mx-auto max-w-[900px] text-center">
+			<div class="mb-6 text-3xl font-semibold text-white/90">Error loading tree</div>
+			<div class="mb-8 text-xl text-white/75">{error.message}</div>
+		</div>
+	</div>
+{/await}

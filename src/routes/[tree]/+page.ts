@@ -10,14 +10,12 @@ export const load: PageLoad = async ({ params, fetch }) => {
 		});
 	}
 
-	let tree = treeDetails.tree;
-	if (!tree) {
-		const response = await fetch(`/trees/${treeDetails.pathName}.json`);
-		tree = await response.json();
-	}
-
+	// Return the tree loading promise separately
+	const treePromise = treeDetails.tree
+		? Promise.resolve(treeDetails.tree)
+		: fetch(`/trees/${treeDetails.pathName}.json`).then((response) => response.json());
 	return {
 		...treeDetails,
-		tree
+		treePromise
 	};
 };
