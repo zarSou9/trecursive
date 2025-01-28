@@ -176,12 +176,23 @@ function getAllParentIDs(nodeID: string | undefined): string[] {
 	return parents;
 }
 
-function getNodeIdIdxs(nodeID: string) {
-	return nodeID
-		.split('')
-		.map(Number)
-		.filter((_, i) => i % 2 == 0)
-		.slice(1);
+function getNodeIdIdxs(nodeID: string, onlyNodeIds = true) {
+	const idxs: number[] = [];
+	let inClosure: null | string = null;
+	for (const char of nodeID.slice(1)) {
+		if (inClosure !== null) {
+			if (char === '.') {
+				idxs.push(Number(inClosure));
+				inClosure = null;
+			} else {
+				inClosure += char;
+			}
+		} else {
+			if (char === '.') inClosure = '';
+			else idxs.push(Number(char));
+		}
+	}
+	return onlyNodeIds ? idxs.filter((_, i) => i % 2 != 0) : idxs;
 }
 
 function getNodeFromID(nodeID: string | undefined, root: Node | undefined) {
