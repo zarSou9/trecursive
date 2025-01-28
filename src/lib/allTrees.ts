@@ -127,8 +127,8 @@ export const allTrees: TreeDefinition[] = [
 						charW: 10
 					},
 					{
-						textSize: 16,
-						charW: 8
+						textSize: 17,
+						charW: 8.7
 					}
 				]
 			}
