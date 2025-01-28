@@ -47,7 +47,7 @@
 </script>
 
 {#if pathData && (pointA.x || pointA.y) && (pointB.x || pointB.y)}
-	<div class="pointer-events-none absolute left-0 right-0 z-[2]">
+	<div class="pointer-events-none absolute left-0 right-0">
 		<svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg">
 			<path d={pathData} stroke={strokeColor} fill="none" stroke-width="{strokeWidth}px" />
 		</svg>

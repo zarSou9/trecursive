@@ -3,9 +3,7 @@
 		chooseBreakdowns,
 		getAllCollapsed,
 		getAllParentIDs,
-		getNodeFromID,
 		getParentNode,
-		getSubNodes,
 		isNodeEmpty,
 		positionTree
 	} from '$lib/treeLogic';
@@ -31,6 +29,7 @@
 	import { defaultSettings } from '$lib/allTrees';
 	import { SvelteSet } from 'svelte/reactivity';
 	import { browser } from '$app/environment';
+	import { fade } from 'svelte/transition';
 
 	const {
 		title,
@@ -58,8 +57,8 @@
 	let titlePositionedNodes: TitlePosNode[] = $state([]);
 	let totalTitleWidth = $state(0);
 	let totalTitleHeight = $state(0);
-	let titlePosLinksShown: { left: number; top: number; posLinks: TitlePosLink[] } | undefined =
-		$state();
+	let titlePosLinksShown: TitlePosNode | undefined = $state();
+	let hidePosLinksTimeout: undefined | number = $state(undefined);
 	let disableArrowNav = false;
 
 	let openModal = $state(() => {});
@@ -376,6 +375,21 @@
 		});
 	}
 
+	function getTitlePosNodeFontSize(depth: number) {
+		return (settings.titlesMode.avgTextCharSizes[depth] || settings.titlesMode.defaultTitleCharSize)
+			.textSize;
+	}
+
+	function getTitlesToolTipFontSize(depth: number) {
+		return Math.min(18, Math.max(13, getTitlePosNodeFontSize(depth) * 0.7));
+	}
+
+	function getRelatedToolTip(fontSize: number, node?: NodeType, reason?: string) {
+		const desc = node?.mini_description || node?.description;
+		if (!reason) return desc;
+		return `<i style="padding-bottom: ${fontSize / 1.5}px; font-size: ${fontSize - 1.5}px;" class="block text-neutral-400">${reason}</i>${desc}`;
+	}
+
 	async function onTitleClick(posNode: TitlePosNode) {
 		toggleTitlesMode();
 		await tick();
@@ -447,19 +461,64 @@
 			{#if $titlesMode}
 				<div class="p-[400px]">
 					<div style="height: {totalTitleHeight}px; width: {totalTitleWidth}px;" class="relative">
-						{#if titlePosLinksShown}
+						{#if titlePosLinksShown && titlePosLinksShown.posLinks}
+							{@const toolTipFontSize = getTitlesToolTipFontSize(titlePosLinksShown.depth)}
 							<div
-								class="absolute rounded-md border border-[#2a3444] bg-[#121921] px-[12px] py-2 text-[#c6c6c6] shadow-lg shadow-black/40"
-								style="top: {titlePosLinksShown.top}px; left: {titlePosLinksShown.left}px;"
+								class="absolute"
+								style="top: {(titlePosLinksShown.top || 0) -
+									getTitlePosNodeFontSize(titlePosLinksShown.depth) -
+									10}px; left: {titlePosLinksShown.left}px;"
 							>
-								<p class="text-lg">Related</p>
-								{#each titlePosLinksShown.posLinks as posLink}
-									<ToolTipItem>
-										<button class="underline">
-											{posLink.posNode?.node.title || posLink.hiddenNode?.title}
-										</button>
-									</ToolTipItem>
-								{/each}
+								<div
+									onmouseenter={() => clearTimeout(hidePosLinksTimeout)}
+									onmouseleave={() => {
+										hidePosLinksTimeout = setTimeout(() => (titlePosLinksShown = undefined), 1);
+									}}
+									role="presentation"
+									transition:fade={{ duration: 100 }}
+									class="absolute right-0 top-0 z-[1] pr-3"
+								>
+									<div
+										style="width: {toolTipFontSize * 15}px;"
+										class="relative rounded-md border border-[#3a3a3a] bg-[#171717] px-[12px] py-2 text-[#c6c6c6] shadow-lg shadow-black/40"
+									>
+										<p
+											style="font-size: {toolTipFontSize + 3}px"
+											class="mb-2 border-b border-[#3a3a3a] pb-2 font-medium text-[#bababa]"
+										>
+											Related Nodes
+										</p>
+										<div style="gap: {toolTipFontSize / 2.3}px;" class="grid">
+											{#each titlePosLinksShown.posLinks as posLink, i}
+												<ToolTipItem
+													className="w-fit"
+													tooltip={getRelatedToolTip(
+														Math.max(toolTipFontSize - 2, 12.5),
+														posLink.posNode?.node || posLink.hiddenNode,
+														posLink.reason
+													)}
+													style="font-size: {Math.max(toolTipFontSize - 2, 12.5)}px"
+													showOnHover={false}
+													containerClassName="cursor-auto"
+													tooltipClassName={toolTipFontSize < 16
+														? 'max-w-[300px]'
+														: 'max-w-[400px]'}
+												>
+													<button
+														style="
+															font-size: {Math.max(toolTipFontSize - 0.5, 12.5)}px; 
+															--base-color: {`hsl(${170 + ((i * 37) % 360)}, 30%, 70%)`};
+															color: color-mix(in srgb, var(--base-color) 70%, transparent);
+														"
+														class="w-fit text-start transition-colors hover:!text-[var(--base-color)]"
+													>
+														{posLink.posNode?.node.title || posLink.hiddenNode?.title}
+													</button>
+												</ToolTipItem>
+											{/each}
+										</div>
+									</div>
+								</div>
 							</div>
 						{/if}
 						{#each titlePositionedNodes as titlePosNode (titlePosNode.node.id)}
@@ -477,26 +536,23 @@
 										tooltipClassName="pt-2 max-w-[clamp(310px,83%,500px)]"
 										toolTipContainerClassName="line-clamp-[12]"
 										showOnHover={false}
+										onShow={() => {
+											if (titlePosNode.posLinks) {
+												clearTimeout(hidePosLinksTimeout);
+												titlePosLinksShown = titlePosNode;
+											}
+										}}
+										onHide={() => {
+											hidePosLinksTimeout = setTimeout(() => (titlePosLinksShown = undefined), 20);
+										}}
 										delay={170}
-										style="font-size: {Math.min(
-											18,
-											Math.max(
-												13,
-												(
-													settings.titlesMode.avgTextCharSizes[titlePosNode.depth] ||
-													settings.titlesMode.defaultTitleCharSize
-												).textSize * 0.7
-											)
-										)}px"
+										style="font-size: {getTitlesToolTipFontSize(titlePosNode.depth)}px"
 									>
 										<button
 											onclick={() => onTitleClick(titlePosNode)}
 											style="width: {titlePosNode.children
 												? titlePosNode.width
-												: ''}px; font-size: {(
-												settings.titlesMode.avgTextCharSizes[titlePosNode.depth] ||
-												settings.titlesMode.defaultTitleCharSize
-											).textSize}px;
+												: ''}px; font-size: {getTitlePosNodeFontSize(titlePosNode.depth)}px;
 										border-color: {titlePosNode.color};
 										color: {mixColors(titlePosNode.color, 0.3)};
 										--hover-color: {titlePosNode.color || '#badaff'}"
