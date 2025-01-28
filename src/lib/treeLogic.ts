@@ -45,6 +45,7 @@ function positionTree(t: Node, collapsedNodes: SvelteSet<string>, settings: Vert
 			parent,
 			node
 		};
+		positionedNodes.push(posNode);
 		if (isEndNode(node)) {
 			const parentSubNodes = parent && getSubNodes(parent, collapsedNodes);
 			const first = !parentSubNodes || parentSubNodes[0].id === node.id;
@@ -56,11 +57,14 @@ function positionTree(t: Node, collapsedNodes: SvelteSet<string>, settings: Vert
 			}
 			posNode.left = currentX;
 		} else if (node.breakdown) {
+			const children: PosNode[] = [];
 			for (let subNode of node.breakdown.sub_nodes) {
-				positionEndNodes(subNode, depth + 1, node, firstFound);
+				const subPosNode = positionEndNodes(subNode, depth + 1, node, firstFound);
+				if (subPosNode) children.push(subPosNode);
 			}
+			if (children.length) posNode.children = children;
 		}
-		positionedNodes.push(posNode);
+		return posNode;
 	}
 
 	function findPositioned(node: Node) {
@@ -172,16 +176,19 @@ function getAllParentIDs(nodeID: string | undefined): string[] {
 	return parents;
 }
 
-function getNodeFromID(nodeID: string | undefined, root: Node | undefined) {
-	if (!root || !nodeID) return;
-	const idxs = nodeID
+function getNodeIdIdxs(nodeID: string) {
+	return nodeID
 		.split('')
 		.map(Number)
 		.filter((_, i) => i % 2 == 0)
 		.slice(1);
+}
+
+function getNodeFromID(nodeID: string | undefined, root: Node | undefined) {
+	if (!root || !nodeID) return;
 	let currentNode: Node = root;
-	for (const idx of idxs) {
-		if (!currentNode.breakdown) return;
+	for (const idx of getNodeIdIdxs(nodeID)) {
+		if (!currentNode?.breakdown) return;
 		currentNode = currentNode.breakdown.sub_nodes[idx];
 	}
 	return currentNode;
@@ -191,6 +198,7 @@ export {
 	positionTree,
 	chooseBreakdowns,
 	getNodeFromID,
+	getNodeIdIdxs,
 	getAllCollapsed,
 	getSubNodes,
 	calculateAvgBranchingFactor,

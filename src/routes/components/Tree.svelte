@@ -16,7 +16,8 @@
 		PosNode,
 		HashMap,
 		TitlePosNode,
-		TreeDefinition
+		TreeDefinition,
+		TitlePosLink
 	} from '$lib/types';
 	import { createLocalStore } from '$lib/createLocalStore';
 
@@ -57,6 +58,8 @@
 	let titlePositionedNodes: TitlePosNode[] = $state([]);
 	let totalTitleWidth = $state(0);
 	let totalTitleHeight = $state(0);
+	let titlePosLinksShown: { left: number; top: number; posLinks: TitlePosLink[] } | undefined =
+		$state();
 	let disableArrowNav = false;
 	// let textw = $state(0);
 	// let test = $state('');
@@ -170,13 +173,6 @@
 				breakdownSection: true
 			};
 		updateTitlePosNodes();
-	}
-
-	function getPosSubNodes(goal: NodeType): PosNode[] {
-		const subNodes = getSubNodes(goal, collapsedNodes);
-		return subNodes
-			.map((sub) => positionedNodes.find((p) => p.node.id === sub.id))
-			.filter(Boolean) as PosNode[];
 	}
 
 	async function handleNavNode({
@@ -464,6 +460,21 @@
 			{#if $titlesMode}
 				<div class="p-[400px]">
 					<div style="height: {totalTitleHeight}px; width: {totalTitleWidth}px;" class="relative">
+						{#if titlePosLinksShown}
+							<div
+								class="absolute rounded-md border border-[#2a3444] bg-[#121921] px-[12px] py-2 text-[#c6c6c6] shadow-lg shadow-black/40"
+								style="top: {titlePosLinksShown.top}px; left: {titlePosLinksShown.left}px;"
+							>
+								<p class="text-lg">Related</p>
+								{#each titlePosLinksShown.posLinks as posLink}
+									<ToolTipItem>
+										<button class="underline">
+											{posLink.posNode?.node.title || posLink.hiddenNode?.title}
+										</button>
+									</ToolTipItem>
+								{/each}
+							</div>
+						{/if}
 						{#each titlePositionedNodes as titlePosNode (titlePosNode.node.id)}
 							<div
 								role="presentation"
@@ -475,9 +486,7 @@
 							>
 								<div class="absolute bottom-[calc(100%-.5px)] left-0 w-full">
 									<ToolTipItem
-										tooltip={(titlePosNode.node.mini_description?.[0].toUpperCase() || '') +
-											(titlePosNode.node.mini_description?.slice(1) || '') ||
-											titlePosNode.node.description}
+										tooltip={titlePosNode.node.mini_description || titlePosNode.node.description}
 										tooltipClassName="pt-2 max-w-[clamp(310px,83%,500px)]"
 										toolTipContainerClassName="line-clamp-[12]"
 										showOnHover={false}
@@ -580,7 +589,7 @@
 									{totalWidth}
 								/>
 							</div>
-							{#each getPosSubNodes(posNode.node) as posSubNode (posSubNode.node.id)}
+							{#each posNode.children || [] as posSubNode (posSubNode.node.id)}
 								<Curve
 									width={totalWidth}
 									height={totalHeight}

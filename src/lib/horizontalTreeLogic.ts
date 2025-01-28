@@ -1,4 +1,5 @@
-import type { HorizontalTreeSettings, Node, TitlePosNode } from './types';
+import { getNodeFromID, getNodeIdIdxs } from './treeLogic';
+import type { HorizontalTreeSettings, Node, TitlePosLink, TitlePosNode } from './types';
 import { mixColors } from './utils';
 
 function reorderTree(tree: Node) {
@@ -17,6 +18,17 @@ function limitTreeDepth(node: Node, limit: undefined | number, depth = 0) {
 		for (let subNode of node.breakdown.sub_nodes) limitTreeDepth(subNode, limit, depth + 1);
 	}
 	return node;
+}
+
+function getTitlePosNode(nodeID: string | undefined, root: TitlePosNode | undefined) {
+	if (!root || !nodeID) return;
+	let currentNode: TitlePosNode = root;
+	const nodeIdxs = getNodeIdIdxs(nodeID);
+	for (const idx of nodeIdxs) {
+		if (!currentNode?.children) return;
+		currentNode = currentNode.children[idx];
+	}
+	return currentNode;
 }
 
 function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
@@ -41,9 +53,25 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 	const treePosNode = positionEndNodes(tree);
 	setNonEndTops(treePosNode);
 	condenseSiblings(treePosNode);
+	rereorderPosTree(treePosNode);
 	for (let posNode of positionedNodes) {
 		totalHeight = Math.max(posNode.top || 0, totalHeight);
 		totalWidth = Math.max(posNode.left || 0, totalWidth);
+
+		if (posNode.node.links?.length) {
+			posNode.posLinks = [];
+			for (const link of posNode.node.links) {
+				const posLink: TitlePosLink = {
+					id: link.id,
+					reason: link.reason
+				};
+				const thisPosNode = getTitlePosNode(link.id, treePosNode);
+				if (thisPosNode) posLink.posNode = thisPosNode;
+				else posLink.hiddenNode = getNodeFromID(link.id, tree);
+
+				posNode.posLinks.push(posLink);
+			}
+		}
 	}
 
 	return {
@@ -51,6 +79,20 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 		totalHeight,
 		totalWidth
 	};
+
+	function rereorderPosTree(rootPosNode: TitlePosNode) {
+		if (!rootPosNode.children?.length) return;
+
+		rootPosNode.children.sort((a, b) => {
+			const aIdxs = getNodeIdIdxs(a.node.id);
+			const bIdxs = getNodeIdIdxs(b.node.id);
+			return aIdxs[aIdxs.length - 1] - bIdxs[bIdxs.length - 1];
+		});
+
+		for (const child of rootPosNode.children) {
+			rereorderPosTree(child);
+		}
+	}
 
 	function getNodeColor(i: number, parentColor?: string): string {
 		const base = baseColors[i % baseColors.length];
@@ -83,6 +125,7 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 			node,
 			color
 		};
+		positionedNodes.push(posNode);
 		if (node.breakdown) {
 			posNode.children = [];
 			for (let i = 0; i < node.breakdown.sub_nodes.length; i++) {
@@ -112,7 +155,6 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 			}
 			posNode.top = currentY;
 		}
-		positionedNodes.push(posNode);
 		return posNode;
 	}
 

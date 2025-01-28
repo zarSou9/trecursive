@@ -74,6 +74,7 @@ type PosNode = {
 	miniSubMiddles?: MiniMiddle[];
 	descriptionDivHeight?: number;
 	miniDivHeight?: number;
+	children?: PosNode[];
 };
 
 type TitlePosNode = {
@@ -84,6 +85,14 @@ type TitlePosNode = {
 	left?: number;
 	top?: number;
 	children?: TitlePosNode[];
+	posLinks?: TitlePosLink[];
+};
+
+type TitlePosLink = {
+	id: string;
+	posNode?: TitlePosNode;
+	hiddenNode?: Node;
+	reason?: string;
 };
 
 type CharSize = {
@@ -163,6 +172,7 @@ export {
 	DropDownItem,
 	HashMap,
 	TreeDefinition,
+	TitlePosLink,
 	Node,
 	Paper,
 	PosNode,
