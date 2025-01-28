@@ -534,7 +534,7 @@
 									<ToolTipItem
 										tooltip={titlePosNode.node.mini_description || titlePosNode.node.description}
 										tooltipClassName="pt-2 max-w-[clamp(310px,83%,500px)]"
-										toolTipContainerClassName="line-clamp-[12]"
+										toolTipContainerClassName="line-clamp-[12] text-[#cbcbcb]"
 										showOnHover={false}
 										onShow={() => {
 											if (titlePosNode.posLinks) {
