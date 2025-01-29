@@ -26,8 +26,8 @@
 			<div class="text-xl text-white/75">Please wait while we fetch the data</div>
 		</div>
 	</div>
-{:then tree}
-	<Tree {...data} {tree} />
+{:then fullTree}
+	<Tree {...data} {fullTree} />
 {:catch error}
 	<div class="min-h-screen px-5 py-20">
 		<div class="mx-auto max-w-[900px] text-center">

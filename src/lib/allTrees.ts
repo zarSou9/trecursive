@@ -56,43 +56,6 @@ export const defaultSettings: TreeSettings = {
 
 export const allTrees: TreeDefinition[] = [
 	{
-		pathName: 'ai-safety-map',
-		title: 'AI Safety Map',
-		disable_expand_all: true,
-		note: 'This map used LLMs to map the AI safety research landscape. Each node is equipped with a list of related papers.',
-		cover_root_description:
-			'AI safety is the interdisciplinary field dedicated to ensuring that artificial intelligence systems are designed, developed, and deployed in ways that align with human values, promote societal well-being, and minimize risks. As AI continues to evolve in capability and influence, the field addresses both immediate concerns, such as fairness, robustness, and transparency in current systems, and long-term challenges, including ensuring that more advanced systems\u2014such as artificial general intelligence (AGI)\u2014operate safely and beneficially.',
-		leftSidePanelInitOpen: true,
-		customSettings: {
-			titlesMode: {
-				horizontalSpacingAdditions: [0, 400],
-				widthAddition: 800,
-				horizontalSpacing: 900,
-				depthLimit: 3,
-				nodeGroupSpacingAdditions: [100, 100, 100, 100]
-			}
-		}
-	},
-	{
-		pathName: 'ai-safety-goals',
-		title: 'AI Safety Goals',
-		note: 'This map used LLMs to recursively break down AI safety into continuously smaller sub-goals. At each sub-goal, research papers are found to ground the model as it generates the next breakdown.',
-		cover_root_description:
-			'Mitigate the risk that people build an agentic AI system which results in the loss of human control, extinction or some other existential catastrophe.',
-		breakdownName: 'paper',
-		customSettings: {
-			defaultMode: {
-				nodeHeight: 2100
-			},
-			titlesMode: {
-				widthAddition: 500,
-				horizontalSpacing: 900,
-				horizontalSpacingAdditions: [0, 300],
-				nodeGroupSpacing: 120
-			}
-		}
-	},
-	{
 		pathName: 'fli-map',
 		title: "Future of Life's Map",
 		note: 'The data on this map was directly copied from the Future of Life Institute\'s <a class="pretty-link" href="https://futureoflife.org/valuealignmentmap/" target="_blank">Value Alignment Map</a>',
@@ -133,6 +96,43 @@ export const allTrees: TreeDefinition[] = [
 						charW: 8.7
 					}
 				]
+			}
+		}
+	},
+	{
+		pathName: 'ai-safety-goals',
+		title: 'AI Safety Goals',
+		note: 'This map used LLMs to recursively break down AI safety into continuously smaller sub-goals. At each sub-goal, research papers are found to ground the model as it generates the next breakdown.',
+		cover_root_description:
+			'Mitigate the risk that people build an agentic AI system which results in the loss of human control, extinction or some other existential catastrophe.',
+		breakdownName: 'paper',
+		customSettings: {
+			defaultMode: {
+				nodeHeight: 2100
+			},
+			titlesMode: {
+				widthAddition: 500,
+				horizontalSpacing: 900,
+				horizontalSpacingAdditions: [0, 300],
+				nodeGroupSpacing: 120
+			}
+		}
+	},
+	{
+		pathName: 'ai-safety-map',
+		title: 'AI Safety Map',
+		disable_expand_all: true,
+		note: 'This map used LLMs to map the AI safety research landscape. Each node is equipped with a list of related papers.',
+		cover_root_description:
+			'AI safety is the interdisciplinary field dedicated to ensuring that artificial intelligence systems are designed, developed, and deployed in ways that align with human values, promote societal well-being, and minimize risks. As AI continues to evolve in capability and influence, the field addresses both immediate concerns, such as fairness, robustness, and transparency in current systems, and long-term challenges, including ensuring that more advanced systems\u2014such as artificial general intelligence (AGI)\u2014operate safely and beneficially.',
+		leftSidePanelInitOpen: true,
+		customSettings: {
+			titlesMode: {
+				horizontalSpacingAdditions: [0, 400],
+				widthAddition: 800,
+				horizontalSpacing: 900,
+				depthLimit: 3,
+				nodeGroupSpacingAdditions: [100, 100, 100, 100]
 			}
 		}
 	}

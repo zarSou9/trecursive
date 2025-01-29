@@ -104,7 +104,7 @@ type CharSize = {
 type TreeDefinition = {
 	pathName: string;
 	title: string;
-	tree?: any;
+	fullTree?: any;
 	treeUrl?: string;
 	note?: string;
 	cover_root_description: string;
@@ -136,6 +136,7 @@ type CustomHorizontalTreeSettings = {
 	depthLimit?: number;
 	nodeGroupSpacingAdditions?: number[];
 	padding?: number;
+	rootNodeColor?: string;
 };
 
 type HorizontalTreeSettings = {
@@ -150,6 +151,7 @@ type HorizontalTreeSettings = {
 	padding: number;
 	depthLimit?: number;
 	nodeGroupSpacingAdditions?: number[];
+	rootNodeColor?: string;
 };
 
 type CustomVerticalTreeSettings = {

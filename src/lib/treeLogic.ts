@@ -116,6 +116,7 @@ function chooseBreakdowns(
 		for (let subNode of fullNode.breakdown.sub_nodes) {
 			chooseBreakdowns(subNode, selectedBreakdowns, breakdownMustHaveSubNodes, depth + 1);
 		}
+		// I can't just do all breakdowns because it loads way too slowly otherwise for no aparent reason
 		fullNode.otherBreakdowns = fullNode.breakdowns.filter((b: any) => b !== fullNode.breakdown);
 		delete fullNode.breakdowns;
 	}
@@ -151,10 +152,6 @@ function calculateAvgBranchingFactor(node: Node): number {
 
 	return totalNodes ? totalBranches / totalNodes : 0;
 }
-function getParentNode(nodeID: string, root: Node | undefined): Node | undefined {
-	if (nodeID === root?.id) return root;
-	return getNodeFromID(nodeID.slice(0, -2), root);
-}
 
 function isNodeEmpty(node: Node) {
 	return (
@@ -163,17 +160,6 @@ function isNodeEmpty(node: Node) {
 		!node.questions?.length &&
 		!node.papers?.length
 	);
-}
-
-function getAllParentIDs(nodeID: string | undefined): string[] {
-	if (!nodeID) return [];
-	const parents: string[] = [];
-	let currentID = nodeID;
-	while (currentID.length) {
-		parents.push(currentID);
-		currentID = currentID.slice(0, -2);
-	}
-	return parents;
 }
 
 function getNodeIdIdxs(nodeID: string, onlyNodeIds = true) {
@@ -195,6 +181,33 @@ function getNodeIdIdxs(nodeID: string, onlyNodeIds = true) {
 	return onlyNodeIds ? idxs.filter((_, i) => i % 2 != 0) : idxs;
 }
 
+function getParentID(nodeID: string) {
+	if (nodeID.length <= 2) return '';
+	return (
+		'0' +
+		getNodeIdIdxs(nodeID, false)
+			.slice(0, -2)
+			.map((idx) => (`${idx}`.length > 1 ? `.${idx}.` : `${idx}`))
+			.join('')
+	);
+}
+
+function getParentNode(nodeID: string, root: Node | undefined): Node | undefined {
+	if (nodeID === root?.id) return undefined;
+	return getNodeFromID(getParentID(nodeID), root);
+}
+
+function getAllParentIDs(nodeID: string | undefined): string[] {
+	if (!nodeID) return [];
+	const parents: string[] = [];
+	let currentID = nodeID;
+	while (currentID.length) {
+		parents.push(currentID);
+		currentID = getParentID(currentID);
+	}
+	return parents;
+}
+
 function getNodeFromID(nodeID: string | undefined, root: Node | undefined) {
 	if (!root || !nodeID) return;
 	let currentNode: Node = root;
@@ -204,10 +217,28 @@ function getNodeFromID(nodeID: string | undefined, root: Node | undefined) {
 	}
 	return currentNode;
 }
+function getFullNodeFromID(fullNodeID: string | undefined, root: any) {
+	if (!root || !fullNodeID) return;
+	let current = root;
+	const idxs = getNodeIdIdxs(fullNodeID, false);
+	for (let i = 0; i < idxs.length; i++) {
+		const idx = idxs[i];
+		if (i % 2 === 0) {
+			if (!current?.breakdowns?.length) return;
+			current = current.breakdowns[idx];
+		} else {
+			if (!current?.sub_nodes?.length) return;
+			current = current.sub_nodes[idx];
+		}
+	}
+	return current;
+}
 
 export {
 	positionTree,
+	getFullNodeFromID,
 	chooseBreakdowns,
+	getParentID,
 	getNodeFromID,
 	getNodeIdIdxs,
 	getAllCollapsed,

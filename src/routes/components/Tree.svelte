@@ -3,7 +3,7 @@
 		chooseBreakdowns,
 		getAllCollapsed,
 		getAllParentIDs,
-		getParentNode,
+		getFullNodeFromID,
 		isNodeEmpty,
 		positionTree
 	} from '$lib/treeLogic';
@@ -15,7 +15,7 @@
 		HashMap,
 		TitlePosNode,
 		TreeDefinition,
-		TitlePosLink
+		HorizontalTreeSettings
 	} from '$lib/types';
 	import { createLocalStore } from '$lib/createLocalStore';
 
@@ -23,7 +23,7 @@
 	import Node from './Node.svelte';
 	import InfoModal from '$lib/components/tree/InfoModal.svelte';
 	import InfiniteCanvas from './InfiniteCanvas.svelte';
-	import { positionHorizontalTree } from '$lib/horizontalTreeLogic';
+	import { getTitlePosNode, positionHorizontalTree } from '$lib/horizontalTreeLogic';
 	import { mergeWithDefaults, mixColors, sendTipOnce } from '$lib/utils';
 	import ToolTipItem from '$lib/components/general/ToolTipItem.svelte';
 	import { defaultSettings } from '$lib/allTrees';
@@ -32,20 +32,19 @@
 	import { fade } from 'svelte/transition';
 
 	const {
-		title,
 		pathName,
-		tree: fullTree,
+		fullTree,
 		note = '',
 		customSettings = {},
 		breakdownName = 'breakdown',
 		disable_expand_all,
 		leftSidePanelInitOpen
-	}: TreeDefinition = $props();
+	}: TreeDefinition & { fullTree: any } = $props();
 
 	const tipPopUp: Writable<string | false> = getContext('tipPopUpStore');
 	const isMobile: Writable<boolean> = getContext('isMobileStore');
 
-	let tree: NodeType | undefined = $state(undefined);
+	let defaultTree: NodeType | undefined = $state(undefined);
 
 	const settings = mergeWithDefaults(defaultSettings, customSettings);
 
@@ -54,6 +53,7 @@
 	let totalHeight = $state(0);
 
 	let titlePositionedNodes: TitlePosNode[] = $state([]);
+	let ogTitleWidth = 0;
 	let totalTitleWidth = $state(0);
 	let totalTitleHeight = $state(0);
 	let titlePosLinksShown: TitlePosNode | undefined = $state();
@@ -121,14 +121,14 @@
 	});
 
 	function updateDefaultPosNodes(centeredNodeID?: string, forceGoFull = false) {
-		if (!tree) return;
+		if (!defaultTree) return;
 		let prevCenteredPosNode;
 		if (centeredNodeID) {
 			prevCenteredPosNode = positionedNodes.find((pos) => pos.node.id === centeredNodeID);
 			if (!prevCenteredPosNode) return;
 		}
 		if (browser) localStorage.setItem(COLLAPSED_KEY, JSON.stringify(Array.from(collapsedNodes)));
-		const positionedResult = positionTree(tree, collapsedNodes, settings.defaultMode);
+		const positionedResult = positionTree(defaultTree, collapsedNodes, settings.defaultMode);
 
 		positionedNodes = positionedResult.positionedNodes;
 		totalHeight = positionedResult.totalHeight;
@@ -157,6 +157,7 @@
 		titlePositionedNodes = positionedResult.positionedNodes;
 		totalTitleHeight = positionedResult.totalHeight;
 		totalTitleWidth = positionedResult.totalWidth + settings.titlesMode.widthAddition;
+		ogTitleWidth = totalTitleWidth;
 
 		setTimeout(() => goFullIfOut(), 1);
 	}
@@ -165,7 +166,7 @@
 		selectBreakdown: undefined | { nodeID: string; breakdownID: string } = undefined
 	) {
 		if (selectBreakdown) $selectedBreakdowns[selectBreakdown.nodeID] = selectBreakdown.breakdownID;
-		tree = chooseBreakdowns(fullTree, $selectedBreakdowns);
+		defaultTree = chooseBreakdowns(fullTree, $selectedBreakdowns);
 		updateDefaultPosNodes(selectBreakdown?.nodeID);
 		if (selectBreakdown)
 			lastNavedNode = {
@@ -265,7 +266,7 @@
 			clearTimeout(useArrowsTipTimeout);
 			e.preventDefault();
 			if (!lastNavedNode.posNode) {
-				handleNavNode({ id: tree?.id });
+				handleNavNode({ id: fullTree?.id });
 				return;
 			}
 			const node = lastNavedNode.posNode.node;
@@ -281,7 +282,7 @@
 			}
 
 			try {
-				const lastParent = getParentNode(node.id, tree);
+				const lastParent = lastNavedNode.posNode.parent;
 				let lastNodeIdx = lastParent?.breakdown?.sub_nodes.findIndex(
 					(sub) => sub.id === lastNavedNode.posNode?.node.id
 				);
@@ -344,11 +345,10 @@
 							handleNavNode({ id: node.id });
 						}
 					} else {
-						if (lastNavedNode.posNode.node.id === tree?.id || !lastParent) {
-							handleNavNode({ id: tree?.id });
-						} else if (lastNavedNode.breakdownSection) {
+						if (!lastParent) throw 'same';
+						if (lastNavedNode.breakdownSection) {
 							handleNavNode({ id: node.id });
-						} else if (lastParent) {
+						} else {
 							handleNavNode({
 								id: lastParent.id,
 								sub: node.id,
@@ -385,6 +385,59 @@
 			else clearTimeout(titleModeTipTimeout);
 			return !v;
 		});
+	}
+
+	function activateSubTree(titlePosNode: TitlePosNode) {
+		if (settings.titlesMode.depthLimit !== titlePosNode.depth) return;
+		const subTreeSubNode = titlePositionedNodes.findLast(
+			(tp) => tp.depth > settings.titlesMode.depthLimit!
+		);
+		if (subTreeSubNode) {
+			const subTreeRootID = getAllParentIDs(subTreeSubNode.node.id).reverse()[titlePosNode.depth];
+			if (subTreeRootID === titlePosNode.node.id) return;
+			const prevSubTreeRoot = $state(
+				titlePositionedNodes.find((pn) => pn.node.id === subTreeRootID)
+			);
+			if (!prevSubTreeRoot?.children) return;
+			prevSubTreeRoot.children = undefined;
+			titlePositionedNodes = titlePositionedNodes.filter((tp) => tp.depth <= titlePosNode.depth);
+		}
+		const sets: HorizontalTreeSettings = {
+			...settings.titlesMode,
+			avgTextCharSizes: settings.titlesMode.avgTextCharSizes.slice(titlePosNode.depth),
+			horizontalSpacingAdditions: settings.titlesMode.horizontalSpacingAdditions.slice(
+				titlePosNode.depth
+			),
+			nodeGroupSpacingAdditions: settings.titlesMode.nodeGroupSpacingAdditions?.slice(
+				titlePosNode.depth
+			),
+			depthLimit: undefined,
+			rootNodeColor: titlePosNode.color
+		};
+		const positionedResult = positionHorizontalTree(
+			chooseBreakdowns(
+				getFullNodeFromID(titlePosNode.node.id, fullTree),
+				$selectedBreakdowns,
+				true
+			),
+			sets
+		);
+
+		totalTitleWidth = ogTitleWidth + positionedResult.totalWidth;
+
+		const mainTop = titlePosNode.top || 0;
+		const subRootTop = positionedResult.positionedNodes[0].top || 0;
+		const topOffset = Math.max(
+			0,
+			Math.min(totalTitleHeight - positionedResult.totalHeight, mainTop - subRootTop)
+		);
+		for (const subTitlePosNode of positionedResult.positionedNodes) {
+			subTitlePosNode.top = topOffset + (subTitlePosNode.top || 0);
+			subTitlePosNode.left = (titlePosNode.left || 0) + (subTitlePosNode.left || 0);
+			subTitlePosNode.depth += titlePosNode.depth;
+		}
+		titlePositionedNodes.push(...positionedResult.positionedNodes.slice(1));
+		titlePosNode.children = positionedResult.positionedNodes[0].children;
 	}
 
 	function getTitlePosNodeFontSize(depth: number) {
@@ -432,7 +485,7 @@
 								key: 'c',
 								putAfter: true,
 								func: () => {
-									if (tree) {
+									if (positionedNodes.length) {
 										collapsedNodes = getAllCollapsed(fullTree);
 										updateDefaultPosNodes(undefined, true);
 									}
@@ -447,7 +500,7 @@
 											putAfter: true,
 											key: 'c',
 											func: () => {
-												if (tree) {
+												if (positionedNodes.length) {
 													collapsedNodes.clear();
 													updateDefaultPosNodes(undefined, true);
 												}
@@ -581,9 +634,15 @@
 												clearTimeout(hidePosLinksTimeout);
 												titlePosLinksShown = titlePosNode;
 											}
+											activateSubTree(titlePosNode);
 										}}
 										onHide={() => {
-											hidePosLinksTimeout = setTimeout(() => (titlePosLinksShown = undefined), 20);
+											if (titlePosNode.posLinks) {
+												hidePosLinksTimeout = setTimeout(
+													() => (titlePosLinksShown = undefined),
+													20
+												);
+											}
 										}}
 										delay={170}
 										style="font-size: {toolTipFontSize}px;
@@ -652,7 +711,7 @@
 								<Node
 									node={posNode.node}
 									setDescriptionDivHeight={(h) => (posNode.descriptionDivHeight = h)}
-									note={posNode.node === tree && note}
+									note={!posNode.parent && note}
 									setMiniMiddles={(m) => (posNode.miniSubMiddles = m)}
 									setMiniDivHeight={(h) => (posNode.miniDivHeight = h)}
 									onDescriptionClick={() => handleNavNode({ id: posNode.node.id })}
@@ -661,7 +720,7 @@
 											if (!isNodeEmpty(miniNode)) handleNavNode({ id: miniNode.id });
 										} else {
 											collapsedNodes.add(miniNode.id);
-											updateDefaultPosNodes(getParentNode(miniNode.id, tree)?.id);
+											updateDefaultPosNodes(posNode.node.id);
 										}
 									}}
 									goalHeight={settings.defaultMode.nodeHeight}

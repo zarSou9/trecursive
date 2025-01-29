@@ -41,7 +41,8 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 		horizontalSpacingAdditions,
 		nodeGroupSpacingAdditions,
 		baseColors,
-		depthLimit
+		depthLimit,
+		rootNodeColor
 	} = settings;
 	const textSizeSpacingFactor = 1.4;
 
@@ -49,7 +50,7 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 	let totalHeight = 0;
 	let totalWidth = 0;
 	let positionedNodes: TitlePosNode[] = [];
-	tree = reorderTree(limitTreeDepth(JSON.parse(JSON.stringify(tree)), depthLimit));
+	tree = reorderTree(limitTreeDepth(tree, depthLimit));
 
 	const treePosNode = positionEndNodes(tree);
 	setNonEndTops(treePosNode);
@@ -117,7 +118,7 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 		depth = 0,
 		parentSubNodes?: Node[],
 		firstFound = { v: false },
-		color: string | undefined = undefined
+		color: string | undefined = rootNodeColor
 	) {
 		const posNode: TitlePosNode = {
 			depth: depth,
@@ -223,4 +224,4 @@ function positionHorizontalTree(tree: Node, settings: HorizontalTreeSettings) {
 	}
 }
 
-export { positionHorizontalTree };
+export { positionHorizontalTree, getTitlePosNode };
