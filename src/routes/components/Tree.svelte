@@ -587,7 +587,7 @@
 										}}
 										delay={170}
 										style="font-size: {toolTipFontSize}px;
-										max-width: clamp({toolTipFontSize < 18 ? 300 : 500}px, 83%, {toolTipFontSize < 26 ? 500 : 900}px);"
+										max-width: clamp({toolTipFontSize < 18 ? 300 : 500}px, 83%, {toolTipFontSize < 18 ? 500 : 900}px);"
 									>
 										<button
 											onclick={() => onTitleClick(titlePosNode)}
