@@ -2,12 +2,12 @@
 	import Search from '$lib/icons/Search.svelte';
 	import { clickOutside } from '$lib/utils';
 	import { getContext } from 'svelte';
-	import { slide } from 'svelte/transition';
 	import { twMerge } from 'tailwind-merge';
+	import type { Snippet } from 'svelte';
 
 	interface Props {
 		value: string;
-		children?: import('svelte').Snippet;
+		children?: Snippet;
 		collapsedWidth?: string;
 		expandedWidth?: string;
 		className?: string;

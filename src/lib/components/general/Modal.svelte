@@ -2,11 +2,13 @@
 	import Cross from '$lib/icons/Cross.svelte';
 	import { clickOutside } from '$lib/utils';
 	import { fade } from 'svelte/transition';
+	import type { Snippet } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
+	import type { HTMLAttributes } from 'svelte/elements';
 
-	interface Props {
+	interface Props extends HTMLAttributes<HTMLDivElement> {
 		onClose: () => void;
-		children: import('svelte').Snippet;
+		children: Snippet;
 		closeOnOutsideClick?: boolean;
 		useCross?: boolean;
 		className?: string;
@@ -19,7 +21,8 @@
 		closeOnOutsideClick = false,
 		className = '',
 		useCross = true,
-		useAlt = false
+		useAlt = false,
+		...rest
 	}: Props = $props();
 
 	function close(e: MouseEvent) {
@@ -37,13 +40,14 @@
 
 <div
 	onkeydown={handleKeyDown}
-	class="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-40 flex justify-center items-center z-[4] backdrop-blur-sm"
+	class="fixed left-0 top-0 z-[4] flex h-screen w-screen items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm"
 	role="presentation"
 	transition:fade={{ duration: 120 }}
+	{...rest}
 >
 	<div
 		class={twMerge(
-			'relative flex flex-col bg-[#2a2a2a] rounded-md p-6 pt-5 items-center w-[90%] max-w-[500px] shadow-lg',
+			'relative flex w-[90%] max-w-[500px] flex-col items-center rounded-md bg-[#2a2a2a] p-6 pt-5 shadow-lg',
 			useAlt ? 'border-b-[1px] border-l-[1px] border-[#747474] bg-[#282a31fc]' : '',
 			className
 		)}
@@ -53,7 +57,7 @@
 		{#if useCross}
 			<button
 				onclick={close}
-				class="flex absolute top-2 right-2 hover:bg-[#3a3a3a] rounded-full w-8 h-8 items-center justify-center transition-colors"
+				class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-[#3a3a3a]"
 			>
 				<Cross size="16px" color="#c3c3c3" />
 			</button>

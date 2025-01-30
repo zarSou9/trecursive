@@ -23,8 +23,8 @@
 	import Node from './Node.svelte';
 	import InfoModal from '$lib/components/tree/InfoModal.svelte';
 	import InfiniteCanvas from './InfiniteCanvas.svelte';
-	import { getTitlePosNode, positionHorizontalTree } from '$lib/horizontalTreeLogic';
-	import { mergeWithDefaults, mixColors, sendTipOnce } from '$lib/utils';
+	import { positionHorizontalTree } from '$lib/horizontalTreeLogic';
+	import { mergeWithDefaults, mixColors } from '$lib/utils';
 	import ToolTipItem from '$lib/components/general/ToolTipItem.svelte';
 	import { defaultSettings } from '$lib/allTrees';
 	import { SvelteSet } from 'svelte/reactivity';
@@ -41,7 +41,6 @@
 		leftSidePanelInitOpen
 	}: TreeDefinition & { fullTree: any } = $props();
 
-	const tipPopUp: Writable<string | false> = getContext('tipPopUpStore');
 	const isMobile: Writable<boolean> = getContext('isMobileStore');
 
 	let defaultTree: NodeType | undefined = $state(undefined);
@@ -61,7 +60,6 @@
 	let hidePosLinksTimeout: undefined | number = $state(undefined);
 	let disableArrowNav = false;
 
-	let openModal = $state(() => {});
 	let containerDiv: HTMLDivElement | undefined = $state();
 	let navToPos:
 		| ((
@@ -459,13 +457,10 @@
 		toggleTitlesMode();
 		await tick();
 		handleNavNode({ id: posNode.node.id, duration: 0 });
-		sendTipOnce('Press t to go back', tipPopUp, 500);
 	}
 </script>
 
 <svelte:window onkeydown={handleKeyDown} onmousemove={() => (subHighlighted = '')} />
-
-<InfoModal bind:open={openModal} />
 
 <div class="relative size-full">
 	{#key $titlesMode}
@@ -491,7 +486,7 @@
 									}
 								}
 							},
-							...(disable_expand_all
+							...(disable_expand_all || $isMobile
 								? []
 								: [
 										{
@@ -511,17 +506,8 @@
 			]}
 			bind:moveByOffset
 			bind:navToPos
-			oninfo={openModal}
+			{InfoModal}
 			coordsKey={pathName + $titlesMode}
-			onModalsClosed={() => {
-				if ($isMobile) return;
-				useArrowsTipTimeout = sendTipOnce(
-					'TIP: Use arrow keys to navigate the tree',
-					tipPopUp,
-					2800
-				);
-				titleModeTipTimeout = sendTipOnce('TIP: Press t to toggle titles view', tipPopUp, 10000);
-			}}
 		>
 			{#if $titlesMode}
 				<div style="padding: {settings.titlesMode.padding}px">

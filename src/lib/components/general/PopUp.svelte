@@ -3,8 +3,10 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 	import { fly } from 'svelte/transition';
 	import { twMerge } from 'tailwind-merge';
+	import type { Snippet } from 'svelte';
+
 	interface Props extends HTMLAttributes<HTMLDivElement> {
-		children?: import('svelte').Snippet;
+		children?: Snippet;
 		position?: 'top-right' | 'bottom-left' | 'bottom-middle';
 		className?: string;
 	}
@@ -21,10 +23,10 @@
 		easing: quintOut
 	}}
 	class={twMerge(
-		'z-[400] fixed',
+		'fixed z-[400]',
 		className,
 		position === 'top-right'
-			? 'top-[20px] right-[20px]'
+			? 'right-[20px] top-[20px]'
 			: position === 'bottom-left'
 				? 'bottom-[30px] left-[30px]'
 				: 'bottom-[30px] left-[50%] -translate-x-1/2'

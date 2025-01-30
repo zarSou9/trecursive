@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getContext, onMount, setContext } from 'svelte';
+	import type { Component, Snippet } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
 	import { createLocalStore } from '$lib/createLocalStore';
@@ -18,9 +19,9 @@
 	};
 
 	interface Props {
-		oninfo: () => void;
+		InfoModal: Component<{ open: () => void; onClose?: () => void }>;
 		goFullIfOut?: (forceGoFull?: boolean) => void;
-		children?: import('svelte').Snippet;
+		children?: Snippet;
 		coordsKey: string | undefined;
 		navToPos?: (
 			left: number,
@@ -38,7 +39,7 @@
 	}
 
 	let {
-		oninfo,
+		InfoModal,
 		goFullIfOut = $bindable(),
 		children,
 		additionalCommands,
@@ -94,6 +95,7 @@
 	let altPressed = false;
 	let grabbed = $state(false);
 	let rightAfterFirstTime = false;
+	let openInfoModal = $state(() => {});
 	let dropdownItems: DropDownItem[] = $derived([
 		...(additionalCommands?.filter((v) => !v.putAfter) || []),
 		{ title: 'Full View', key: 'f', func: goFull },
@@ -107,7 +109,7 @@
 		...($isMobile
 			? []
 			: [
-					{ title: 'How To Use', func: oninfo },
+					{ title: 'How To Use', func: openInfoModal },
 					{
 						title: 'Settings',
 						func: () => (settingsModalOpen = true)
@@ -179,13 +181,15 @@
 		moveToPos(newX, newY, newZ, dur);
 	};
 
-	let mouseSettingsOpen = $state(writable(false));
+	let inputSettingsOpen = $state(false);
+	let isFirstTime = $state(writable(false));
 	const isUsingMouse = createLocalStore('isUsingMouse', false);
 	setContext('isUsingMouse', isUsingMouse);
 
 	onMount(() => {
 		usingCanvasTouch.set(true);
-		mouseSettingsOpen = createLocalStore('mouseSettingsOpen', true);
+		isFirstTime = createLocalStore('isFirstTime', true);
+		if ($isFirstTime) openInfoModal();
 
 		viewPortResizeObserver = new ResizeObserver(updateOnResize);
 		canvasResizeObserver = new ResizeObserver(updateOnResize);
@@ -946,11 +950,18 @@
 	}
 </script>
 
-{#if settingsModalOpen}
+<InfoModal
+	bind:open={openInfoModal}
+	onClose={() => {
+		if ($isFirstTime) inputSettingsOpen = true;
+	}}
+/>
+
+{#if settingsModalOpen && !$isMobile}
 	<CanvasSettings {isUsingMouse} onClose={() => (settingsModalOpen = false)} />
 {/if}
 
-{#if $mouseSettingsOpen && !$isMobile}
+{#if inputSettingsOpen && !$isMobile}
 	<PopUp position="bottom-middle">
 		<div
 			class="flex flex-col items-center gap-4 rounded-xl border border-[#2a3444] bg-[#121921] p-6 text-gray-200 shadow-lg"
@@ -962,8 +973,9 @@
 						? 'bg-[#2a3444] text-white'
 						: 'bg-[#202a39] text-gray-300 hover:bg-[#2a3444] hover:text-white'}"
 					onclick={() => {
-						mouseSettingsOpen.set(false);
+						isFirstTime.set(false);
 						isUsingMouse.set(false);
+						inputSettingsOpen = false;
 						onModalsClosed();
 					}}
 				>
@@ -974,8 +986,9 @@
 						? 'bg-[#2a3444] text-white'
 						: 'bg-[#202a39] text-gray-300 hover:bg-[#2a3444] hover:text-white'}"
 					onclick={() => {
-						mouseSettingsOpen.set(false);
+						isFirstTime.set(false);
 						isUsingMouse.set(true);
+						inputSettingsOpen = false;
 						onModalsClosed();
 					}}
 				>

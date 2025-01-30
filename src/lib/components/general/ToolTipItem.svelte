@@ -2,11 +2,12 @@
 	import { onMount } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import { twMerge } from 'tailwind-merge';
+	import type { Snippet } from 'svelte';
 
 	interface Props extends HTMLAttributes<HTMLDivElement> {
 		tooltip?: string;
 		className?: string;
-		children?: import('svelte').Snippet;
+		children?: Snippet;
 		tooltipClassName?: string;
 		containerClassName?: string;
 		toolTipContainerClassName?: string;

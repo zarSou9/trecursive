@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Cross from '$lib/icons/Cross.svelte';
+	import Modal from '$lib/components/general/Modal.svelte';
 
 	interface Props {
 		open: () => void;
@@ -7,88 +7,53 @@
 	}
 
 	let { open = $bindable(), onClose }: Props = $props();
-
 	open = () => {
 		modalVisible = true;
 	};
 
 	let modalVisible = $state(false);
-
-	function close() {
-		modalVisible = false;
-		onClose?.();
-	}
-
-	function handleKeyDown(e: KeyboardEvent) {
-		e.stopPropagation();
-		if (e.key === 'Escape') close();
-	}
 </script>
 
 {#if modalVisible}
-	<div
-		onwheel={(e) => e.preventDefault()}
-		onkeydown={handleKeyDown}
-		class="modal-background backdrop-blur-sm"
-		onclick={close}
-		role="presentation"
+	<Modal
+		onClose={() => {
+			modalVisible = false;
+			onClose?.();
+		}}
+		useCross
+		closeOnOutsideClick
+		useAlt
+		onwheel={(e) => {
+			e.preventDefault();
+		}}
 	>
-		<div
-			class="modal-content flex flex-col items-center rounded-md border-b-[1px] border-l-[1px] border-[#747474] bg-[#282a31fc] px-6 pb-7 pt-4 text-[#e0e0e0]"
-			onclick={(e) => e.stopPropagation()}
-			role="presentation"
-		>
-			<button
-				onclick={close}
-				class="absolute right-[6px] top-[6px] flex size-[24px] items-center justify-center rounded-md transition-colors hover:bg-[#5f5f5f4f]"
-			>
-				<Cross size="16px" color="#c3c3c3" />
-			</button>
-			<h2 class="text-[24px] font-semibold">How To Use</h2>
-			<div>
-				<ul class="mt-4 list-disc space-y-4 pl-[25px]">
-					<li>
-						<p class="font-medium">Navigate Tree</p>
-						<ul class="mt-2 list-disc space-y-2 pl-[25px]">
-							<li>Arrow Keys</li>
-						</ul>
-					</li>
-					<li>
-						<p class="font-medium">Pan</p>
-						<ul class="mt-2 list-disc space-y-2 pl-[25px]">
-							<li>Two fingers on trackpad</li>
-							<li>Click and drag (<kbd>alt</kbd> to disable)</li>
-							<li><kbd>WASD</kbd></li>
-						</ul>
-					</li>
-					<li>
-						<p class="font-medium">Zoom</p>
-						<ul class="mt-2 list-disc space-y-2 pl-[25px]">
-							<li>Ctrl + Scroll</li>
-							<li><kbd>-</kbd> | <kbd>+</kbd></li>
-						</ul>
-					</li>
-				</ul>
+		<div class="flex flex-col items-center pb-5 pt-3 text-[#e0e0e0]">
+			<h2 class="mb-6 text-[24px] font-semibold">How To Use</h2>
+
+			<div class="flex w-full max-w-[400px] flex-col gap-6">
+				<div>
+					<h3 class="mb-2 text-[18px] font-medium">Navigation Modes</h3>
+					<p class="text-[#c3c3c3]">
+						Switch between Default and Titles mode using the dropdown menu in the top right or press <span
+							class="rounded bg-[#3a3a3a] px-1.5 py-0.5">T</span
+						>
+					</p>
+				</div>
+
+				<div>
+					<h3 class="mb-2 text-[18px] font-medium">Default Mode</h3>
+					<p class="text-[#c3c3c3]">Navigate the tree by:</p>
+					<ul class="ml-5 mt-1 list-disc text-[#c3c3c3]">
+						<li>Arrow keys</li>
+						<li>Clicking on nodes</li>
+					</ul>
+				</div>
+
+				<div>
+					<h3 class="mb-2 text-[18px] font-medium">Titles Mode</h3>
+					<p class="text-[#c3c3c3]">Hover over titles to view their descriptions</p>
+				</div>
 			</div>
 		</div>
-	</div>
+	</Modal>
 {/if}
-
-<style>
-	.modal-background {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		background-color: #00000062;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		z-index: 300;
-	}
-
-	.modal-content {
-		position: relative;
-	}
-</style>

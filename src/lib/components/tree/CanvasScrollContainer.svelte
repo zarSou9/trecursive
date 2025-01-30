@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
+	import type { Snippet } from 'svelte';
 
 	interface Props extends HTMLAttributes<HTMLDivElement> {
 		className?: string;
 		styleName?: string;
 		element?: HTMLDivElement;
-		children?: import('svelte').Snippet;
+		children?: Snippet;
 	}
 
 	let {
