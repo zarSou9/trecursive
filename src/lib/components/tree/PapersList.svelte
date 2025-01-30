@@ -65,15 +65,17 @@
 							href={paper.url}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="pr-[20px] text-[15px] font-[450] text-[#e0e0e0] hover:underline"
+							class="pr-[20px] text-[17px] font-medium leading-snug tracking-tight text-[#e0e0e0] hover:underline"
 						>
 							{paper.title}
 						</a>
 					</div>
-					<div class="mt-2 flex flex-wrap items-center gap-[18px] text-[#adadad]">
+					<div
+						class="mt-3 flex flex-wrap items-center gap-[18px] text-[13px] font-medium tracking-wide text-[#adadad]"
+					>
 						{#if paper.published_date !== undefined}
 							<ToolTipItem tooltip="Date Published<br />{paper.published_date.split('T')[0]}">
-								<div class="whitespace-nowrap text-[12px] font-medium">
+								<div class="whitespace-nowrap">
 									{formatDate(paper.published_date)}
 								</div>
 							</ToolTipItem>
@@ -81,7 +83,7 @@
 						{#if paper.citation_count !== undefined}
 							<div class="flex items-center space-x-2">
 								{#if paper.citation_count !== undefined}
-									<div class="flex items-center text-[12px] font-medium">
+									<div class="flex items-center">
 										{paper.citation_count} Citations
 									</div>
 								{/if}
@@ -93,7 +95,7 @@
 									href={new URL(paper.url).origin}
 									rel="noopener noreferrer"
 									target="_blank"
-									class="whitespace-nowrap text-[12px] font-medium"
+									class="whitespace-nowrap"
 								>
 									{getSourceTitle(paper.url)}
 								</a>
@@ -102,7 +104,7 @@
 						{#if paper.summary && paper.abstract}
 							<button
 								onclick={() => (abstractsShown[paper.url] = !abstractsShown[paper.url])}
-								class="flex items-center fill-[#adadad] text-[12px] font-medium"
+								class="flex items-center fill-[#adadad]"
 							>
 								Abstract
 								<div
@@ -120,14 +122,14 @@
 							<div
 								class="w-full rounded-lg border border-[#3a3a3a] bg-[#2a2a2a] px-4 py-3 shadow-md"
 							>
-								<div class="line-clamp-[18] text-[13px] text-[#d0d0d0]">
+								<div class="line-clamp-[18] text-[14px] leading-relaxed text-[#d0d0d0]">
 									{paper.abstract}
 								</div>
 							</div>
 						</div>
 					{/if}
 					<div class="mt-[15px] flex">
-						<div class="mr-auto space-y-[18px] text-[13.5px] text-[#d0d0d0]">
+						<div class="mr-auto space-y-[18px] text-[14px] leading-relaxed text-[#d0d0d0]">
 							{paper.summary}
 						</div>
 					</div>

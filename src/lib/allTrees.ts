@@ -3,7 +3,7 @@ import type { TreeDefinition, TreeSettings } from '$lib/types';
 // (textSize / charW) = 2.05 - oops, TO DO: Only set the textSize and do calculation elseware
 export const defaultSettings: TreeSettings = {
 	defaultMode: {
-		nodeWidth: 2000,
+		nodeWidth: 2600,
 		nodeHeight: 1400,
 		verticalSpacing: 130,
 		siblingNodeSpacing: 500,
@@ -57,6 +57,7 @@ export const defaultSettings: TreeSettings = {
 export const allTrees: TreeDefinition[] = [
 	{
 		pathName: 'fli-map',
+		disable_expand_all: true,
 		title: "Future of Life's Map",
 		note: 'The data on this map was directly copied from the Future of Life Institute\'s <a class="pretty-link" href="https://futureoflife.org/valuealignmentmap/" target="_blank">Value Alignment Map</a>',
 		cover_root_description:

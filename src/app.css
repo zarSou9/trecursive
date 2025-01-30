@@ -27,6 +27,18 @@ body {
 	overscroll-behavior: none;
 }
 
+.text-primary {
+	color: var(--text-primary);
+}
+
+.text-secondary {
+	color: var(--text-secondary);
+}
+
+.text-tertiary {
+	color: var(--text-tertiary);
+}
+
 .link {
 	text-decoration: underline;
 }

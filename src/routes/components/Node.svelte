@@ -25,7 +25,7 @@
 		setMiniMiddles: (m: MiniMiddle[]) => void;
 		setMiniDivHeight: (h: number) => void;
 		nodeAction: Writable<null | string>;
-		onDescriptionClick: () => void;
+		handleNavNode: (nav: { id: string; breakdownSection?: boolean; leftPanel?: boolean }) => void;
 		subHighlighted?: string;
 		breakdownName: string;
 		goalHeight: number;
@@ -52,7 +52,7 @@
 		setMiniMiddles,
 		setMiniDivHeight,
 		nodeAction,
-		onDescriptionClick,
+		handleNavNode,
 		subHighlighted = '',
 		goalHeight,
 		note = false,
@@ -145,12 +145,12 @@
 	<button
 		{onclick}
 		aria-label="Collapse questions"
-		class="absolute top-[-13px] z-10 rounded-full p-3 outline-none transition-all hover:bg-[#bbbbbb1c] group-hover:opacity-100 {open
+		class="absolute top-[-13px] z-10 rounded-full p-3 outline-none transition-all hover:bg-[#535e6f96] group-hover:opacity-100 {open
 			? 'opacity-0'
-			: 'rotate-180 bg-[#bbbbbb13]'} {right ? 'right-[-13px]' : 'left-[-13px]'}"
+			: 'rotate-180 bg-[#535e6f55]'} {right ? 'right-[-13px]' : 'left-[-13px]'}"
 	>
 		<div
-			class="relative top-[1px] size-[9px] border-t-[1.4px] border-neutral-500 transition-colors {right
+			class="relative top-[1px] size-[9px] border-t-[1.4px] border-[#9b9b9b] transition-colors {right
 				? 'right-[1px] rounded-tr-sm border-r-[1.4px]'
 				: 'left-[1px] rounded-tl-sm border-l-[1.4px]'}"
 		></div>
@@ -158,7 +158,7 @@
 {/snippet}
 
 {#snippet paperMetaData(paper: Paper, showLink = false)}
-	<div class="mt-[5px] flex items-center gap-[10px] text-[14px] text-gray-400">
+	<div class="mt-3 flex items-center gap-[10px] text-[14px] text-gray-400">
 		<button
 			onclick={() => setAbstractShown(!abstractShown)}
 			class="flex items-center fill-[#adadad]"
@@ -187,8 +187,8 @@
 	</div>
 	{#if abstractShown}
 		<div transition:slide={{ duration: 150 }} class="mt-3 flex">
-			<div class="w-full rounded-lg border border-[#3a3a3a] bg-[#292929] p-3 shadow-md">
-				<div class="text-[13.5px] text-[#d0d0d0]">
+			<div class="w-full rounded-lg border border-[#3a3a3a] bg-[#2b2b2b] px-4 py-3 shadow-md">
+				<div class="text-[14.5px] leading-relaxed text-white/75">
 					{paper.abstract}
 				</div>
 			</div>
@@ -212,20 +212,23 @@
 					{@render collapser(() => (leftPanelOpen = !leftPanelOpen), leftPanelOpen)}
 					{#if leftPanelOpen}
 						<CanvasScrollContainer
-							className="rounded-[30px] max-h-[470px] bg-[#191919] {node.papers ? '' : 'px-8 py-6'}"
+							className="rounded-[30px] max-h-[470px] bg-[#191919] {node.papers ? '' : 'px-8 py-7'}"
+							onclick={() => handleNavNode({ id: node.id, leftPanel: true })}
 						>
 							{#if node.papers}
 								<p class="header mb-5 ml-8 mt-6">Related Papers</p>
 								<BreakLine />
 								<PapersList papers={node.papers} includeSource />
 							{:else if node.questions}
-								<h3 class="header">Open Research Questions</h3>
-								<div class="mt-5 flex flex-col gap-8">
+								<h3 class="header mb-6">Open Research Questions</h3>
+								<div class="flex flex-col gap-6">
 									{#each node.questions as question}
-										<div class="rounded-lg bg-[#212121] p-4">
-											<p class="text-[14px] text-[#e0e0e0] sm:text-[15px]">{question.question}</p>
+										<div
+											class="rounded-xl border border-[#3a3a3a] bg-[#1d1d1d] px-5 py-4 shadow-md transition-colors"
+										>
+											<p class="text-[15px] leading-relaxed text-[#e8e8e8]">{question.question}</p>
 											{#if question.context}
-												<Note className="mt-3">{question.context}</Note>
+												<Note className="mt-4">{question.context}</Note>
 											{/if}
 										</div>
 									{/each}
@@ -242,17 +245,20 @@
 					.breakdown?.explanation || node.breakdown?.paper
 					? 'mb-8 overflow-visible'
 					: 'mb-1'}"
-				onclick={onDescriptionClick}
+				onclick={() => handleNavNode({ id: node.id })}
 			>
-				<p class="header">{node.title}</p>
-				<p class="mt-4 text-[14px] sm:text-[16px]">
+				<h2 class="header">{node.title}</h2>
+				<div class="description mt-4">
 					{#if note}
-						<em class="block pb-3 text-[13px] text-[#8b8b8b] [&>a]:text-[#829dbb]">{@html note}</em>
+						<em
+							class="mb-4 block text-[14.5px] italic leading-relaxed text-white/60 [&>a]:text-[#829dbb] [&>a]:no-underline hover:[&>a]:underline"
+							>{@html note}</em
+						>
 					{/if}
 					{@html addPrettyLinks(
 						(node.description || node.mini_description || '').replaceAll('\n', '<br>')
 					)}
-				</p>
+				</div>
 			</CanvasScrollContainer>
 
 			{#if node.otherBreakdowns?.length}
@@ -266,15 +272,17 @@
 						{#if breakdownResults?.length}
 							{#each breakdownResults as breakdown}
 								<button
-									class="m-2 rounded px-2 py-1.5 text-left text-[13px] text-gray-300 transition-colors hover:bg-[#222222]"
+									class="m-3 rounded-lg px-3 py-2 text-left text-[14.5px] text-gray-300 transition-colors hover:bg-[#2a2a2a]"
 									onclick={() => {
 										loadTree({ nodeID: node.id, breakdownID: breakdown.id });
 										searchExpanded = false;
 									}}
 								>
-									<div class="font-medium">{breakdown.title || breakdown.paper?.title}</div>
+									<div class="text-[15.5px] font-medium text-gray-200">
+										{breakdown.title || breakdown.paper?.title}
+									</div>
 									{#if breakdown.paper && (breakdown.paper.published_date || breakdown.paper.citation_count)}
-										<div class="mt-1 flex items-center gap-2 text-[12px] text-gray-500">
+										<div class="mt-2 flex items-center gap-2.5 text-[13.5px] text-gray-500">
 											{#if breakdown.paper.published_date}
 												<span>{formatDate(breakdown.paper.published_date)}</span>
 											{/if}
@@ -286,21 +294,22 @@
 											{/if}
 										</div>
 									{/if}
-									<p class="mt-1.5 line-clamp-6 text-[12px] text-gray-400">
+									<p class="mt-2 line-clamp-6 text-[14px] leading-relaxed text-gray-400">
 										{breakdown.explanation || breakdown.paper?.abstract}
 									</p>
 								</button>
-								<div class="h-[.5px] bg-[#606060]"></div>
+								<div class="mx-3 h-[.5px] bg-[#404040]"></div>
 							{/each}
 						{:else}
-							<div class="px-2 py-3 text-[13px] text-gray-400">No results found</div>
+							<div class="px-6 py-5 text-[14.5px] text-gray-400">No results found</div>
 						{/if}
 					</CanvasScrollContainer>
 				</SearchDropdown>
 			{/if}
 			{#if node.breakdown?.explanation || node.breakdown?.paper}
 				<CanvasScrollContainer
-					className="relative max-w-[700px] rounded-[30px] bg-[#212121] px-8 py-6"
+					className="relative max-w-[700px] rounded-[30px] bg-[#212121] px-8 py-7"
+					onclick={() => handleNavNode({ id: node.id, breakdownSection: true })}
 				>
 					<div class="">
 						{#if node.breakdown.references}
@@ -328,11 +337,7 @@
 								{@render paperMetaData(node.breakdown.paper, true)}
 							{:else}
 								<div>
-									<a
-										target="_blank"
-										href={node.breakdown.paper.url}
-										class="link-alt text-[16px] font-medium sm:text-[19px]"
-									>
+									<a target="_blank" href={node.breakdown.paper.url} class="link-alt header">
 										{node.breakdown.paper.title}
 									</a>
 									{@render paperMetaData(node.breakdown.paper)}
@@ -342,7 +347,7 @@
 							<p class="header">{node.breakdown.title || 'Plan'}</p>
 						{/if}
 						{#if node.breakdown.explanation}
-							<p class="mt-3 text-[14px] sm:text-[16px]">
+							<p class="description mt-4">
 								{@html textToHTML(node.breakdown.explanation)}
 							</p>
 						{/if}
@@ -355,24 +360,23 @@
 		<div class="flex w-full justify-center">
 			<div
 				bind:clientHeight={miniDivHeight}
-				style="max-width: {node.breakdown.sub_nodes.length * 420}px;"
-				class="mt-14 grid h-fit grid-flow-col gap-9"
+				style="max-width: {node.breakdown.sub_nodes.length * 450}px;"
+				class="mt-14 grid h-fit grid-flow-col gap-14"
 			>
 				{#each node.breakdown.sub_nodes as subNode}
 					<button
 						bind:this={miniDivs[subNode.id]}
-						disabled={isNodeEmpty(subNode)}
+						disabled={isNodeEmpty(subNode) && collapsedNodes.has(subNode.id)}
 						onclick={() => onMiniClick(subNode)}
-						class="flex flex-col items-start overflow-hidden rounded-[25px] border-transparent bg-[#212121] px-6 text-left outline-none transition-colors
+						class="flex flex-col items-start overflow-hidden rounded-[25px] border-transparent bg-[#212121] px-[27px] text-left outline-none transition-colors
 						{collapsedNodes.has(subNode.id)
-							? `border-b-[2px] py-[20px] ${isNodeEmpty(subNode) ? '' : 'hover:border-b-neutral-400'}`
-							: 'border-y-[2px] pb-[20px] pt-[18px] hover:border-t-neutral-400'}
+							? `border-b-[2px] pb-[24px] pt-[22px] ${isNodeEmpty(subNode) ? '' : 'hover:border-b-neutral-400'}`
+							: 'border-y-[2px] pb-[24px] pt-[20px] hover:border-t-neutral-400'}
 							{subHighlighted === subNode.id ? 'border-b-neutral-400' : ''}"
 					>
-						<p class="header">{subNode.title}</p>
-						<p class="sm mt-4 line-clamp-[14] text-gray-200">
-							{(subNode.mini_description?.[0].toUpperCase() || '') +
-								(subNode.mini_description?.slice(1) || '') || subNode.description}
+						<p class="text-[20px] font-medium tracking-tight">{subNode.title}</p>
+						<p class="mt-3 line-clamp-[14] text-[15.5px] leading-relaxed text-gray-300">
+							{subNode.mini_description || subNode.description}
 						</p>
 					</button>
 				{/each}
@@ -383,13 +387,29 @@
 
 <style>
 	.header {
-		font-size: 21px;
+		font-size: 22px;
 		font-weight: 500;
+		line-height: 1.3;
+		letter-spacing: -0.01em;
+		color: rgba(255, 255, 255, 0.95);
+	}
+
+	.description {
+		font-size: 15px;
+		line-height: 1.65;
+		color: rgba(255, 255, 255, 0.9);
+	}
+
+	@media (min-width: 640px) {
+		.description {
+			font-size: 16px;
+		}
 	}
 
 	@media (max-width: 640px) {
 		.header {
 			font-size: 18px;
+			line-height: 1.4;
 		}
 	}
 </style>

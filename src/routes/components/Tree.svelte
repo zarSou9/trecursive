@@ -714,7 +714,7 @@
 									note={!posNode.parent && note}
 									setMiniMiddles={(m) => (posNode.miniSubMiddles = m)}
 									setMiniDivHeight={(h) => (posNode.miniDivHeight = h)}
-									onDescriptionClick={() => handleNavNode({ id: posNode.node.id })}
+									{handleNavNode}
 									onMiniClick={(miniNode) => {
 										if (collapsedNodes.has(miniNode.id)) {
 											if (!isNodeEmpty(miniNode)) handleNavNode({ id: miniNode.id });

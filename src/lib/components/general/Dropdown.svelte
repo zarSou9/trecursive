@@ -25,9 +25,9 @@
 	<button
 		onclick={() => (dropdownOpen = !dropdownOpen)}
 		aria-label="nav"
-		class="rounded-md stroke-[#d1d1d1] p-1.5 transition-colors hover:stroke-gray-50 {dropdownOpen
-			? 'bg-gray-800 stroke-gray-50'
-			: 'bg-[#1f1f1f] stroke-[#d1d1d1] hover:bg-[#202a39]'}"
+		class="rounded-md stroke-[#d1d1d1] p-[7px] transition-colors hover:stroke-gray-50 {dropdownOpen
+			? 'bg-[#263343] stroke-gray-50'
+			: 'bg-[#1c2531] stroke-[#d1d1d1] hover:bg-[#263343]'}"
 	>
 		<ThreeDotsAlt />
 	</button>

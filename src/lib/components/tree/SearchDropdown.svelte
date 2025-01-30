@@ -31,7 +31,7 @@
 
 <div
 	class={twMerge('relative transition-[width]', className)}
-	style={expanded ? `width: ${expandedWidth};` : `width: ${placeholder.length * 5.76 + 40}px;`}
+	style={expanded ? `width: ${expandedWidth};` : `width: ${placeholder.length * 6.5 + 50}px;`}
 	use:clickOutside={() => (expanded = false)}
 >
 	<div bind:clientHeight={inputHeight} class="relative z-[2] h-fit p-0">
@@ -42,18 +42,18 @@
 				expanded = true;
 			}}
 			onblur={() => (disableShortcuts.v = false)}
-			class="m-0 block w-full rounded-md border-[#494949] bg-[#151515] py-[2px] pl-[22px] text-[12px] text-[#b0b0b0] outline-none transition-colors placeholder:text-[#848484] {expanded
+			class="m-0 block w-full rounded-md border-[#494949] bg-[#151515] py-[4px] pl-[26px] text-[14px] text-[#b0b0b0] outline-none transition-colors placeholder:text-[#848484] {expanded
 				? 'm-[.6px] border-[.7px]'
 				: 'border-[1px] placeholder:text-[#6b6b6b]'}"
 			{placeholder}
 		/>
 		<div
-			class="pointer-events-none absolute bottom-0 left-[6.5px] top-0 flex items-center transition-colors {expanded
+			class="pointer-events-none absolute bottom-0 left-[8px] top-0 flex items-center transition-colors {expanded
 				? 'stroke-[#878787]'
 				: 'stroke-[#606060]'}"
 		>
 			<div class="relative">
-				<Search size="11px" />
+				<Search size="13px" />
 			</div>
 		</div>
 	</div>
