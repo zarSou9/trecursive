@@ -27,6 +27,10 @@ body {
 	overscroll-behavior: none;
 }
 
+p {
+	word-spacing: 0.06em;
+}
+
 .text-primary {
 	color: var(--text-primary);
 }

@@ -360,7 +360,7 @@
 		<div class="flex w-full justify-center">
 			<div
 				bind:clientHeight={miniDivHeight}
-				style="max-width: {node.breakdown.sub_nodes.length * 450}px;"
+				style="max-width: {node.breakdown.sub_nodes.length * 500}px;"
 				class="mt-14 grid h-fit grid-flow-col gap-14"
 			>
 				{#each node.breakdown.sub_nodes as subNode}
