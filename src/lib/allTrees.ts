@@ -5,7 +5,7 @@ export const defaultSettings: TreeSettings = {
 	defaultMode: {
 		nodeWidth: 2600,
 		nodeHeight: 1400,
-		verticalSpacing: 130,
+		verticalSpacing: 250,
 		siblingNodeSpacing: 500,
 		nodeGroupSpacing: 600,
 		padding: 1000
