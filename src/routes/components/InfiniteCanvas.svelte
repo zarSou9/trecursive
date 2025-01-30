@@ -950,12 +950,14 @@
 	}
 </script>
 
-<InfoModal
-	bind:open={openInfoModal}
-	onClose={() => {
-		if ($isFirstTime) inputSettingsOpen = true;
-	}}
-/>
+{#if !$isMobile}
+	<InfoModal
+		bind:open={openInfoModal}
+		onClose={() => {
+			if ($isFirstTime) inputSettingsOpen = true;
+		}}
+	/>
+{/if}
 
 {#if settingsModalOpen && !$isMobile}
 	<CanvasSettings {isUsingMouse} onClose={() => (settingsModalOpen = false)} />
