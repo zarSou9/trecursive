@@ -27,7 +27,7 @@
 			e.preventDefault();
 		}}
 	>
-		<div class="flex flex-col items-center pb-3 pt-1 text-[#e0e0e0] sm:px-5 sm:py-3">
+		<div class="flex flex-col items-center pb-3 pt-1 text-[#e0e0e0] sm:pb-5 sm:pt-2">
 			<h2 class="mb-6 text-[24px] font-semibold">How To Use</h2>
 
 			<div class="flex w-full max-w-[400px] flex-col gap-6">
