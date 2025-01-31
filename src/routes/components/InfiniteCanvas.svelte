@@ -19,7 +19,10 @@
 	};
 
 	interface Props {
-		InfoModal: Component<{ open: () => void; onClose?: (dontShowAgain?: boolean) => void }>;
+		InfoModal: Component<{
+			open: (includeDontShow?: boolean) => void;
+			onClose?: (dontShowAgain?: boolean) => void;
+		}>;
 		goFullIfOut?: (forceGoFull?: boolean) => void;
 		children?: Snippet;
 		coordsKey: string | undefined;
@@ -95,7 +98,7 @@
 	let altPressed = false;
 	let grabbed = $state(false);
 	let rightAfterFirstTime = false;
-	let openInfoModal = $state(() => {});
+	let openInfoModal = $state((includeDontShow = false) => {});
 	let dropdownItems: DropDownItem[] = $derived([
 		...(additionalCommands?.filter((v) => !v.putAfter) || []),
 		{ title: 'Full View', key: 'f', func: goFull },
@@ -189,7 +192,7 @@
 
 	onMount(() => {
 		usingCanvasTouch.set(true);
-		if (!$dontShowInfoModal) openInfoModal();
+		if (!$dontShowInfoModal) openInfoModal(true);
 
 		viewPortResizeObserver = new ResizeObserver(updateOnResize);
 		canvasResizeObserver = new ResizeObserver(updateOnResize);

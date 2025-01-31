@@ -2,13 +2,17 @@
 	import Modal from '$lib/components/general/Modal.svelte';
 
 	interface Props {
-		open: () => void;
+		open: (includeDontShow?: boolean) => void;
 		onClose?: (dontShowAgain: boolean) => void;
 	}
 
 	let { open = $bindable(), onClose }: Props = $props();
-	open = () => {
+
+	let includeDontShowAgain = $state(false);
+
+	open = (includeDontShow = false) => {
 		modalVisible = true;
+		includeDontShowAgain = includeDontShow;
 	};
 
 	function close(dontShowAgain = false) {
@@ -23,16 +27,17 @@
 	<Modal
 		onClose={close}
 		useCross
+		className="p-0 max-w-[470px]"
 		closeOnOutsideClick
 		useAlt
 		onwheel={(e) => {
 			e.preventDefault();
 		}}
 	>
-		<div class="flex flex-col items-center pb-3 pt-1 text-[#e0e0e0] sm:pb-3 sm:pt-2">
+		<div class="flex flex-col items-center px-9 pb-8 pt-6 text-[#e0e0e0]">
 			<h2 class="mb-5 text-[24px] font-semibold">How To Use</h2>
 
-			<div class="flex w-full max-w-[400px] flex-col gap-5 text-[15px]">
+			<div class="flex w-full flex-col gap-5 text-[15px]">
 				<div>
 					<p class="text-[#c3c3c3]">
 						This is an interactive tree-map designed for complex research fields. It features a
@@ -56,12 +61,15 @@
 					<p class="text-[#c3c3c3]">Hover over titles to view their descriptions</p>
 				</div>
 			</div>
-			<button
-				class="mt-6 text-[#acacac] transition-colors hover:text-[#e0e0e0]"
-				onclick={() => close(true)}
-			>
-				Don't show this again
-			</button>
+
+			{#if includeDontShowAgain}
+				<button
+					class="mt-6 text-[#acacac] transition-colors hover:text-[#e0e0e0]"
+					onclick={() => close(true)}
+				>
+					Don't show this again
+				</button>
+			{/if}
 		</div>
 	</Modal>
 {/if}
