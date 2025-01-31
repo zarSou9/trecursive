@@ -19,7 +19,7 @@
 	};
 
 	interface Props {
-		InfoModal: Component<{ open: () => void; onClose?: () => void }>;
+		InfoModal: Component<{ open: () => void; onClose?: (dontShowAgain?: boolean) => void }>;
 		goFullIfOut?: (forceGoFull?: boolean) => void;
 		children?: Snippet;
 		coordsKey: string | undefined;
@@ -182,14 +182,14 @@
 	};
 
 	let inputSettingsOpen = $state(false);
-	let isFirstTime = $state(writable(false));
+	const isFirstTime = createLocalStore('isFirstTime', true);
 	const isUsingMouse = createLocalStore('isUsingMouse', false);
+	const dontShowInfoModal = createLocalStore('dontShowInfoModal', false);
 	setContext('isUsingMouse', isUsingMouse);
 
 	onMount(() => {
 		usingCanvasTouch.set(true);
-		isFirstTime = createLocalStore('isFirstTime', true);
-		if ($isFirstTime) openInfoModal();
+		if (!$dontShowInfoModal) openInfoModal();
 
 		viewPortResizeObserver = new ResizeObserver(updateOnResize);
 		canvasResizeObserver = new ResizeObserver(updateOnResize);
@@ -953,8 +953,9 @@
 {#if !$isMobile}
 	<InfoModal
 		bind:open={openInfoModal}
-		onClose={() => {
+		onClose={(dontShowAgain) => {
 			if ($isFirstTime) inputSettingsOpen = true;
+			if (dontShowAgain) dontShowInfoModal.set(true);
 		}}
 	/>
 {/if}
