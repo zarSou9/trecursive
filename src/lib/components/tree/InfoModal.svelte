@@ -40,10 +40,11 @@
 			<div class="flex w-full flex-col gap-5 text-[15px]">
 				<div>
 					<p class="text-[#c3c3c3]">
-						This is an interactive tree-map designed for complex research fields. It features a
-						Default and Titles mode. Switch between them by <span class="font-semibold"
-							>pressing</span
-						> <span class="rounded bg-[#3a3a3a] px-1.5 py-0.5">T</span>
+						This map has a
+						<span class="font-semibold">Default</span> and
+						<span class="font-semibold">Titles mode.</span>
+						Switch between them by <span class="font-semibold">pressing</span>
+						<span class="rounded bg-[#3a3a3a] px-1.5 py-0.5">T</span>
 						or through the <span class="font-semibold">top right drop-down menu</span>
 					</p>
 				</div>
