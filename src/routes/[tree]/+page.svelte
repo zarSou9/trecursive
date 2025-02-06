@@ -28,11 +28,4 @@
 	</div>
 {:then fullTree}
 	<Tree {...data} {fullTree} />
-{:catch error}
-	<div class="min-h-screen px-5 py-20">
-		<div class="mx-auto max-w-[900px] text-center">
-			<div class="mb-6 text-3xl font-semibold text-white/90">Error loading tree</div>
-			<div class="mb-8 text-xl text-white/75">{error.message}</div>
-		</div>
-	</div>
 {/await}

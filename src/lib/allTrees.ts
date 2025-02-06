@@ -1,6 +1,5 @@
 import type { TreeDefinition, TreeSettings } from '$lib/types';
 
-// (textSize / charW) = 2.05 - oops, TO DO: Only set the textSize and do calculation elseware
 export const defaultSettings: TreeSettings = {
 	defaultMode: {
 		nodeWidth: 2600,

@@ -13,7 +13,7 @@ function positionTree(t: Node, collapsedNodes: SvelteSet<string>, settings: Vert
 
 	const { nodeWidth, nodeHeight, verticalSpacing, siblingNodeSpacing, nodeGroupSpacing } = settings;
 
-	collapsedNodes.delete(t.id); // Will cause infinite recursion if not deleted
+	collapsedNodes.delete(t.id); // Will cause infinite recursion if the root is set as collapsed
 	positionEndNodes(t);
 	while (findPositioned(t)?.left === undefined) {
 		positionBulkOfTree(t);
