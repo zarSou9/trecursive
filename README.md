@@ -1,8 +1,6 @@
 # Interactive Research Maps
 
-This is the git repo for [AI Research Maps](https://www.airesearchmaps.com/). It is an interactive tool built for visualizing large research fields (though it can be used to visualize any hierarchical data). This repo also features a rich infinite canvas component with mobile support!
-
-## Video Demo
+This is the git repo for [AI Research Maps](https://www.airesearchmaps.com/). It is an interactive tool built for visualizing large research fields (though it can be used to visualize any hierarchical data). This repo also features a rich infinite canvas component with mobile support! Here is also a [video demo](https://www.youtube.com/watch?v=nXtQtNlU_jg)
 
 ## Developing
 
