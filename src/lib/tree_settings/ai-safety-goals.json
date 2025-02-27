@@ -1,0 +1,18 @@
+{
+	"pathName": "ai-safety-goals",
+	"title": "AI Safety Goals",
+	"note": "This map used LLMs to recursively break down AI safety into continuously smaller sub-goals. At each sub-goal, research papers are found to ground the model as it generates the next breakdown.",
+	"cover_root_description": "Mitigate the risk that people build an agentic AI system which results in the loss of human control, extinction or some other existential catastrophe.",
+	"breakdownName": "paper",
+	"customSettings": {
+		"defaultMode": {
+			"nodeHeight": 2100
+		},
+		"titlesMode": {
+			"widthAddition": 500,
+			"horizontalSpacing": 900,
+			"horizontalSpacingAdditions": [0, 300],
+			"nodeGroupSpacing": 120
+		}
+	}
+}
