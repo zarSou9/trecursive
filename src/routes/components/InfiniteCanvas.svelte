@@ -7,7 +7,7 @@
 	import ToolTipItem from '$lib/components/general/ToolTipItem.svelte';
 	import type { DropDownItem } from '$lib/types';
 	import Dropdown from '$lib/components/general/Dropdown.svelte';
-	import { writable, type Writable } from 'svelte/store';
+	import type { Writable } from 'svelte/store';
 	import PopUp from '$lib/components/general/PopUp.svelte';
 	import CanvasSettings from '$lib/components/tree/CanvasSettings.svelte';
 
@@ -55,11 +55,12 @@
 	}: Props = $props();
 
 	const zoomIntensity = 0.01;
+	const maxZoom = 100;
 
 	// Mobile settings
-	const doubleTapDelay = 300; // milliseconds between taps
-	const doubleTapDistance = 30; // maximum distance between taps in pixels
-	const doubleTapZoomScale = 2; // how much to zoom in on double tap
+	const doubleTapDelay = 250; // maximum milliseconds between taps
+	const doubleTapDistance = 25; // maximum distance between taps in pixels
+	const doubleTapZoomScale = 1.55; // how much to zoom in on double tap
 	const friction = 0.95; // How much touch inertia slows down (1 is no friction)
 
 	goFullIfOut = (forceGoFull = false) => {
@@ -93,8 +94,8 @@
 	let smoothMoving = $state(false);
 	let isZooming = false;
 	let currentDir = '';
-	let grabX: number;
-	let grabY: number;
+	let prevGrabX: number;
+	let prevGrabY: number;
 	let altPressed = false;
 	let grabbed = $state(false);
 	let rightAfterFirstTime = false;
@@ -274,10 +275,20 @@
 		const k = e.key;
 		if ((e.ctrlKey || e.metaKey) && k === '=') {
 			e.preventDefault();
-			zoomIn();
+			const [newX, newY, newZ] = updateZoomPure(
+				1 + zoomIntensity + 0.25,
+				viewPort.clientWidth / 2,
+				viewPort.clientHeight / 2
+			);
+			moveToPos(newX, newY, newZ);
 		} else if ((e.ctrlKey || e.metaKey) && k === '-') {
 			e.preventDefault();
-			zoomOut();
+			const [newX, newY, newZ] = updateZoomPure(
+				1 - zoomIntensity - 0.25,
+				viewPort.clientWidth / 2,
+				viewPort.clientHeight / 2
+			);
+			moveToPos(newX, newY, newZ);
 		} else if (k === '=') {
 			if (!isZooming) zooming(true);
 		} else if (k === '-') {
@@ -329,12 +340,6 @@
 		}
 		if (k === 'Alt' || k === 'Option') altPressed = false;
 	}
-	function zoomIn() {
-		scale(z * (1 + zoomIntensity + 0.15));
-	}
-	function zoomOut() {
-		scale(z * (1 - zoomIntensity - 0.15));
-	}
 	function setHome() {
 		homeX = x;
 		homeY = y;
@@ -342,6 +347,63 @@
 	}
 	function goHome() {
 		moveToPos(homeX, homeY, homeZ, 400, 900);
+	}
+
+	function updatePositionPure(offsetX: number, offsetY: number) {
+		let newX = x;
+		let newY = y;
+		if ((x + offsetX) / z <= horizontalOffset) {
+			if (
+				viewPort.clientWidth / z - ((x + offsetX) / z + canvas.clientWidth) >=
+				horizontalOffset + 1
+			) {
+				newX = (viewPort.clientWidth / z - (horizontalOffset + 1) - canvas.clientWidth) * z;
+			} else {
+				newX += offsetX;
+				if (newX / z > horizontalOffset) {
+					newX = horizontalOffset * z;
+				}
+			}
+		} else {
+			newX = horizontalOffset * z;
+		}
+
+		if ((y + offsetY) / z <= verticalOffset) {
+			if (
+				viewPort.clientHeight / z - ((y + offsetY) / z + canvas.clientHeight) >=
+				verticalOffset + 1
+			) {
+				newY = (viewPort.clientHeight / z - (verticalOffset + 1) - canvas.clientHeight) * z;
+			} else {
+				newY += offsetY;
+				if (newY / z > verticalOffset) {
+					newY = verticalOffset * z;
+				}
+			}
+		} else {
+			newY = verticalOffset * z;
+		}
+
+		return [newX, newY];
+	}
+
+	function updateZoomPure(scaleMultiplier: number, centerX: number, centerY: number) {
+		const newZ = Math.min(Math.max(z * scaleMultiplier, minZoom), maxZoom);
+
+		const zDiff = newZ / z;
+
+		const offsetX = (centerX - x - viewPortOffset.x) * (1 - zDiff);
+		const offsetY = (centerY - y - viewPortOffset.y) * (1 - zDiff);
+
+		return [...updatePositionPure(offsetX, offsetY), newZ];
+	}
+
+	function updatePosition(offsetX: number, offsetY: number) {
+		[x, y] = updatePositionPure(offsetX, offsetY);
+	}
+
+	function updateZoom(scaleMultiplier: number, centerX: number, centerY: number) {
+		[x, y, z] = updateZoomPure(scaleMultiplier, centerX, centerY);
 	}
 
 	async function moving(dir: string) {
@@ -418,87 +480,18 @@
 		let prevDir = currentDir;
 		while (currentDir === prevDir) {
 			prevDir = currentDir;
-			if ((x - dx) / z <= horizontalOffset) {
-				if (
-					viewPort.clientWidth / z - ((x - dx) / z + canvas.clientWidth) >=
-					horizontalOffset + 1
-				) {
-					x = (viewPort.clientWidth / z - (horizontalOffset + 1) - canvas.clientWidth) * z;
-				} else {
-					x -= dx;
-					if (x / z > horizontalOffset) {
-						x = horizontalOffset * z;
-					}
-				}
-			} else {
-				x = horizontalOffset * z;
-			}
-			if ((y - dy) / z <= verticalOffset) {
-				if (viewPort.clientHeight / z - ((y - dy) / z + canvas.clientHeight) >= verticalOffset) {
-					y = (viewPort.clientHeight / z - verticalOffset - canvas.clientHeight) * z;
-				} else {
-					y -= dy;
-					if (y / z > verticalOffset) {
-						y = verticalOffset * z;
-					}
-				}
-			} else {
-				y = verticalOffset * z;
-			}
+			updatePosition(-dx, -dy);
 
 			canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
 			await new Promise((resolve) => setTimeout(resolve, 1));
 		}
 	}
 	async function zooming(dir: boolean) {
-		let zf;
 		if (!smoothMoving) {
 			isZooming = true;
 			while (isZooming) {
-				if (dir) {
-					zf = z * 1.008;
-				} else {
-					zf = z * 0.992;
-				}
-				const scaleMultiplier = zf / z;
-				z = Math.min(Math.max(zf, minZoom), 100);
-				if (!(z === 100) && !(z === minZoom)) {
-					const offsetX = (viewPort.clientWidth / 2 - x) * (1 - scaleMultiplier);
-					const offsetY = (viewPort.clientHeight / 2 - y) * (1 - scaleMultiplier);
-					if ((x + offsetX) / z <= horizontalOffset) {
-						if (
-							viewPort.clientWidth / z - ((x + offsetX) / z + canvas.clientWidth) >=
-							horizontalOffset + 1
-						) {
-							x = (viewPort.clientWidth / z - (horizontalOffset + 1) - canvas.clientWidth) * z;
-						} else {
-							x += offsetX;
-							if (x / z > horizontalOffset) {
-								x = horizontalOffset * z;
-							}
-						}
-					} else {
-						x = horizontalOffset * z;
-					}
-					if ((y + offsetY) / z <= verticalOffset) {
-						if (
-							viewPort.clientHeight / z - ((y + offsetY) / z + canvas.clientHeight) >=
-							verticalOffset + 1
-						) {
-							y = (viewPort.clientHeight / z - (verticalOffset + 1) - canvas.clientHeight) * z;
-						} else {
-							y += offsetY;
-							if (y / z > verticalOffset) {
-								y = verticalOffset * z;
-							}
-						}
-					} else {
-						y = verticalOffset * z;
-					}
-				} else if (z === minZoom) {
-					x = horizontalOffset * z;
-					y = verticalOffset * z;
-				}
+				updateZoom(dir ? 1.008 : 0.992, viewPort.clientWidth / 2, viewPort.clientHeight / 2);
+
 				canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
 				await new Promise((resolve) => setTimeout(resolve, 2));
 			}
@@ -508,8 +501,8 @@
 		if (!definitelyTouching) usingCanvasTouch.set(false);
 		if (e.button !== 2 && !altPressed) {
 			grabbed = true;
-			grabX = e.clientX;
-			grabY = e.clientY;
+			prevGrabX = e.clientX;
+			prevGrabY = e.clientY;
 			window.addEventListener('mousemove', grabMove);
 		}
 	}
@@ -519,178 +512,24 @@
 	}
 
 	function grabMove(e: MouseEvent) {
-		let dx = grabX - e.clientX;
-		let dy = grabY - e.clientY;
-		grabX = e.clientX;
-		grabY = e.clientY;
-		if ((x - dx) / z <= horizontalOffset) {
-			if (viewPort.clientWidth / z - ((x - dx) / z + canvas.clientWidth) >= horizontalOffset + 1) {
-				x = (viewPort.clientWidth / z - (horizontalOffset + 1) - canvas.clientWidth) * z;
-			} else {
-				x -= dx;
-				if (x / z > horizontalOffset) {
-					x = horizontalOffset * z;
-				}
-			}
-		} else {
-			x = horizontalOffset * z;
-		}
-		if ((y - dy) / z <= verticalOffset) {
-			if (viewPort.clientHeight / z - ((y - dy) / z + canvas.clientHeight) >= verticalOffset) {
-				y = (viewPort.clientHeight / z - verticalOffset - canvas.clientHeight) * z;
-			} else {
-				y -= dy;
-				if (y / z > verticalOffset) {
-					y = verticalOffset * z;
-				}
-			}
-		} else {
-			y = verticalOffset * z;
-		}
+		updatePosition(e.clientX - prevGrabX, e.clientY - prevGrabY);
 
+		prevGrabX = e.clientX;
+		prevGrabY = e.clientY;
 		canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
 	}
 
-	function scale(zf: number, dur = 250, delay = dur) {
-		if (!smoothMoving) {
-			motionX.set(x, { duration: 0 });
-			motionY.set(y, { duration: 0 });
-			motionZ.set(z, { duration: 0 });
-			smoothMoving = true;
-
-			const scaleMultiplier = zf / z;
-			z = Math.min(Math.max(zf, minZoom), 100);
-
-			if (!(z === 100) && !(z === minZoom)) {
-				const offsetX = (viewPort.clientWidth / 2 - x) * (1 - scaleMultiplier);
-				const offsetY = (viewPort.clientHeight / 2 - y) * (1 - scaleMultiplier);
-
-				if ((x + offsetX) / z <= horizontalOffset) {
-					if (
-						viewPort.clientWidth / z - ((x + offsetX) / z + canvas.clientWidth) >=
-						horizontalOffset + 1
-					) {
-						x = (viewPort.clientWidth / z - (horizontalOffset + 1) - canvas.clientWidth) * z;
-					} else {
-						x += offsetX;
-						if (x / z > horizontalOffset) {
-							x = horizontalOffset * z;
-						}
-					}
-				} else {
-					x = horizontalOffset * z;
-				}
-				if ((y + offsetY) / z <= verticalOffset) {
-					if (
-						viewPort.clientHeight / z - ((y + offsetY) / z + canvas.clientHeight) >=
-						verticalOffset + 1
-					) {
-						y = (viewPort.clientHeight / z - (verticalOffset + 1) - canvas.clientHeight) * z;
-					} else {
-						y += offsetY;
-						if (y / z > verticalOffset) {
-							y = verticalOffset * z;
-						}
-					}
-				} else {
-					y = verticalOffset * z;
-				}
-			} else if (z === minZoom) {
-				x = horizontalOffset * z;
-				y = verticalOffset * z;
-			}
-
-			motionX.update(() => x, { duration: dur });
-			motionY.update(() => y, { duration: dur });
-			motionZ.update(() => z, { duration: dur });
-			setTimeout(() => {
-				smoothMoving = false;
-			}, delay);
-		}
-	}
 	function handlePanZoom(e: WheelEvent) {
 		e.preventDefault();
 		if (!smoothMoving) {
 			if (e.ctrlKey || $isUsingMouse) {
 				const scaleMultiplier = 1 + -(e.deltaY * zoomIntensity * ($isUsingMouse ? 0.06 : 1));
-				const targetZoom = z * scaleMultiplier;
 
-				z = Math.min(Math.max(targetZoom, minZoom), 100);
-				if (!(z === 100) && !(z === minZoom)) {
-					const offsetX = (e.clientX - x - viewPortOffset.x) * (1 - scaleMultiplier);
-					const offsetY = (e.clientY - y - viewPortOffset.y) * (1 - scaleMultiplier);
-
-					if ((x + offsetX) / z <= horizontalOffset) {
-						if (
-							viewPort.clientWidth / z - ((x + offsetX) / z + canvas.clientWidth) >=
-							horizontalOffset + 1
-						) {
-							x = (viewPort.clientWidth / z - (horizontalOffset + 1) - canvas.clientWidth) * z;
-						} else {
-							x += offsetX;
-							if (x / z > horizontalOffset) {
-								x = horizontalOffset * z;
-							}
-						}
-					} else {
-						x = horizontalOffset * z;
-					}
-					if ((y + offsetY) / z <= verticalOffset) {
-						if (
-							viewPort.clientHeight / z - ((y + offsetY) / z + canvas.clientHeight) >=
-							verticalOffset + 1
-						) {
-							y = (viewPort.clientHeight / z - (verticalOffset + 1) - canvas.clientHeight) * z;
-						} else {
-							y += offsetY;
-							if (y / z > verticalOffset) {
-								y = verticalOffset * z;
-							}
-						}
-					} else {
-						y = verticalOffset * z;
-					}
-					canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
-				} else if (z === minZoom) {
-					z = minZoom;
-					x = horizontalOffset * z;
-					y = verticalOffset * z;
-					canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
-				}
+				updateZoom(scaleMultiplier, e.clientX, e.clientY);
 			} else {
-				if ((x - e.deltaX) / z <= horizontalOffset) {
-					if (
-						viewPort.clientWidth / z - ((x - e.deltaX) / z + canvas.clientWidth) >=
-						horizontalOffset + 1
-					) {
-						x = (viewPort.clientWidth / z - (horizontalOffset + 1) - canvas.clientWidth) * z;
-					} else {
-						x -= e.deltaX;
-						if (x / z > horizontalOffset) {
-							x = horizontalOffset * z;
-						}
-					}
-				} else {
-					x = horizontalOffset * z;
-				}
-				if ((y - e.deltaY) / z <= verticalOffset) {
-					if (
-						viewPort.clientHeight / z - ((y - e.deltaY) / z + canvas.clientHeight) >=
-						verticalOffset
-					) {
-						y = (viewPort.clientHeight / z - verticalOffset - canvas.clientHeight) * z;
-					} else {
-						y -= e.deltaY;
-						if (y / z > verticalOffset) {
-							y = verticalOffset * z;
-						}
-					}
-				} else {
-					y = verticalOffset * z;
-				}
-
-				canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
+				updatePosition(-e.deltaX, -e.deltaY);
 			}
+			canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
 		}
 	}
 
@@ -834,6 +673,7 @@
 				}, 50); // 50ms threshold for considering movement stopped
 
 				updatePosition(-dx, -dy);
+				canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
 			}
 		} else if (e.touches.length === 2) {
 			e.preventDefault();
@@ -850,17 +690,7 @@
 			};
 
 			if (lastTouchDistance > 0) {
-				const scaleMultiplier = touchDistance / lastTouchDistance;
-				const targetZoom = z * scaleMultiplier;
-
-				z = Math.min(Math.max(targetZoom, minZoom), 100);
-				if (!(z === 100) && !(z === minZoom)) {
-					const offsetX = (pinchCenter.x - x - viewPortOffset.x) * (1 - scaleMultiplier);
-					const offsetY = (pinchCenter.y - y - viewPortOffset.y) * (1 - scaleMultiplier);
-
-					x += offsetX;
-					y += offsetY;
-				}
+				updateZoom(touchDistance / lastTouchDistance, pinchCenter.x, pinchCenter.y);
 			}
 
 			lastTouchDistance = touchDistance;
@@ -906,6 +736,7 @@
 
 			if (Math.abs(touchVelocityX) > 0.01 || Math.abs(touchVelocityY) > 0.01) {
 				updatePosition(dx, dy);
+				canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
 				inertiaAnimationFrame = requestAnimationFrame(animate);
 			} else {
 				inertiaAnimationFrame = null;
@@ -913,33 +744,6 @@
 		}
 
 		inertiaAnimationFrame = requestAnimationFrame(animate);
-	}
-
-	// Helper function to update position with boundaries
-	function updatePosition(dx: number, dy: number) {
-		if ((x + dx) / z <= horizontalOffset) {
-			if (viewPort.clientWidth / z - ((x + dx) / z + canvas.clientWidth) >= horizontalOffset + 1) {
-				x = (viewPort.clientWidth / z - (horizontalOffset + 1) - canvas.clientWidth) * z;
-			} else {
-				x += dx;
-				if (x / z > horizontalOffset) x = horizontalOffset * z;
-			}
-		} else {
-			x = horizontalOffset * z;
-		}
-
-		if ((y + dy) / z <= verticalOffset) {
-			if (viewPort.clientHeight / z - ((y + dy) / z + canvas.clientHeight) >= verticalOffset) {
-				y = (viewPort.clientHeight / z - verticalOffset - canvas.clientHeight) * z;
-			} else {
-				y += dy;
-				if (y / z > verticalOffset) y = verticalOffset * z;
-			}
-		} else {
-			y = verticalOffset * z;
-		}
-
-		canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
 	}
 
 	function setupTouchMove(node: HTMLElement) {
