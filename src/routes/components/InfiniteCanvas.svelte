@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { getContext, onMount, setContext } from 'svelte';
 	import type { Component, Snippet } from 'svelte';
-	import { tweened } from 'svelte/motion';
-	import { cubicOut } from 'svelte/easing';
+	import { cubicInOut, cubicOut } from 'svelte/easing';
 	import { createLocalStore } from '$lib/createLocalStore';
 	import ToolTipItem from '$lib/components/general/ToolTipItem.svelte';
 	import type { DropDownItem } from '$lib/types';
@@ -10,6 +9,7 @@
 	import type { Writable } from 'svelte/store';
 	import PopUp from '$lib/components/general/PopUp.svelte';
 	import CanvasSettings from '$lib/components/tree/CanvasSettings.svelte';
+	import { Tween } from 'svelte/motion';
 
 	type NavItem = {
 		title: string;
@@ -99,7 +99,7 @@
 	let altPressed = false;
 	let grabbed = $state(false);
 	let rightAfterFirstTime = false;
-	let openInfoModal = $state((includeDontShow = false) => {});
+	let openInfoModal: (includeDontShow?: boolean) => void = $state(() => {});
 	let dropdownItems: DropDownItem[] = $derived([
 		...(additionalCommands?.filter((v) => !v.putAfter) || []),
 		{ title: 'Full View', key: 'f', func: goFull },
@@ -129,48 +129,36 @@
 
 	const userCoords = createLocalStore(`userCoords-${coordsKey}`, [91291312402, 0, 0, 0, 0, 0]);
 
-	const motionX = tweened(0, {
-		duration: 400,
-		easing: cubicOut
-	});
-	const motionY = tweened(0, {
-		duration: 400,
-		easing: cubicOut
-	});
-	const motionZ = tweened(0, {
-		duration: 400,
-		easing: cubicOut
-	});
+	const tweenX = new Tween(0);
+	const tweenY = new Tween(0);
+	const tweenZ = new Tween(0);
 	$effect(() => {
-		if (
-			$motionX !== undefined &&
-			$motionY !== undefined &&
-			$motionZ !== undefined &&
-			smoothMoving
-		) {
-			canvas.style.transform = `translate(${$motionX}px, ${$motionY}px) scale(${$motionZ})`;
+		if (smoothMoving) {
+			x = tweenX.current;
+			y = tweenY.current;
+			z = tweenZ.current;
+			canvas.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
 		}
 	});
 
 	let movingToPosTimeout: undefined | number = $state(undefined);
-	function moveToPos(xf: number, yf: number, zf: number, dur = 400, delay = dur) {
+	async function moveToPos(xf: number, yf: number, zf: number, dur = 400, delay = dur) {
 		clearTimeout(movingToPosTimeout);
-		motionX.set(x, { duration: 0 });
-		motionY.set(y, { duration: 0 });
-		motionZ.set(z, { duration: 0 });
-		smoothMoving = true;
+		await Promise.all([
+			tweenX.set(x, { duration: 0 }),
+			tweenY.set(y, { duration: 0 }),
+			tweenZ.set(z, { duration: 0 })
+		]);
 
-		x = xf;
-		y = yf;
-		z = zf;
+		tweenX.set(xf, { duration: dur, easing: smoothMoving ? cubicOut : cubicInOut });
+		tweenY.set(yf, { duration: dur, easing: smoothMoving ? cubicOut : cubicInOut });
+		tweenZ.set(zf, { duration: dur, easing: smoothMoving ? cubicOut : cubicInOut });
+
+		smoothMoving = true;
 
 		movingToPosTimeout = setTimeout(() => {
 			smoothMoving = false;
 		}, delay);
-
-		motionX.update(() => xf, { duration: dur });
-		motionY.update(() => yf, { duration: dur });
-		motionZ.update(() => zf, { duration: dur });
 	}
 
 	moveByOffset = (offsetX, offsetY) => {
@@ -605,32 +593,15 @@
 	}
 
 	function handleDoubleTap(tapX: number, tapY: number) {
-		// If we're already at max zoom, zoom out to min
-		if (z >= 100 * 0.9) {
-			moveToPos(horizontalOffset * minZoom, verticalOffset * minZoom, minZoom);
-			return;
-		}
+		const scaleMultiplier = Math.min(doubleTapZoomScale, maxZoom / z);
 
-		// Calculate target zoom
-		const targetZ = Math.min(z * doubleTapZoomScale, 100);
-
-		// Calculate the point to zoom into (relative to canvas)
-		const viewPortRect = viewPort.getBoundingClientRect();
-		const relativeX = tapX - viewPortRect.left;
-		const relativeY = tapY - viewPortRect.top;
-
-		// Calculate new position to keep the tapped point stationary
-		const scaleMultiplier = targetZ / z;
-		const offsetX = (relativeX - x) * (1 - scaleMultiplier);
-		const offsetY = (relativeY - y) * (1 - scaleMultiplier);
-
-		// Use existing moveToPos function with new coordinates
-		moveToPos(
-			x + offsetX,
-			y + offsetY,
-			targetZ,
-			300 // duration in ms
+		const [newX, newY, newZ] = updateZoomPure(
+			scaleMultiplier,
+			tapX - viewPortOffset.x,
+			tapY - viewPortOffset.y
 		);
+
+		moveToPos(newX, newY, newZ, 300);
 	}
 
 	function handleTouchMove(e: TouchEvent) {
