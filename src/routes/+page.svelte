@@ -8,7 +8,7 @@
 	<title>AI Research Maps</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-b from-[#151515] to-[#212121] px-5 py-16">
+<div class="size-full overflow-auto bg-gradient-to-b from-[#151515] to-[#1e1e1e] px-5 py-16">
 	<div class="mx-auto max-w-[900px]">
 		<h1
 			class="mb-4 bg-gradient-to-r from-purple-600 via-purple-500 to-purple-600 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent [text-shadow:_0_4px_30px_rgba(168,85,247,0.15)] sm:text-[72px]"
