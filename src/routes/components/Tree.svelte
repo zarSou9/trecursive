@@ -200,54 +200,55 @@
 			await tick();
 			posNode = positionedNodes.find((pn) => pn.node.id === id);
 		}
+		if (!posNode) return;
+
+		if (sub) {
+			const subPosNode = posNode.miniSubMiddles?.find((mini) => mini.id === sub);
+			if (!subPosNode) return;
+			navToPos?.(
+				settings.defaultMode.padding + subPosNode.x,
+				settings.defaultMode.padding + subPosNode.y - (posNode.miniDivHeight || 0) - 100,
+				duration
+			);
+		} else if (leftPanel) {
+			const leftPanelWidth = Math.min(550, window.innerWidth - 40);
+			const descriptionWidth = Math.min(700, window.innerWidth - 40);
+			const descriptionLeft =
+				settings.defaultMode.padding +
+				(posNode.left || 0) +
+				settings.defaultMode.nodeWidth / 2 -
+				descriptionWidth / 2;
+			nodeAction.set(`open-left-panel-${posNode?.node.id}`);
+			navToPos?.(
+				descriptionLeft - 55 - leftPanelWidth / 2,
+				settings.defaultMode.padding + (posNode.top || 0) - 80,
+				duration
+			);
+		} else if (breakdownSection) {
+			navToPos?.(
+				settings.defaultMode.padding + (posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
+				settings.defaultMode.padding +
+					(posNode.top || 0) -
+					80 +
+					(posNode.descriptionDivHeight || 0) +
+					32,
+				duration
+			);
+		} else {
+			navToPos?.(
+				settings.defaultMode.padding + (posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
+				settings.defaultMode.padding + (posNode.top || 0) - 80,
+				duration
+			);
+		}
+
 		lastNavedNode = {
 			posNode,
 			sub,
 			leftPanel,
 			breakdownSection
 		};
-		if (posNode) {
-			if (sub) {
-				const subPosNode = posNode.miniSubMiddles?.find((mini) => mini.id === sub);
-				if (subPosNode) {
-					navToPos?.(
-						settings.defaultMode.padding + subPosNode.x,
-						settings.defaultMode.padding + subPosNode.y - (posNode.miniDivHeight || 0) - 100,
-						duration
-					);
-				}
-			} else if (leftPanel) {
-				const leftPanelWidth = Math.min(550, window.innerWidth - 40);
-				const descriptionWidth = Math.min(700, window.innerWidth - 40);
-				const descriptionLeft =
-					settings.defaultMode.padding +
-					(posNode.left || 0) +
-					settings.defaultMode.nodeWidth / 2 -
-					descriptionWidth / 2;
-				nodeAction.set(`open-left-panel-${posNode?.node.id}`);
-				navToPos?.(
-					descriptionLeft - 55 - leftPanelWidth / 2,
-					settings.defaultMode.padding + (posNode.top || 0) - 80,
-					duration
-				);
-			} else if (breakdownSection) {
-				navToPos?.(
-					settings.defaultMode.padding + (posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
-					settings.defaultMode.padding +
-						(posNode.top || 0) -
-						80 +
-						(posNode.descriptionDivHeight || 0) +
-						32,
-					duration
-				);
-			} else {
-				navToPos?.(
-					settings.defaultMode.padding + (posNode.left || 0) + settings.defaultMode.nodeWidth / 2,
-					settings.defaultMode.padding + (posNode.top || 0) - 80,
-					duration
-				);
-			}
-		}
+
 		if (collapseSub && sub) {
 			disableArrowNav = true;
 			setTimeout(() => {
@@ -357,8 +358,9 @@
 				} else if (e.key === 'ArrowDown') {
 					if (lastNavedNode.sub) {
 						const subNode = node.breakdown?.sub_nodes.find((sub) => sub.id === lastNavedNode.sub);
-						if (subNode && !isNodeEmpty(subNode))
+						if (subNode && !isNodeEmpty(subNode)) {
 							handleNavNode({ id: lastNavedNode.sub, centerID: lastNavedNode.posNode.node.id });
+						}
 					} else if (
 						!lastNavedNode.breakdownSection &&
 						(node.breakdown?.explanation || node.breakdown?.paper)
