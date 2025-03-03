@@ -337,39 +337,24 @@
 		moveToPos(homeX, homeY, homeZ, 400, 900);
 	}
 
-	function updatePositionPure(offsetX: number, offsetY: number) {
+	function updatePositionPure(offsetX: number, offsetY: number, fromZoom = false) {
 		let newX = x;
 		let newY = y;
-		if ((x + offsetX) / z <= horizontalOffset) {
-			if (
-				viewPort.clientWidth / z - ((x + offsetX) / z + canvas.clientWidth) >=
-				horizontalOffset + 1
-			) {
-				newX = (viewPort.clientWidth / z - (horizontalOffset + 1) - canvas.clientWidth) * z;
-			} else {
-				newX += offsetX;
-				if (newX / z > horizontalOffset) {
-					newX = horizontalOffset * z;
-				}
-			}
+
+		if (fromZoom && z < minZoom + 0.01) return [x + offsetX, y + offsetY];
+
+		if (viewPort.clientWidth / z - ((x + offsetX) / z + canvas.clientWidth) >= horizontalOffset) {
+			newX = (viewPort.clientWidth / z - (horizontalOffset + 1) - canvas.clientWidth) * z;
 		} else {
-			newX = horizontalOffset * z;
+			newX += offsetX;
+			if (newX / z > horizontalOffset) newX = horizontalOffset * z;
 		}
 
-		if ((y + offsetY) / z <= verticalOffset) {
-			if (
-				viewPort.clientHeight / z - ((y + offsetY) / z + canvas.clientHeight) >=
-				verticalOffset + 1
-			) {
-				newY = (viewPort.clientHeight / z - (verticalOffset + 1) - canvas.clientHeight) * z;
-			} else {
-				newY += offsetY;
-				if (newY / z > verticalOffset) {
-					newY = verticalOffset * z;
-				}
-			}
+		if (viewPort.clientHeight / z - ((y + offsetY) / z + canvas.clientHeight) >= verticalOffset) {
+			newY = (viewPort.clientHeight / z - (verticalOffset + 1) - canvas.clientHeight) * z;
 		} else {
-			newY = verticalOffset * z;
+			newY += offsetY;
+			if (newY / z > verticalOffset) newY = verticalOffset * z;
 		}
 
 		return [newX, newY];
@@ -378,12 +363,12 @@
 	function updateZoomPure(scaleMultiplier: number, centerX: number, centerY: number) {
 		const newZ = Math.min(Math.max(z * scaleMultiplier, minZoom), maxZoom);
 
-		const zDiff = newZ / z;
+		const zDiff = 1 - newZ / z;
 
-		const offsetX = (centerX - x - viewPortOffset.x) * (1 - zDiff);
-		const offsetY = (centerY - y - viewPortOffset.y) * (1 - zDiff);
+		const offsetX = (centerX - x - viewPortOffset.x) * zDiff;
+		const offsetY = (centerY - y - viewPortOffset.y) * zDiff;
 
-		return [...updatePositionPure(offsetX, offsetY), newZ];
+		return [...updatePositionPure(offsetX, offsetY, true), newZ];
 	}
 
 	function updatePosition(offsetX: number, offsetY: number) {
