@@ -654,20 +654,22 @@
 		}
 	}
 
-	function handleTouchEnd(e: TouchEvent) {
+	function handleTouchEnd(e: TouchEvent | CustomEvent) {
 		// Clear the velocity decay timeout
 		if (velocityDecayTimeout) {
 			clearTimeout(velocityDecayTimeout);
 		}
 
-		// Only start inertia if the touch ended recently after movement
-		const timeSinceLastMove = Date.now() - lastMoveTime;
-		if (
-			timeSinceLastMove < 100 &&
-			(Math.abs(touchVelocityX) > 0.1 || Math.abs(touchVelocityY) > 0.1)
-		) {
-			e.preventDefault();
-			startInertia();
+		if (!e.detail?.noInertia) {
+			// Only start inertia if the touch ended recently after movement
+			const timeSinceLastMove = Date.now() - lastMoveTime;
+			if (
+				timeSinceLastMove < 100 &&
+				(Math.abs(touchVelocityX) > 0.1 || Math.abs(touchVelocityY) > 0.1)
+			) {
+				e.preventDefault();
+				startInertia();
+			}
 		}
 
 		isTouching = false;

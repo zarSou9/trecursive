@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import type { Snippet } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 
 	interface Props extends HTMLAttributes<HTMLDivElement> {
 		className?: string;
@@ -18,38 +18,101 @@
 	}: Props = $props();
 
 	let mouseIn = false;
-	let isMidScroll = false;
-	let isMobile = false;
 	let prevDelta = 0;
+
+	let usingTouch = false;
+
+	let atScrollStart = true;
+	let atScrollEnd = false;
+	let justStarted = false;
+	let lastTapY: number;
+
+	let scrollMiddleTouchEnded = false;
+	let isScrollable = false;
+
+	function checkScrollable() {
+		if (element) isScrollable = element.clientHeight < element.scrollHeight - 1;
+	}
+
+	onMount(() => {
+		checkScrollable();
+
+		const resizeObserver = new ResizeObserver(() => {
+			checkScrollable();
+		});
+
+		if (element) resizeObserver.observe(element);
+
+		return () => {
+			if (element) resizeObserver.unobserve(element);
+			resizeObserver.disconnect();
+		};
+	});
 </script>
 
-<!-- svelte-ignore a11y_mouse_events_have_key_events -->
 <div
 	role="presentation"
 	bind:this={element}
 	onmousemove={() => (mouseIn = true)}
 	onmouseleave={() => (mouseIn = false)}
 	ontouchmove={(e) => {
-		if (isMidScroll && e.touches.length === 1) {
-			e.currentTarget.dispatchEvent(new TouchEvent('touchend'));
-			e.stopPropagation();
-			return;
+		if (e.touches.length === 1 && isScrollable) {
+			if (atScrollStart || atScrollEnd) {
+				const tapY = e.touches[0].clientY;
+				if (tapY < lastTapY && atScrollStart) e.stopPropagation();
+				else if (tapY > lastTapY && atScrollEnd) e.stopPropagation();
+				else if (justStarted) {
+					e.currentTarget.parentElement?.dispatchEvent(
+						new TouchEvent('touchstart', {
+							bubbles: true,
+							cancelable: true,
+							touches: Array.from(e.touches),
+							targetTouches: Array.from(e.targetTouches),
+							changedTouches: Array.from(e.changedTouches)
+						})
+					);
+					justStarted = false;
+				}
+			} else {
+				e.stopPropagation();
+			}
 		}
 	}}
 	ontouchstart={(e) => {
-		isMobile = true;
-		if (isMidScroll && e.touches.length === 1) e.stopPropagation();
+		usingTouch = true;
+		if (e.touches.length === 1 && isScrollable) {
+			e.stopPropagation();
+			if (atScrollStart || atScrollEnd) {
+				justStarted = true;
+				lastTapY = e.touches[0].clientY;
+			}
+		}
 	}}
 	onscroll={(e) => {
-		if (isMobile) {
+		if (usingTouch && isScrollable) {
 			const el = e.currentTarget;
-			if (el.scrollTop < 1 || el.scrollTop + el.clientHeight >= el.scrollHeight - 1)
-				isMidScroll = false;
-			else isMidScroll = true;
+			atScrollStart = el.scrollTop < 1;
+			atScrollEnd = el.scrollTop + el.clientHeight > el.scrollHeight - 1;
+
+			if (!atScrollStart && !atScrollEnd) {
+				if (!scrollMiddleTouchEnded) {
+					e.currentTarget.parentElement?.dispatchEvent(
+						new CustomEvent('touchend', {
+							bubbles: true,
+							detail: {
+								noInertia: true
+							}
+						})
+					);
+					scrollMiddleTouchEnded = true;
+				}
+			} else {
+				scrollMiddleTouchEnded = false;
+			}
 		}
 	}}
 	onwheel={(e) => {
-		isMobile = false;
+		usingTouch = false;
 		if (e.ctrlKey || !mouseIn) return;
 		const el = e.currentTarget;
 		const isScrollingUp = e.deltaY < 0;
