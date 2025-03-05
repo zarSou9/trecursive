@@ -13,7 +13,7 @@ const schema = Joi.object({
 
 export const POST: RequestHandler = async ({ request }) => {
 	try {
-		const { value, error } = schema.validate(request);
+		const { value, error } = schema.validate(await request.json());
 		if (error) throw { message: error.message || 'Invalid request', status: 400 };
 
 		const { map_repo }: RequestBody = value;
