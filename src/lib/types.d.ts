@@ -107,8 +107,8 @@ type TreeDefinition = {
 	fullTree?: any;
 	treeUrl?: string;
 	note?: string;
-	cover_root_description: string;
-	disable_expand_all?: boolean;
+	coverRootDescription: string;
+	disableExpandAll?: boolean;
 	leftSidePanelInitOpen?: boolean;
 	breakdownName?: string;
 	customSettings?: CustomTreeSettings;

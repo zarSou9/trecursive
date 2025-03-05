@@ -37,7 +37,7 @@
 		note = '',
 		customSettings = {},
 		breakdownName = 'breakdown',
-		disable_expand_all,
+		disableExpandAll,
 		leftSidePanelInitOpen
 	}: TreeDefinition & { fullTree: any } = $props();
 
@@ -488,7 +488,7 @@
 									}
 								}
 							},
-							...(disable_expand_all || $isMobile
+							...(disableExpandAll || $isMobile
 								? []
 								: [
 										{

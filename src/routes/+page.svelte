@@ -44,7 +44,7 @@
 						<p
 							class="mt-2.5 line-clamp-3 text-[15px] leading-relaxed text-white/75 group-hover:text-white/80"
 						>
-							{treeDetails.cover_root_description}
+							{treeDetails.coverRootDescription}
 						</p>
 					</article>
 
