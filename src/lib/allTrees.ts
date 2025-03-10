@@ -1,7 +1,7 @@
 import type { TreeDefinition, TreeSettings } from '$lib/types';
 import fliMap from '$lib/tree_settings/fli-map.json';
-import aiSafetyMap from '$lib/tree_settings/ai-safety-map.json';
-import aiSafetyGoals from '$lib/tree_settings/ai-safety-goals.json';
+import aiSafetyMap from '$lib/tree_settings/llm-ai-safety-map.json';
+import aiSafetyGoals from '$lib/tree_settings/llm-ai-safety-goals.json';
 
 export const defaultSettings: TreeSettings = {
 	defaultMode: {
