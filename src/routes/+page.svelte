@@ -5,15 +5,20 @@
 </script>
 
 <svelte:head>
-	<title>AI Research Maps</title>
+	<title>TRecursive</title>
 </svelte:head>
 
 <div class="size-full overflow-auto bg-gradient-to-b from-[#151515] to-[#1e1e1e] px-5 py-16">
 	<div class="mx-auto max-w-[900px]">
 		<h1
-			class="mb-4 bg-gradient-to-r from-purple-600 via-purple-500 to-purple-600 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent [text-shadow:_0_4px_30px_rgba(168,85,247,0.15)] sm:text-[72px]"
+			class="mb-4 text-center text-5xl font-bold tracking-tight [text-shadow:_0_4px_30px_rgba(168,85,247,0.15)] sm:text-[72px]"
 		>
-			AI Research Maps
+			<span
+				class="bg-gradient-to-r from-green-600 via-[#34a3af] to-purple-600 bg-clip-text text-transparent"
+				>TRec</span
+			><span class="bg-gradient-to-r from-purple-600 to-purple-500 bg-clip-text text-transparent"
+				>ursive</span
+			>
 		</h1>
 		<p
 			class="mb-14 text-center text-lg font-medium leading-relaxed tracking-wide text-purple-200/70"
