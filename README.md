@@ -1,6 +1,6 @@
 # Interactive Research Maps
 
-This is the git repo for [AI Research Maps](https://www.airesearchmaps.com/). It is an interactive 2D canvas app built for visualizing large research fields (though it can be used to visualize any hierarchical data). This repo also features a rich infinite canvas component with mobile support! Here is a [video demo](https://www.youtube.com/watch?v=nXtQtNlU_jg).
+This is the git repo for [TRecursive](https://www.trecursive.com/): an interactive 2D canvas app for visualizing hierarchical knowledge. This repo also features a rich infinite canvas component with mobile support!
 
 ## Developing
 
